@@ -3,6 +3,15 @@ import { Reveal } from "@/components/layout/Reveal";
 
 const CARDS = [
   {
+    href: "/walkthroughs/",
+    icon: "🎬",
+    iconClass: "blue",
+    title: "Problem Walkthroughs",
+    desc: "Whiteboard-style animated solutions to classic problems. Watch the array, pointers, and pseudocode move together, one narrated step at a time.",
+    meta: ["step-by-step", "synced code", "narrated", "animated"],
+    arrow: "Watch walkthroughs →",
+  },
+  {
     href: "/linked-lists/",
     icon: "⛓️",
     iconClass: "green",
