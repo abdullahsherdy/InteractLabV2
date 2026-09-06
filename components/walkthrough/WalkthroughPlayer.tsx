@@ -1,5 +1,6 @@
 "use client";
 
+import { MotionConfig } from "motion/react";
 import { useMemo } from "react";
 import { getProblem } from "@/lib/walkthrough";
 import { useWalkPlayer } from "./useWalkPlayer";
@@ -17,15 +18,20 @@ export function WalkthroughPlayer({ slug }: { slug: string }) {
   if (!problem) return null;
 
   return (
-    <div className="wt-player">
-      <div className="wt-stage">
-        <div className="wt-stage-main">
-          {step?.viz.kind === "array" && <ArrayCanvas viz={step.viz} />}
-          <VarBoard vars={step?.vars ?? []} />
+    // reducedMotion="user" drops transform/layout animation (the sliding
+    // pointers, the spring bracket) for viewers who ask for it, while keeping
+    // opacity fades — the walkthrough still advances, it just doesn't glide.
+    <MotionConfig reducedMotion="user">
+      <div className="wt-player">
+        <div className="wt-stage">
+          <div className="wt-stage-main">
+            {step?.viz.kind === "array" && <ArrayCanvas viz={step.viz} />}
+            <VarBoard vars={step?.vars ?? []} />
+          </div>
+          <CodePanel code={problem.code} activeLine={step?.codeLine ?? -1} language={problem.language} />
         </div>
-        <CodePanel code={problem.code} activeLine={step?.codeLine ?? -1} language={problem.language} />
+        <WalkTransport player={player} />
       </div>
-      <WalkTransport player={player} />
-    </div>
+    </MotionConfig>
   );
 }
