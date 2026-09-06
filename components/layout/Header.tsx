@@ -8,6 +8,7 @@ const LINKS = [
   { href: "/", label: "Home" },
   { href: "/topics/", label: "Topics" },
   { href: "/linked-lists/", label: "Linked Lists" },
+  { href: "/walkthroughs/", label: "Walkthroughs" },
 ];
 
 export function Header() {
@@ -32,16 +33,23 @@ export function Header() {
         ☰
       </button>
       <nav className={`site-nav${open ? " open" : ""}`} aria-label="Main">
-        {LINKS.map((l) => (
-          <Link
-            key={l.href}
-            href={l.href}
-            className={`nav-link${pathname === l.href || pathname === l.href.replace(/\/$/, "") ? " active" : ""}`}
-            onClick={() => setOpen(false)}
-          >
-            {l.label}
-          </Link>
-        ))}
+        {LINKS.map((l) => {
+          const base = l.href.replace(/\/$/, "");
+          const active =
+            base === ""
+              ? pathname === "/"
+              : pathname === l.href || pathname === base || pathname.startsWith(`${base}/`);
+          return (
+            <Link
+              key={l.href}
+              href={l.href}
+              className={`nav-link${active ? " active" : ""}`}
+              onClick={() => setOpen(false)}
+            >
+              {l.label}
+            </Link>
+          );
+        })}
       </nav>
     </header>
   );
