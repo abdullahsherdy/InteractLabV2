@@ -7,6 +7,8 @@ import { BigOChart } from "@/components/recursion/BigOChart";
 import { AnnotateCards } from "@/components/recursion/AnnotateCards";
 import { SixStepMethod } from "@/components/recursion/SixStepMethod";
 import { CODE } from "@/lib/recursion/content";
+// The stylesheet is resolved by Next.js at build time but has no TypeScript declaration.
+// @ts-expect-error CSS side-effect import
 import "./recursion.css";
 
 export const metadata: Metadata = {
