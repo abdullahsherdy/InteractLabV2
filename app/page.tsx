@@ -30,14 +30,13 @@ const CARDS = [
     arrow: "Open visualizer →",
   },
   {
-    href: "/recursion-and-big-o.html",
+    href: "/recursion/",
     icon: "02",
     iconClass: "purple",
     title: "Recursion & Big-O",
-    desc: "Call stack visualizers, Fibonacci trees, and Big-O charts to build recursion intuition.",
-    meta: ["call stack", "complexity", "recursion"],
-    arrow: "Open tutorial →",
-    legacy: true,
+    desc: "Step through the call stack frame by frame, watch a Fibonacci tree explode with repeated work, compare Big-O growth live, and learn a 6-step method for any problem.",
+    meta: ["call stack", "Fibonacci tree", "Big-O", "animated"],
+    arrow: "Open visualizer →",
   },
   {
     href: "/sorting-algorithms.html",

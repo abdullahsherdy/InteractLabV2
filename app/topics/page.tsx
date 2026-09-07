@@ -46,11 +46,11 @@ export default function TopicsPage() {
             </Link>
           </Reveal>
           <Reveal delay={0.18}>
-            <a className="tutorial-card" href="/recursion-and-big-o.html">
+            <Link className="tutorial-card" href="/recursion/">
               <div className="card-icon purple" aria-hidden="true">02</div>
               <h3>Recursion &amp; Big-O</h3>
-              <p>Call stack visualizers, Fibonacci trees, and Big-O intuition.</p>
-            </a>
+              <p>Step through the call stack, watch a Fibonacci tree explode, and compare Big-O growth live.</p>
+            </Link>
           </Reveal>
           <Reveal delay={0.24}>
             <a className="tutorial-card" href="/sorting-algorithms.html">
