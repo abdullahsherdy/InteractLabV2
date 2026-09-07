@@ -1,0 +1,405 @@
+/* Bitwise & Number Systems — module styles. Mirrors the linked-lists layout
+   conventions (bw- prefix) and reuses the globals.css design tokens. */
+
+.bw-block {
+  margin-bottom: 48px;
+}
+
+.bw-block-head {
+  margin-bottom: 16px;
+}
+
+.bw-kicker {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal-dark);
+  margin-bottom: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .bw-kicker { color: #5eead4; }
+}
+
+.bw-block-head h2 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.bw-analogy {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  background: var(--bg-muted);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  max-width: 72ch;
+}
+
+/* ---- module shell ---- */
+.bw-module {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bw-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.bw-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: opacity 0.2s;
+}
+
+.bw-field-dim { opacity: 0.4; }
+
+.bw-field-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bw-input,
+.bw-select {
+  padding: 9px 12px;
+  font-size: 15px;
+  font-family: var(--font-mono);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 42px;
+}
+
+.bw-input { width: 120px; }
+.bw-select { cursor: pointer; }
+
+.bw-input:focus,
+.bw-select:focus {
+  outline: 2px solid var(--teal);
+  outline-offset: 1px;
+}
+
+.bw-slider {
+  flex: 1;
+  min-width: 160px;
+  accent-color: var(--teal);
+}
+
+.bw-readout {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 64px;
+}
+
+.bw-readout-num {
+  font-size: 30px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  line-height: 1;
+  color: var(--text);
+}
+
+.bw-readout-sub {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+}
+
+/* ---- the byte / bit boxes ---- */
+.bw-byte {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-x: auto;
+}
+
+.bw-bit-row {
+  display: flex;
+  gap: 6px;
+}
+
+.bw-bit {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 600;
+  border: 1.5px solid transparent;
+  padding: 0;
+  line-height: 1;
+}
+
+/* button variant reset */
+button.bw-bit {
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+button.bw-bit:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+button.bw-bit:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.bw-bit-zero {
+  background: var(--bg-muted);
+  border-color: var(--border);
+  color: var(--text-tertiary);
+}
+
+.bw-bit-one {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+
+.bw-bit-active {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #fff;
+}
+
+.bw-bit-result {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: #fff;
+}
+
+.bw-bit-meta {
+  width: 40px;
+  flex: none;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.bw-bit-val { color: var(--text-secondary); }
+
+/* ---- notes / labels ---- */
+.bw-note {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 72ch;
+}
+
+.bw-note code,
+.bw-card code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--bg-subtle);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--text);
+}
+
+.bw-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ---- conversion trace ---- */
+.bw-steps {
+  background: var(--bg-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 16px;
+}
+
+.bw-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bw-step:last-of-type { border-bottom: none; }
+
+.bw-step-num {
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  width: 56px;
+  flex: none;
+}
+
+.bw-step-math { color: var(--text); }
+
+.bw-rem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bw-rem-1 { background: var(--green); color: #fff; }
+.bw-rem-0 { background: var(--bg-subtle); color: var(--text-secondary); }
+
+.bw-result {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ---- playground result grid ---- */
+.bw-op-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: var(--bg-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+
+.bw-op-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.bw-op-dec {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.bw-op-hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.bw-op-sep {
+  height: 1px;
+  background: var(--border-strong);
+  margin: 8px 0 4px;
+}
+
+.bw-shift-note {
+  font-style: italic;
+  padding-left: 2px;
+}
+
+.bw-op-answer {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--teal-light), var(--purple-light));
+  border: 1px solid var(--border);
+}
+
+.bw-op-expr {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.bw-op-result-num {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.bw-op-bin {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ---- tags ---- */
+.bw-tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+}
+
+.bw-tag-a { background: var(--green-light); color: var(--green); }
+.bw-tag-b { background: var(--amber-light); color: var(--amber); }
+.bw-tag-r { background: var(--purple-light); color: var(--purple); }
+
+/* ---- real-world cards ---- */
+.bw-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.bw-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.bw-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.bw-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bw-bit,
+  button.bw-bit,
+  .bw-op-answer,
+  .bw-step {
+    transition: none !important;
+    animation: none !important;
+  }
+}

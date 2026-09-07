@@ -21,14 +21,13 @@ const CARDS = [
     arrow: "Open visualizer →",
   },
   {
-    href: "/bitwise-and-number-systems.html",
+    href: "/bitwise/",
     icon: "01",
     iconClass: "teal",
     title: "Bitwise & Number Systems",
-    desc: "Binary and hexadecimal conversions plus a hands-on bitwise operators playground.",
-    meta: ["number systems", "bitwise ops", "foundations"],
-    arrow: "Open tutorial →",
-    legacy: true,
+    desc: "A byte as 8 light switches: flip bits, watch decimal→binary conversion animate, and compare bytes in a live AND/OR/XOR/shift playground.",
+    meta: ["place value", "decimal → binary", "bitwise ops", "animated"],
+    arrow: "Open visualizer →",
   },
   {
     href: "/recursion-and-big-o.html",
