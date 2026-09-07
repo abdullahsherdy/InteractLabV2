@@ -39,14 +39,13 @@ const CARDS = [
     arrow: "Open visualizer →",
   },
   {
-    href: "/sorting-algorithms.html",
+    href: "/sorting/",
     icon: "03",
     iconClass: "amber",
     title: "Sorting Algorithms",
-    desc: "Step-through visualizers for common sorting algorithms and runtime comparisons.",
-    meta: ["O(n²)", "O(n log n)", "Python"],
-    arrow: "Open tutorial →",
-    legacy: true,
+    desc: "Step through bubble, selection and insertion bar by bar, replay merge and quick sort's recursion, compare growth rates live, and see why stable, in-place and adaptive matter.",
+    meta: ["O(n²)", "O(n log n)", "sort by key", "animated"],
+    arrow: "Open visualizer →",
   },
   {
     href: "/revision-app/index.html",
