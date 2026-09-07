@@ -9,7 +9,7 @@ import {
   type Frame,
   type RecFn,
 } from "@/lib/recursion/call-stack";
-import { useStepper } from "./useStepper";
+import { useStepper } from "@/components/shared/useStepper";
 
 const STATE_LABEL: Record<Frame["state"], string> = {
   active: "running",
