@@ -8,6 +8,9 @@ import { CompareChart } from "@/components/sorting/CompareChart";
 import { KeyDemo } from "@/components/sorting/KeyDemo";
 import { PropertiesTable } from "@/components/sorting/PropertiesTable";
 import { BUILTIN_CODE, WHY_LEARN, DECISIONS } from "@/lib/sorting/content";
+
+// The stylesheet is resolved by Next.js at build time but has no TypeScript declaration.
+// @ts-expect-error CSS side-effect import
 import "./sorting.css";
 
 export const metadata: Metadata = {
