@@ -39,11 +39,11 @@ export default function TopicsPage() {
             </Link>
           </Reveal>
           <Reveal delay={0.12}>
-            <a className="tutorial-card" href="/bitwise-and-number-systems.html">
+            <Link className="tutorial-card" href="/bitwise/">
               <div className="card-icon teal" aria-hidden="true">01</div>
               <h3>Bitwise &amp; Number Systems</h3>
-              <p>Binary, hex, conversion, and a hands-on bitwise playground.</p>
-            </a>
+              <p>A byte as 8 light switches, animated decimal→binary conversion, and a live bitwise playground.</p>
+            </Link>
           </Reveal>
           <Reveal delay={0.18}>
             <a className="tutorial-card" href="/recursion-and-big-o.html">
