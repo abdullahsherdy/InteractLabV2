@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/layout/Reveal";
-import { CodeBlock } from "@/components/recursion/CodeBlock";
+import { CodeBlock } from "@/components/shared/CodeBlock";
 import { CallStackViz } from "@/components/recursion/CallStackViz";
 import { FibTreeViz } from "@/components/recursion/FibTreeViz";
 import { BigOChart } from "@/components/recursion/BigOChart";

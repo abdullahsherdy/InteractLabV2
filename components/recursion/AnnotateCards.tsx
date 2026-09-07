@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ANNOTATE_CARDS } from "@/lib/recursion/content";
-import { CodeBlock } from "./CodeBlock";
+import { CodeBlock } from "@/components/shared/CodeBlock";
 
 /**
  * Module 4 (practice) — read a snippet, guess its Big-O, then reveal the answer
@@ -26,7 +26,7 @@ export function AnnotateCards() {
         const open = shown.has(i);
         return (
           <div key={i} className="rec-anno">
-            <CodeBlock code={card.code} className="rec-code-sm" />
+            <CodeBlock code={card.code} className="code-block-sm" />
             <button
               className="rec-reveal-btn"
               type="button"
