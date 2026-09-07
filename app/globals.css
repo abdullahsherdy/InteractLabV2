@@ -500,6 +500,28 @@ body {
   line-height: 1.55;
 }
 
+/* ─── Shared code block (Python highlighter — see components/shared/CodeBlock) ─── */
+.code-block {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.65;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.code-block code { font-family: inherit; white-space: pre; }
+.code-block-sm { font-size: 12px; padding: 12px 14px; }
+
+.tok-comment { color: #64748b; font-style: italic; }
+.tok-str { color: #86efac; }
+.tok-num { color: #fda4af; }
+.tok-kw { color: #93c5fd; font-weight: 600; }
+.tok-fn { color: #fcd34d; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

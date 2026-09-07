@@ -162,28 +162,6 @@
   border: 1px solid var(--rec-red-border);
 }
 
-/* ---- code blocks ---- */
-.rec-code {
-  background: #0f172a;
-  color: #e2e8f0;
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  overflow-x: auto;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 1.65;
-  border: 1px solid rgba(148, 163, 184, 0.18);
-}
-
-.rec-code code { font-family: inherit; white-space: pre; }
-.rec-code-sm { font-size: 12px; padding: 12px 14px; }
-
-.rec-tok-comment { color: #64748b; font-style: italic; }
-.rec-tok-str { color: #86efac; }
-.rec-tok-num { color: #fda4af; }
-.rec-tok-kw { color: #93c5fd; font-weight: 600; }
-.rec-tok-fn { color: #fcd34d; }
-
 /* ---- intro cards ---- */
 .rec-intro-cards {
   display: grid;

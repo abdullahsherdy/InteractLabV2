@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { SIX_STEPS } from "@/lib/recursion/content";
-import { CodeBlock } from "./CodeBlock";
+import { CodeBlock } from "@/components/shared/CodeBlock";
 
 /**
  * Module 5 — the repeatable method. Six expandable cards walk a problem from

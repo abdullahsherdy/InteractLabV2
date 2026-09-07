@@ -1,8 +1,10 @@
 import { Fragment } from "react";
 
-// A deliberately small Python highlighter for the static teaching snippets in
-// this tool. The snippets are trusted, hand-written constants (see content.ts),
-// so a single-pass tokenizer is plenty — no parser, no client JS, no CDN.
+// A deliberately small Python highlighter for the static teaching snippets used
+// across the tools (recursion, sorting, …). The snippets are trusted,
+// hand-written constants (see each tool's content.ts), so a single-pass
+// tokenizer is plenty — no parser, no client JS, no CDN. Styling lives in
+// globals.css as `.code-block` + `.tok-*`, so every tool shares one look.
 
 const TOKEN = /#[^\n]*|'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|\b\d+\b|\b[A-Za-z_]\w*\b/g;
 
@@ -14,7 +16,7 @@ const KEYWORDS = new Set([
 
 const BUILTINS = new Set([
   "print", "range", "len", "get", "append", "split", "reverse", "join", "int",
-  "str", "list", "dict", "set", "sum", "sorted", "enumerate",
+  "str", "list", "dict", "set", "sum", "sorted", "enumerate", "extend",
 ]);
 
 type Tok = { text: string; cls: string };
@@ -26,11 +28,11 @@ function tokenize(code: string): Tok[] {
     if (m.index > last) out.push({ text: code.slice(last, m.index), cls: "" });
     const t = m[0];
     let cls = "";
-    if (t.startsWith("#")) cls = "rec-tok-comment";
-    else if (t.startsWith("'") || t.startsWith('"')) cls = "rec-tok-str";
-    else if (/^\d/.test(t)) cls = "rec-tok-num";
-    else if (KEYWORDS.has(t)) cls = "rec-tok-kw";
-    else if (BUILTINS.has(t)) cls = "rec-tok-fn";
+    if (t.startsWith("#")) cls = "tok-comment";
+    else if (t.startsWith("'") || t.startsWith('"')) cls = "tok-str";
+    else if (/^\d/.test(t)) cls = "tok-num";
+    else if (KEYWORDS.has(t)) cls = "tok-kw";
+    else if (BUILTINS.has(t)) cls = "tok-fn";
     out.push({ text: t, cls });
     last = m.index + t.length;
   }
@@ -42,7 +44,7 @@ function tokenize(code: string): Tok[] {
 export function CodeBlock({ code, className }: { code: string; className?: string }) {
   const tokens = tokenize(code);
   return (
-    <pre className={`rec-code${className ? ` ${className}` : ""}`}>
+    <pre className={`code-block${className ? ` ${className}` : ""}`}>
       <code>
         {tokens.map((t, i) =>
           t.cls ? (
