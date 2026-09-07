@@ -53,11 +53,11 @@ export default function TopicsPage() {
             </Link>
           </Reveal>
           <Reveal delay={0.24}>
-            <a className="tutorial-card" href="/sorting-algorithms.html">
+            <Link className="tutorial-card" href="/sorting/">
               <div className="card-icon amber" aria-hidden="true">03</div>
               <h3>Sorting Algorithms</h3>
-              <p>Bubble, selection, insertion, merge, and quick sort visualizers.</p>
-            </a>
+              <p>Bubble, selection, insertion, merge, and quick sort — step through each, compare growth, and sort by any key.</p>
+            </Link>
           </Reveal>
         </div>
       </section>
