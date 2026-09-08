@@ -39,7 +39,7 @@ export default function LinkedListsPage() {
           <div className="ll-section-head">
             <p className="ll-kicker">Module 1 · Singly linked</p>
             <h2>Node Chain Builder</h2>
-            <p className="ll-analogy">
+            <p className="analogy">
               🗺️ <span><strong>Treasure hunt:</strong> each clue points to the next.
               Try <code>append</code>, <code>insert at head</code>, and{" "}
               <code>delete value</code> — then flip on the 🐛 bug toggle to see
@@ -53,7 +53,7 @@ export default function LinkedListsPage() {
           <div className="ll-section-head">
             <p className="ll-kicker">Module 2 · Doubly linked</p>
             <h2>Dance Line — holding hands both ways</h2>
-            <p className="ll-analogy">
+            <p className="analogy">
               💃 <span><strong>Dance line:</strong> every dancer holds hands in both
               directions. Removing one dancer means <em>two</em> pointer
               updates — watch each neighbor reconnect, one after the other.</span>
@@ -66,7 +66,7 @@ export default function LinkedListsPage() {
           <div className="ll-section-head">
             <p className="ll-kicker">Module 3 · Cycle detection</p>
             <h2>Tortoise &amp; Hare Race — Floyd&apos;s algorithm</h2>
-            <p className="ll-analogy">
+            <p className="analogy">
               🐢🐇 <span><strong>Two runners on a track:</strong> one moves 1 step per
               tick, the other 2. If the track loops, the fast runner laps the
               slow one and they collide — same node object, not same value.
@@ -80,7 +80,7 @@ export default function LinkedListsPage() {
           <div className="ll-section-head">
             <p className="ll-kicker">Module 4 · Mini-project</p>
             <h2>Playlist Manager</h2>
-            <p className="ll-analogy">
+            <p className="analogy">
               🎵 <span><strong>Your music app is a linked list:</strong> “next song”
               follows the next pointer, “previous song” follows prev. That is
               exactly why a playlist is a <em>doubly</em> linked list.</span>
@@ -92,7 +92,7 @@ export default function LinkedListsPage() {
         <Reveal className="ll-section">
           <div className="ll-section-head">
             <h2>Where this connects</h2>
-            <p className="ll-analogy">
+            <p className="analogy">
               🔗 <span><strong>Looking back:</strong> hash table collision chaining is a
               tiny linked list in every bucket. <strong>Looking forward:</strong> a
               tree node is just a linked-list node with two next pointers —{" "}

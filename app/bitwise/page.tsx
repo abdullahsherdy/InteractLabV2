@@ -39,7 +39,7 @@ export default function BitwisePage() {
           <div className="bw-block-head">
             <p className="bw-kicker">Module 1 · Place value</p>
             <h2>A byte is 8 light switches</h2>
-            <p className="bw-analogy">
+            <p className="analogy">
               💡 <span><strong>Light switches:</strong> each of the 8 switches has a
               value — the rightmost is 1, and every switch to the left is worth
               double. Drag the slider or tap a switch to flip it, and watch the
@@ -53,7 +53,7 @@ export default function BitwisePage() {
           <div className="bw-block-head">
             <p className="bw-kicker">Module 2 · Conversion</p>
             <h2>Decimal → binary, by hand</h2>
-            <p className="bw-analogy">
+            <p className="analogy">
               ➗ <span><strong>Keep halving:</strong> divide by 2 over and over and
               write down each remainder. Read those remainders from the bottom
               up and you have the binary number. The trace below runs the real
@@ -67,7 +67,7 @@ export default function BitwisePage() {
           <div className="bw-block-head">
             <p className="bw-kicker">Module 3 · Operators</p>
             <h2>The bitwise playground</h2>
-            <p className="bw-analogy">
+            <p className="analogy">
               🎛️ <span><strong>Column by column:</strong> line up two bytes and compare
               them one switch at a time. AND keeps a switch on only if both are
               on, OR if either is on, XOR only if they disagree. Shifts slide the
@@ -135,7 +135,7 @@ export default function BitwisePage() {
         <Reveal className="bw-block">
           <div className="bw-block-head">
             <h2>Where this connects</h2>
-            <p className="bw-analogy">
+            <p className="analogy">
               🔗 <span><strong>Looking forward:</strong> hashing, hash-set membership,
               and bitmasks in dynamic programming all reuse this exact
               switch-flipping. Once a byte feels like eight switches, those topics
