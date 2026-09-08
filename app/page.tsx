@@ -47,16 +47,6 @@ const CARDS = [
     meta: ["O(n²)", "O(n log n)", "sort by key", "animated"],
     arrow: "Open visualizer →",
   },
-  {
-    href: "/revision-app/index.html",
-    icon: "🐍",
-    iconClass: "green",
-    title: "Python Comprehensive Revision",
-    desc: "13 topic reviews with runnable code examples, 10 multi-concept practice problems, and a full in-browser Python IDE.",
-    meta: ["OOP", "recursion", "Big-O", "sorting", "Pyodide"],
-    arrow: "Open revision app →",
-    legacy: true,
-  },
 ];
 
 export default function HomePage() {
@@ -97,15 +87,9 @@ export default function HomePage() {
         <div className="tutorial-grid">
           {CARDS.map((c, i) => (
             <Reveal key={c.href} delay={i * 0.06}>
-              {c.legacy ? (
-                <a className="tutorial-card" href={c.href}>
-                  <CardBody card={c} />
-                </a>
-              ) : (
-                <Link className="tutorial-card" href={c.href}>
-                  <CardBody card={c} />
-                </Link>
-              )}
+              <Link className="tutorial-card" href={c.href}>
+                <CardBody card={c} />
+              </Link>
             </Reveal>
           ))}
         </div>
