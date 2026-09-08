@@ -1,0 +1,354 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 2540" font-family="'DM Sans', system-ui, sans-serif">
+  <!-- InteractLab · Stacks & Queues — full-page UI mockup (light theme).
+       Layout mirrors the shipped tutorial pages: sticky header, content-narrow hero (820),
+       content-wide module column (1120), shared .analogy callouts, scoped rose/blue accents. -->
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap');
+      .crumb { font-size: 12px; fill: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+      .h1    { font-size: 28px; font-weight: 600; letter-spacing: -0.03em; fill: #0f172a; }
+      .desc  { font-size: 15px; fill: #64748b; }
+      .tag   { font-size: 11px; fill: #64748b; font-family: 'JetBrains Mono', monospace; }
+      .kick  { font-size: 11px; font-weight: 500; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+      .h2    { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; fill: #0f172a; }
+      .body  { font-size: 14px; fill: #0f172a; }
+      .mut   { font-size: 13px; fill: #64748b; }
+      .an    { font-size: 14px; fill: #475569; }
+      .mono  { font-family: 'JetBrains Mono', monospace; }
+      .btnT  { font-size: 13px; font-weight: 600; }
+      .val   { font-size: 16px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+      .cap   { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
+    </style>
+    <filter id="c-sm" x="-20%" y="-30%" width="140%" height="160%"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.05"/></filter>
+    <linearGradient id="g-brand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d9488"/><stop offset="1" stop-color="#0f766e"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/></marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#e11d48"/></marker>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2563eb"/></marker>
+  </defs>
+
+  <rect width="1240" height="2540" fill="#fafaf9"/>
+
+  <!-- ════ HEADER ════ -->
+  <g>
+    <rect width="1240" height="60" fill="#ffffff" fill-opacity="0.92"/>
+    <line x1="0" y1="60" x2="1240" y2="60" stroke="rgba(15,23,42,0.08)"/>
+    <rect x="24" y="12" width="36" height="36" rx="10" fill="url(#g-brand)"/>
+    <text x="42" y="35" text-anchor="middle" class="mono" font-size="14" font-weight="500" fill="#ffffff">IL</text>
+    <text x="70" y="36" font-size="17" font-weight="600" letter-spacing="-0.02em" fill="#0f172a">Interact<tspan fill="#0d9488">Lab</tspan></text>
+    <!-- nav -->
+    <g class="mut" font-size="13" font-weight="500" text-anchor="middle">
+      <text x="800" y="36">Home</text>
+      <text x="872" y="36">Topics</text>
+      <!-- active pill -->
+      <rect x="922" y="16" width="150" height="28" rx="10" fill="#ccfbf1"/>
+      <text x="997" y="35" fill="#0f766e" font-weight="600">Stacks &amp; Queues</text>
+      <text x="1140" y="36">Revision</text>
+    </g>
+  </g>
+
+  <!-- ════ HERO (content-narrow, 820 centred → x 210..1030) ════ -->
+  <g transform="translate(210,96)">
+    <text x="0" y="12" class="crumb">InteractLab / Stacks &amp; Queues</text>
+    <text x="0" y="46" class="h1">Stacks &amp; Queues — plates you pile, lines you join</text>
+    <text x="0" y="80" class="desc">Two of the simplest structures, and two everyday pictures. A <tspan font-weight="600" fill="#0f172a">stack</tspan> is a pile of plates — you</text>
+    <text x="0" y="102" class="desc">add and take only from the top. A <tspan font-weight="600" fill="#0f172a">queue</tspan> is a line at the coffee shop — you join the back and</text>
+    <text x="0" y="124" class="desc">the front is served first. Push, pop, enqueue and dequeue — one animated move at a time.</text>
+    <!-- tags -->
+    <g transform="translate(0,144)">
+      <rect width="118" height="26" rx="13" fill="#f5f5f4" stroke="rgba(15,23,42,0.08)"/><text x="59" y="17" text-anchor="middle" class="tag">stack · LIFO</text>
+      <rect x="128" width="122" height="26" rx="13" fill="#f5f5f4" stroke="rgba(15,23,42,0.08)"/><text x="189" y="17" text-anchor="middle" class="tag">queue · FIFO</text>
+      <rect x="260" width="150" height="26" rx="13" fill="#f5f5f4" stroke="rgba(15,23,42,0.08)"/><text x="335" y="17" text-anchor="middle" class="tag">list vs. deque</text>
+      <rect x="420" width="168" height="26" rx="13" fill="#f5f5f4" stroke="rgba(15,23,42,0.08)"/><text x="504" y="17" text-anchor="middle" class="tag">undo · BFS · call stack</text>
+    </g>
+  </g>
+
+  <!-- ════ MODULE 1 · THE STACK (rose) ════ -->
+  <g transform="translate(60,300)">
+    <rect width="1120" height="440" rx="16" fill="#ffffff" stroke="rgba(15,23,42,0.08)" filter="url(#c-sm)"/>
+    <text x="28" y="46" class="kick" fill="#e11d48">Module 1 · The stack</text>
+    <text x="28" y="76" class="h2">Push, pop, peek — last in, first out</text>
+    <!-- analogy -->
+    <g transform="translate(28,92)">
+      <rect width="1064" height="60" rx="10" fill="#f5f5f4" stroke="rgba(15,23,42,0.08)"/>
+      <text x="16" y="37" font-size="18">🥞</text>
+      <text x="44" y="26" class="an"><tspan font-weight="700" fill="#0f172a">A stack of plates:</tspan> you add and remove from the <tspan font-weight="700" fill="#0f172a">top</tspan> only. The last plate on is the first one off. That is the</text>
+      <text x="44" y="46" class="an">same stack Python used for the <tspan font-weight="600" fill="#0f172a">call stack</tspan> in recursion — now you are holding it directly.</text>
+    </g>
+
+    <!-- stage -->
+    <g transform="translate(28,168)">
+      <rect width="1064" height="248" rx="12" fill="#fafaf9" stroke="rgba(15,23,42,0.08)"/>
+
+      <!-- vertical plate stack (left) -->
+      <text x="150" y="34" text-anchor="middle" class="cap" fill="#e11d48">LIFO</text>
+      <!-- push/pop arrows above top -->
+      <line x1="86" y1="70" x2="86" y2="46" stroke="#e11d48" stroke-width="2" marker-end="url(#arrR)"/>
+      <text x="70" y="62" text-anchor="end" class="tag" fill="#e11d48">pop</text>
+      <line x1="214" y1="46" x2="214" y2="70" stroke="#e11d48" stroke-width="2" marker-end="url(#arrR)"/>
+      <text x="230" y="62" class="tag" fill="#e11d48">push</text>
+      <!-- plates (top = 9) -->
+      <g>
+        <rect x="70" y="74"  width="160" height="34" rx="8" fill="#ffe4e6" stroke="#e11d48"/><text x="150" y="96"  text-anchor="middle" class="val" fill="#9f1239">9</text>
+        <rect x="70" y="114" width="160" height="34" rx="8" fill="#ffe4e6" stroke="#e11d48" stroke-opacity="0.5"/><text x="150" y="136" text-anchor="middle" class="val" fill="#9f1239">1</text>
+        <rect x="70" y="154" width="160" height="34" rx="8" fill="#ffe4e6" stroke="#e11d48" stroke-opacity="0.5"/><text x="150" y="176" text-anchor="middle" class="val" fill="#9f1239">7</text>
+        <rect x="70" y="194" width="160" height="34" rx="8" fill="#ffe4e6" stroke="#e11d48" stroke-opacity="0.5"/><text x="150" y="216" text-anchor="middle" class="val" fill="#9f1239">3</text>
+      </g>
+      <!-- tray base -->
+      <line x1="60" y1="232" x2="240" y2="232" stroke="#94a3b8" stroke-width="2"/>
+      <!-- top pointer -->
+      <line x1="288" y1="91" x2="238" y2="91" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="296" y="88" class="mono" font-size="12" font-weight="600" fill="#0f172a">top</text>
+      <text x="296" y="104" class="mono" font-size="11" fill="#94a3b8">stack[-1]</text>
+
+      <!-- controls + code (right) -->
+      <g transform="translate(430,40)">
+        <!-- input -->
+        <rect width="120" height="36" rx="10" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/>
+        <text x="14" y="23" class="mono" font-size="14" fill="#94a3b8">value…</text>
+        <!-- buttons -->
+        <rect x="132" width="76" height="36" rx="10" fill="#e11d48"/><text x="170" y="23" text-anchor="middle" class="btnT" fill="#ffffff">push</text>
+        <rect x="216" width="72" height="36" rx="10" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/><text x="252" y="23" text-anchor="middle" class="btnT" fill="#0f172a">pop</text>
+        <rect x="296" width="78" height="36" rx="10" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/><text x="335" y="23" text-anchor="middle" class="btnT" fill="#0f172a">peek</text>
+        <rect x="382" width="80" height="36" rx="10" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/><text x="422" y="23" text-anchor="middle" class="btnT" fill="#64748b">clear</text>
+
+        <!-- code block -->
+        <g transform="translate(0,58)">
+          <rect width="462" height="128" rx="10" fill="#0f172a"/>
+          <g class="mono" font-size="13">
+            <text x="16" y="30" fill="#e2e8f0">stack = []</text>
+            <text x="16" y="52" fill="#e2e8f0">stack.<tspan fill="#fcd34d">append</tspan>(<tspan fill="#fda4af">9</tspan>)       <tspan fill="#64748b" font-style="italic"># push → top</tspan></text>
+            <text x="16" y="74" fill="#e2e8f0">stack[-<tspan fill="#fda4af">1</tspan>]             <tspan fill="#64748b" font-style="italic"># peek → 9</tspan></text>
+            <text x="16" y="96" fill="#e2e8f0">stack.<tspan fill="#fcd34d">pop</tspan>()          <tspan fill="#64748b" font-style="italic"># pop  → 9</tspan></text>
+            <text x="16" y="118" fill="#e2e8f0"><tspan fill="#c4b5fd">len</tspan>(stack)          <tspan fill="#64748b" font-style="italic"># → 3, all O(1)</tspan></text>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ════ MODULE 2 · THE QUEUE (blue) ════ -->
+  <g transform="translate(60,772)">
+    <rect width="1120" height="416" rx="16" fill="#ffffff" stroke="rgba(15,23,42,0.08)" filter="url(#c-sm)"/>
+    <text x="28" y="46" class="kick" fill="#2563eb">Module 2 · The queue</text>
+    <text x="28" y="76" class="h2">Enqueue, dequeue — first in, first out</text>
+    <g transform="translate(28,92)">
+      <rect width="1064" height="60" rx="10" fill="#f5f5f4" stroke="rgba(15,23,42,0.08)"/>
+      <text x="16" y="37" font-size="18">☕</text>
+      <text x="44" y="26" class="an"><tspan font-weight="700" fill="#0f172a">A line at the coffee shop:</tspan> you join at the <tspan font-weight="700" fill="#0f172a">back</tspan> and the person at the <tspan font-weight="700" fill="#0f172a">front</tspan> is served first. No</text>
+      <text x="44" y="46" class="an">cutting in — everyone waits their turn. First in line, first served.</text>
+    </g>
+
+    <!-- stage -->
+    <g transform="translate(28,168)">
+      <rect width="1064" height="224" rx="12" fill="#fafaf9" stroke="rgba(15,23,42,0.08)"/>
+      <text x="532" y="34" text-anchor="middle" class="cap" fill="#2563eb">FIFO</text>
+
+      <!-- dequeue arrow (leaves front / left) -->
+      <line x1="150" y1="96" x2="90" y2="96" stroke="#2563eb" stroke-width="2" marker-end="url(#arrB)"/>
+      <text x="150" y="72" text-anchor="middle" class="tag" fill="#2563eb">dequeue</text>
+      <!-- horizontal queue items: front(left)=5 .. back(right)=4 -->
+      <g transform="translate(180,80)">
+        <rect x="0"   width="120" height="44" rx="10" fill="#dbeafe" stroke="#2563eb"/><text x="60"  y="29" text-anchor="middle" class="val" fill="#1e3a8a">5</text>
+        <rect x="132" width="120" height="44" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-opacity="0.5"/><text x="192" y="29" text-anchor="middle" class="val" fill="#1e3a8a">2</text>
+        <rect x="264" width="120" height="44" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-opacity="0.5"/><text x="324" y="29" text-anchor="middle" class="val" fill="#1e3a8a">8</text>
+        <rect x="396" width="120" height="44" rx="10" fill="#dbeafe" stroke="#2563eb"/><text x="456" y="29" text-anchor="middle" class="val" fill="#1e3a8a">4</text>
+        <!-- front / back pointers -->
+        <line x1="60"  y1="60" x2="60"  y2="80" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text x="60"  y="76" text-anchor="middle" class="mono" font-size="11" font-weight="600" fill="#0f172a"> </text>
+        <text x="60"  y="94" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="#0f172a">front</text>
+        <text x="456" y="94" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="#0f172a">back</text>
+      </g>
+      <!-- enqueue arrow (joins back / right) -->
+      <line x1="760" y1="96" x2="820" y2="96" stroke="#2563eb" stroke-width="2" marker-end="url(#arrB)"/>
+      <text x="800" y="72" text-anchor="middle" class="tag" fill="#2563eb">enqueue</text>
+
+      <!-- controls -->
+      <g transform="translate(180,150)">
+        <rect width="120" height="36" rx="10" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/>
+        <text x="14" y="23" class="mono" font-size="14" fill="#94a3b8">value…</text>
+        <rect x="132" width="96"  height="36" rx="10" fill="#2563eb"/><text x="180" y="23" text-anchor="middle" class="btnT" fill="#ffffff">enqueue</text>
+        <rect x="236" width="96"  height="36" rx="10" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/><text x="284" y="23" text-anchor="middle" class="btnT" fill="#0f172a">dequeue</text>
+        <rect x="340" width="78"  height="36" rx="10" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/><text x="379" y="23" text-anchor="middle" class="btnT" fill="#0f172a">peek</text>
+      </g>
+      <!-- code -->
+      <g transform="translate(620,142)">
+        <rect width="424" height="66" rx="10" fill="#0f172a"/>
+        <g class="mono" font-size="12.5">
+          <text x="14" y="26" fill="#e2e8f0"><tspan fill="#93c5fd" font-weight="600">from</tspan> collections <tspan fill="#93c5fd" font-weight="600">import</tspan> deque</text>
+          <text x="14" y="46" fill="#e2e8f0">q.<tspan fill="#fcd34d">append</tspan>(<tspan fill="#fda4af">4</tspan>)     <tspan fill="#64748b" font-style="italic"># enqueue</tspan></text>
+          <!-- second line continues -->
+        </g>
+        <text x="250" y="46" class="mono" font-size="12.5" fill="#e2e8f0">q.<tspan fill="#fcd34d">popleft</tspan>()</text>
+        <text x="360" y="46" class="mono" font-size="12.5" fill="#64748b" font-style="italic"># → 5</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ════ MODULE 3 · HOW THEY'RE BUILT ════ -->
+  <g transform="translate(60,1220)">
+    <rect width="1120" height="360" rx="16" fill="#ffffff" stroke="rgba(15,23,42,0.08)" filter="url(#c-sm)"/>
+    <text x="28" y="46" class="kick" fill="#e11d48">Module 3 · Under the hood</text>
+    <text x="28" y="76" class="h2">Built from a list — and the one trap to avoid</text>
+    <g transform="translate(28,92)">
+      <rect width="1064" height="56" rx="10" fill="#f5f5f4" stroke="rgba(15,23,42,0.08)"/>
+      <text x="16" y="35" font-size="18">🧱</text>
+      <text x="44" y="34" class="an">A stack is just a Python <tspan class="mono" font-weight="600" fill="#0f172a">list</tspan> — add and remove at the end, both O(1). A queue looks the same, but removing from the <tspan font-weight="700" fill="#0f172a">front</tspan> of a list is slow.</text>
+    </g>
+
+    <!-- two panels -->
+    <g transform="translate(28,164)">
+      <!-- left: stack on a list (fast both) -->
+      <rect width="520" height="172" rx="12" fill="#fafaf9" stroke="rgba(15,23,42,0.08)"/>
+      <text x="20" y="32" class="body" font-weight="600">Stack on a <tspan class="mono">list</tspan> — end operations</text>
+      <g transform="translate(20,52)">
+        <rect x="0"   width="56" height="40" rx="8" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/><text x="28"  y="26" text-anchor="middle" class="val" fill="#0f172a">3</text>
+        <rect x="64"  width="56" height="40" rx="8" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/><text x="92"  y="26" text-anchor="middle" class="val" fill="#0f172a">7</text>
+        <rect x="128" width="56" height="40" rx="8" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/><text x="156" y="26" text-anchor="middle" class="val" fill="#0f172a">1</text>
+        <rect x="192" width="56" height="40" rx="8" fill="#ffe4e6" stroke="#e11d48"/><text x="220" y="26" text-anchor="middle" class="val" fill="#9f1239">9</text>
+        <line x1="220" y1="60" x2="220" y2="80" stroke="#e11d48" stroke-width="1.5" marker-end="url(#arrR)"/>
+      </g>
+      <text x="20" y="150" class="mono" font-size="12" fill="#0f172a">append() / pop()</text>
+      <g transform="translate(384,128)"><rect width="116" height="26" rx="13" fill="#d1fae5"/><text x="58" y="18" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="#065f46">both O(1) ✓</text></g>
+
+      <!-- right: queue — list.pop(0) trap vs deque -->
+      <rect x="544" width="520" height="172" rx="12" fill="#fafaf9" stroke="rgba(15,23,42,0.08)"/>
+      <text x="564" y="32" class="body" font-weight="600">Queue: never <tspan class="mono">list.pop(0)</tspan></text>
+      <g transform="translate(564,52)">
+        <rect x="0"   width="56" height="40" rx="8" fill="#f5f5f4" stroke="rgba(15,23,42,0.14)" stroke-dasharray="4 3"/><text x="28"  y="26" text-anchor="middle" class="val" fill="#94a3b8">5</text>
+        <rect x="64"  width="56" height="40" rx="8" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/><text x="92"  y="26" text-anchor="middle" class="val" fill="#0f172a">2</text>
+        <rect x="128" width="56" height="40" rx="8" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/><text x="156" y="26" text-anchor="middle" class="val" fill="#0f172a">8</text>
+        <rect x="192" width="56" height="40" rx="8" fill="#ffffff" stroke="rgba(15,23,42,0.14)"/><text x="220" y="26" text-anchor="middle" class="val" fill="#0f172a">4</text>
+        <!-- everyone shifts left -->
+        <line x1="150" y1="20" x2="110" y2="20" stroke="#e11d48" stroke-width="1.5" marker-end="url(#arrR)"/>
+        <line x1="214" y1="20" x2="174" y2="20" stroke="#e11d48" stroke-width="1.5" marker-end="url(#arrR)"/>
+        <text x="150" y="70" class="tag" fill="#e11d48">everyone shifts down one</text>
+      </g>
+      <g transform="translate(564,124)"><rect width="150" height="26" rx="13" fill="#fee2e2"/><text x="75" y="18" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="#b91c1c">list.pop(0) = O(n) ✗</text></g>
+      <g transform="translate(724,124)"><rect width="176" height="26" rx="13" fill="#d1fae5"/><text x="88" y="18" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="#065f46">deque.popleft() = O(1) ✓</text></g>
+    </g>
+  </g>
+
+  <!-- ════ MODULE 4 · WHERE YOU MEET THEM ════ -->
+  <g transform="translate(60,1612)">
+    <rect width="1120" height="352" rx="16" fill="#ffffff" stroke="rgba(15,23,42,0.08)" filter="url(#c-sm)"/>
+    <text x="28" y="46" class="kick" fill="#e11d48">Module 4 · In the wild</text>
+    <text x="28" y="76" class="h2">You already use these every day</text>
+
+    <!-- Stack column -->
+    <g transform="translate(28,100)">
+      <text x="0" y="16" class="cap" fill="#e11d48">STACK · LIFO</text>
+      <g transform="translate(0,28)">
+        <rect width="516" height="52" rx="10" fill="#fff1f2" stroke="rgba(225,29,72,0.25)"/>
+        <rect width="4" height="52" rx="2" fill="#e11d48"/>
+        <text x="20" y="24" class="body" font-weight="600">Undo / redo</text>
+        <text x="20" y="42" class="mut">Every edit pushed on a stack; Ctrl-Z pops the last one.</text>
+      </g>
+      <g transform="translate(0,90)">
+        <rect width="516" height="52" rx="10" fill="#fff1f2" stroke="rgba(225,29,72,0.25)"/>
+        <rect width="4" height="52" rx="2" fill="#e11d48"/>
+        <text x="20" y="24" class="body" font-weight="600">Browser Back button</text>
+        <text x="20" y="42" class="mut">Each page you visit is pushed; Back pops to the previous.</text>
+      </g>
+      <g transform="translate(0,152)">
+        <rect width="516" height="52" rx="10" fill="#fff1f2" stroke="rgba(225,29,72,0.25)"/>
+        <rect width="4" height="52" rx="2" fill="#e11d48"/>
+        <text x="20" y="24" class="body" font-weight="600">The call stack ↔ recursion</text>
+        <text x="20" y="42" class="mut">The plates you watched pile up were literally a stack.</text>
+      </g>
+      <g transform="translate(0,214)">
+        <rect width="516" height="52" rx="10" fill="#fff1f2" stroke="rgba(225,29,72,0.25)"/>
+        <rect width="4" height="52" rx="2" fill="#e11d48"/>
+        <text x="20" y="24" class="body" font-weight="600">Matching brackets</text>
+        <text x="20" y="42" class="mut">Push each opener, pop on its closer — editors check code this way.</text>
+      </g>
+    </g>
+
+    <!-- Queue column -->
+    <g transform="translate(576,100)">
+      <text x="0" y="16" class="cap" fill="#2563eb">QUEUE · FIFO</text>
+      <g transform="translate(0,28)">
+        <rect width="516" height="52" rx="10" fill="#eff6ff" stroke="rgba(37,99,235,0.25)"/>
+        <rect width="4" height="52" rx="2" fill="#2563eb"/>
+        <text x="20" y="24" class="body" font-weight="600">Print jobs</text>
+        <text x="20" y="42" class="mut">Documents print in the order you sent them — first in, first out.</text>
+      </g>
+      <g transform="translate(0,90)">
+        <rect width="516" height="52" rx="10" fill="#eff6ff" stroke="rgba(37,99,235,0.25)"/>
+        <rect width="4" height="52" rx="2" fill="#2563eb"/>
+        <text x="20" y="24" class="body" font-weight="600">Message &amp; task queues</text>
+        <text x="20" y="42" class="mut">Servers line up jobs and handle them fairly, in arrival order.</text>
+      </g>
+      <g transform="translate(0,152)">
+        <rect width="516" height="52" rx="10" fill="#eff6ff" stroke="rgba(37,99,235,0.25)"/>
+        <rect width="4" height="52" rx="2" fill="#2563eb"/>
+        <text x="20" y="24" class="body" font-weight="600">BFS ↔ trees &amp; graphs</text>
+        <text x="20" y="42" class="mut">Exploring level by level uses a queue — coming up next.</text>
+      </g>
+      <g transform="translate(0,214)">
+        <rect width="516" height="52" rx="10" fill="#eff6ff" stroke="rgba(37,99,235,0.25)"/>
+        <rect width="4" height="52" rx="2" fill="#2563eb"/>
+        <text x="20" y="24" class="body" font-weight="600">Customer service lines</text>
+        <text x="20" y="42" class="mut">"Your call is held in a queue" — the same idea, out loud.</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ════ MODULE 5 · WHICH ONE / COMPLEXITY ════ -->
+  <g transform="translate(60,1996)">
+    <rect width="1120" height="300" rx="16" fill="#ffffff" stroke="rgba(15,23,42,0.08)" filter="url(#c-sm)"/>
+    <text x="28" y="46" class="kick" fill="#e11d48">Module 5 · Cheat sheet</text>
+    <text x="28" y="76" class="h2">Which one, and how fast</text>
+
+    <!-- table -->
+    <g transform="translate(28,100)">
+      <!-- header row -->
+      <rect width="1064" height="40" rx="8" fill="#f5f5f4"/>
+      <text x="20"  y="26" class="mono" font-size="12" font-weight="600" fill="#64748b">STRUCTURE</text>
+      <text x="330" y="26" class="mono" font-size="12" font-weight="600" fill="#64748b">ADD</text>
+      <text x="530" y="26" class="mono" font-size="12" font-weight="600" fill="#64748b">REMOVE</text>
+      <text x="760" y="26" class="mono" font-size="12" font-weight="600" fill="#64748b">PYTHON</text>
+      <text x="960" y="26" class="mono" font-size="12" font-weight="600" fill="#64748b">COST</text>
+      <!-- row 1: stack -->
+      <g transform="translate(0,40)">
+        <text x="20"  y="30" class="body"><tspan font-weight="600" fill="#e11d48">■</tspan>  Stack (LIFO)</text>
+        <text x="330" y="30" class="mono" font-size="13" fill="#0f172a">push (top)</text>
+        <text x="530" y="30" class="mono" font-size="13" fill="#0f172a">pop (top)</text>
+        <text x="760" y="30" class="mono" font-size="13" fill="#0f766e">list</text>
+        <text x="960" y="30" class="mono" font-size="13" font-weight="600" fill="#065f46">O(1)</text>
+        <line x1="0" y1="48" x2="1064" y2="48" stroke="rgba(15,23,42,0.06)"/>
+      </g>
+      <!-- row 2: queue deque -->
+      <g transform="translate(0,88)">
+        <text x="20"  y="30" class="body"><tspan font-weight="600" fill="#2563eb">■</tspan>  Queue (FIFO)</text>
+        <text x="330" y="30" class="mono" font-size="13" fill="#0f172a">enqueue (back)</text>
+        <text x="530" y="30" class="mono" font-size="13" fill="#0f172a">dequeue (front)</text>
+        <text x="760" y="30" class="mono" font-size="13" fill="#0f766e">deque</text>
+        <text x="960" y="30" class="mono" font-size="13" font-weight="600" fill="#065f46">O(1)</text>
+        <line x1="0" y1="48" x2="1064" y2="48" stroke="rgba(15,23,42,0.06)"/>
+      </g>
+      <!-- row 3: the trap -->
+      <g transform="translate(0,136)">
+        <text x="20"  y="30" class="body" fill="#94a3b8"><tspan>⚠</tspan>  Queue on a list</text>
+        <text x="330" y="30" class="mono" font-size="13" fill="#94a3b8">append (back)</text>
+        <text x="530" y="30" class="mono" font-size="13" fill="#94a3b8">pop(0) (front)</text>
+        <text x="760" y="30" class="mono" font-size="13" fill="#94a3b8">list</text>
+        <text x="960" y="30" class="mono" font-size="13" font-weight="600" fill="#b91c1c">O(n) ✗</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ════ WHERE THIS CONNECTS ════ -->
+  <g transform="translate(60,2328)">
+    <text x="28" y="20" class="h2">Where this connects</text>
+    <g transform="translate(28,36)">
+      <rect width="1064" height="76" rx="10" fill="#f5f5f4" stroke="rgba(15,23,42,0.08)"/>
+      <text x="16" y="34" font-size="18">🔗</text>
+      <text x="44" y="30" class="an"><tspan font-weight="700" fill="#0f172a">Looking back:</tspan> the call stack you met in recursion is exactly this stack — nesting dolls pile up the same way plates do.</text>
+      <text x="44" y="54" class="an"><tspan font-weight="700" fill="#0f172a">Looking forward:</tspan> exploring a tree or graph wide (BFS) uses a <tspan font-weight="600" fill="#2563eb">queue</tspan>; going deep (DFS) uses a <tspan font-weight="600" fill="#e11d48">stack</tspan>.</text>
+    </g>
+  </g>
+
+  <!-- footer -->
+  <line x1="0" y1="2470" x2="1240" y2="2470" stroke="rgba(15,23,42,0.08)"/>
+  <text x="620" y="2506" text-anchor="middle" class="mut" font-size="13">InteractLab — built for live 1-on-1 sessions · plain English, one animated step at a time</text>
+</svg>
