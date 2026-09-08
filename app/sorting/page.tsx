@@ -9,8 +9,6 @@ import { KeyDemo } from "@/components/sorting/KeyDemo";
 import { PropertiesTable } from "@/components/sorting/PropertiesTable";
 import { BUILTIN_CODE, WHY_LEARN, DECISIONS } from "@/lib/sorting/content";
 
-// The stylesheet is resolved by Next.js at build time but has no TypeScript declaration.
-// @ts-expect-error CSS side-effect import
 import "./sorting.css";
 
 export const metadata: Metadata = {
@@ -47,7 +45,7 @@ export default function SortingPage() {
           <div className="sort-block-head">
             <p className="sort-kicker">Module 1 · The simple sorts</p>
             <h2>Compare, swap, repeat — the O(n²) sorts</h2>
-            <p className="sort-analogy">
+            <p className="analogy">
               📚 <span><strong>Tidying by hand:</strong> the three simplest sorts each
               tidy the shelf a different way — bubble swaps neighbours, selection
               hunts for the smallest, insertion slides each book back into a growing
@@ -62,7 +60,7 @@ export default function SortingPage() {
           <div className="sort-block-head">
             <p className="sort-kicker">Module 2 · Divide and conquer</p>
             <h2>Split the shelf — the O(n log n) sorts</h2>
-            <p className="sort-analogy">
+            <p className="analogy">
               ✂️ <span><strong>Split the pile:</strong> instead of one long shelf, cut it
               in half again and again until every piece is trivially sorted, then
               merge the pieces back in order. Doing less comparing overall is what
@@ -76,7 +74,7 @@ export default function SortingPage() {
           <div className="sort-block-head">
             <p className="sort-kicker">Module 3 · How fast do they grow?</p>
             <h2>O(n²) vs O(n log n), side by side</h2>
-            <p className="sort-analogy">
+            <p className="analogy">
               📈 <span><strong>Big-O is the shape of the curve.</strong> On a tiny shelf
               every sort feels instant. The difference only shows up as the shelf
               grows — drag n and watch the slow sorts pull away.</span>
@@ -89,7 +87,7 @@ export default function SortingPage() {
           <div className="sort-block-head">
             <p className="sort-kicker">Module 4 · Sorting by a key</p>
             <h2>Sort by anything, not just size</h2>
-            <p className="sort-analogy">
+            <p className="analogy">
               🔑 <span><strong>You choose the rule.</strong> Real sorting is rarely
               "smallest number first". Python's <code>sorted(key=...)</code> lets you
               sort by length, by last letter, by grade, or by several keys at once —
@@ -108,7 +106,7 @@ export default function SortingPage() {
           <div className="sort-block-head">
             <p className="sort-kicker">Module 5 · The vocabulary</p>
             <h2>Stable, in-place, adaptive — and the full comparison</h2>
-            <p className="sort-analogy">
+            <p className="analogy">
               🏷️ <span><strong>Three words describe every sort.</strong> Does it keep equal
               items in order (stable)? Does it avoid making a second copy (in-place)?
               Does it speed up on nearly-tidy shelves (adaptive)? Tap any row for the
@@ -156,7 +154,7 @@ export default function SortingPage() {
         <Reveal className="sort-block">
           <div className="sort-block-head">
             <h2>Where this connects</h2>
-            <p className="sort-analogy">
+            <p className="analogy">
               🔗 <span><strong>Looking forward:</strong> merge and quick sort are recursion
               with a base case — the same nesting-dolls idea. And "which sort?" is
               always a Big-O decision, the same trade-off you make every time you

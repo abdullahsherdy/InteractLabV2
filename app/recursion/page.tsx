@@ -7,6 +7,9 @@ import { BigOChart } from "@/components/recursion/BigOChart";
 import { AnnotateCards } from "@/components/recursion/AnnotateCards";
 import { SixStepMethod } from "@/components/recursion/SixStepMethod";
 import { CODE } from "@/lib/recursion/content";
+
+// CSS is bundled by Next.js; TypeScript has no module declaration for side-effect CSS imports.
+// @ts-ignore -- handled by the Next.js CSS loader
 import "./recursion.css";
 
 export const metadata: Metadata = {
@@ -43,7 +46,7 @@ export default function RecursionPage() {
           <div className="rec-block-head">
             <p className="rec-kicker">Module 1 · The idea</p>
             <h2>Every recursion needs two things</h2>
-            <p className="rec-analogy">
+            <p className="analogy">
               🪆 <span><strong>Nesting dolls:</strong> a recursive function calls a
               smaller copy of itself. Two rules keep it from going forever — a{" "}
               <strong>base case</strong> that stops (the smallest doll) and a{" "}
@@ -73,7 +76,7 @@ export default function RecursionPage() {
           <div className="rec-block-head">
             <p className="rec-kicker">Module 2 · The call stack</p>
             <h2>Watch the calls pile up and unwind</h2>
-            <p className="rec-analogy">
+            <p className="analogy">
               🥞 <span><strong>A stack of plates:</strong> each call is placed on top and
               has to wait for the one above it to finish before it can return.
               Python reaches the base case at the top, then works back down,
@@ -87,7 +90,7 @@ export default function RecursionPage() {
           <div className="rec-block-head">
             <p className="rec-kicker">Module 3 · When recursion explodes</p>
             <h2>The Fibonacci tree — the same work, over and over</h2>
-            <p className="rec-analogy">
+            <p className="analogy">
               🌳 <span><strong>A branching tree:</strong> naive <code>fib(n)</code> makes
               two calls each time, and those make two more. The same small
               answers get recomputed again and again — that repeated work is why
@@ -101,7 +104,7 @@ export default function RecursionPage() {
           <div className="rec-block-head">
             <p className="rec-kicker">Module 4 · Big-O</p>
             <h2>How fast does the work grow?</h2>
-            <p className="rec-analogy">
+            <p className="analogy">
               📈 <span><strong>Big-O is the shape of the curve,</strong> not the exact
               time. It answers one question: when the input doubles, does the
               work stay flat, double, or explode? Drag n and compare.</span>
@@ -114,7 +117,7 @@ export default function RecursionPage() {
           <div className="rec-block-head">
             <p className="rec-kicker">Module 4 · Practice</p>
             <h2>Guess the Big-O</h2>
-            <p className="rec-analogy">
+            <p className="analogy">
               🔍 <span><strong>Count the loops:</strong> no loop is O(1), one loop over
               the input is O(n), a loop inside a loop is O(n²). Read each snippet,
               make your guess, then reveal the answer.</span>
@@ -127,7 +130,7 @@ export default function RecursionPage() {
           <div className="rec-block-head">
             <p className="rec-kicker">Module 5 · A method that always works</p>
             <h2>Six steps for any problem</h2>
-            <p className="rec-analogy">
+            <p className="analogy">
               🧭 <span><strong>Don't code first.</strong> When a problem feels
               overwhelming, follow the same six steps every time. Coding is step
               five — by then you already know it will work.</span>
@@ -144,7 +147,7 @@ export default function RecursionPage() {
         <Reveal className="rec-block">
           <div className="rec-block-head">
             <h2>Where this connects</h2>
-            <p className="rec-analogy">
+            <p className="analogy">
               🔗 <span><strong>Looking forward:</strong> trees, graphs, merge sort, and
               divide-and-conquer are all recursion with a base case. And every
               data-structure choice you make later is really a Big-O decision —

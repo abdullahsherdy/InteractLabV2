@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound } from "next/navigation"; 
+
 import { Reveal } from "@/components/layout/Reveal";
 import { WalkthroughPlayer } from "@/components/walkthrough/WalkthroughPlayer";
+
 import { getProblem, PROBLEMS } from "@/lib/walkthrough";
+
+// this css bundled by Next.js; TypeScript has no module declaration for side-effect CSS imports
+// @ts-ignore -- handled by the Next.js CSS loader
+
 import "../walkthroughs.css";
 
 export function generateStaticParams() {
@@ -134,12 +140,9 @@ export default async function WalkthroughProblemPage({
           <div className="wt-section-head">
             <h2>Where this connects</h2>
           </div>
-          <div className="wt-intuition">
-            <span className="wt-intuition-icon" aria-hidden="true">
-              🔗
-            </span>
-            <span>{problem.connectsTo}</span>
-          </div>
+          <p className="analogy">
+            🔗 <span>{problem.connectsTo}</span>
+          </p>
         </Reveal>
       </main>
     </>
