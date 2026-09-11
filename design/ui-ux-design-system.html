@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>InteractLab Design Sheets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@600&display=swap">
+<style>
+  :root {
+    /* constant blueprint ground (light) */
+    --paper:#e7ecf2; --paper-2:#dde4ec; --panel:#f8fafc; --panel-2:#eef2f7;
+    --ink:#16263d; --graphite:#55677b; --faint:#8496a8;
+    --line:rgba(22,38,61,.16); --line-strong:rgba(22,38,61,.34);
+    --grid:rgba(31,95,139,.10); --grid-major:rgba(31,95,139,.16);
+    --blueprint:#1f5f8b; --blueprint-bright:#2f88c2; --pencil:#c8452f;
+    --node-face:#ffffff; --node-stroke:#16263d;
+    /* per-tool "drawing inks" (map 1:1 to the shipped accents) */
+    --ink-home:#1f5f8b; --ink-walk:#2563eb; --ink-ll:#059669; --ink-bit:#0d9488;
+    --ink-rec:#7c3aed; --ink-sort:#c2790f; --ink-stack:#e11d48;
+    /* semantic */
+    --ok:#0f9d63; --warn:#c2790f; --danger:#c8452f;
+    --shadow-sm:0 1px 2px rgba(22,38,61,.05), 0 2px 6px rgba(22,38,61,.05);
+    --shadow-md:0 1px 2px rgba(22,38,61,.06), 0 10px 26px rgba(22,38,61,.09);
+    --shadow-lift:0 2px 4px rgba(22,38,61,.08), 0 20px 44px rgba(22,38,61,.14);
+    --r-plate:6px; --r-card:14px; --r-control:8px; --r-pill:999px;
+    --e-out:cubic-bezier(.22,1,.36,1); --d-fast:140ms; --d-mid:280ms; --d-draw:520ms;
+    --sans:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --display:"Big Shoulders Display","IBM Plex Sans",sans-serif;
+    --note:"Caveat","Comic Sans MS",cursive;
+    --accent:var(--ink-home);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:#0b1622; --paper-2:#0e1c2c; --panel:#12233a; --panel-2:#0f1e30;
+      --ink:#e9f1f8; --graphite:#90a6bb; --faint:#65798d;
+      --line:rgba(134,182,216,.20); --line-strong:rgba(134,182,216,.40);
+      --grid:rgba(90,169,224,.12); --grid-major:rgba(90,169,224,.20);
+      --blueprint:#5aa9e0; --blueprint-bright:#86d1f6; --pencil:#ff7d5f;
+      --node-face:#0e2033; --node-stroke:#86b6d8;
+      --ink-home:#5aa9e0; --ink-walk:#60a5fa; --ink-ll:#34d399; --ink-bit:#2dd4bf;
+      --ink-rec:#a78bfa; --ink-sort:#fbbf24; --ink-stack:#fb7185;
+      --ok:#34d399; --warn:#fbbf24; --danger:#ff7d5f;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.4); --shadow-md:0 12px 28px rgba(0,0,0,.5);
+      --shadow-lift:0 22px 46px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#0b1622; --paper-2:#0e1c2c; --panel:#12233a; --panel-2:#0f1e30;
+    --ink:#e9f1f8; --graphite:#90a6bb; --faint:#65798d;
+    --line:rgba(134,182,216,.20); --line-strong:rgba(134,182,216,.40);
+    --grid:rgba(90,169,224,.12); --grid-major:rgba(90,169,224,.20);
+    --blueprint:#5aa9e0; --blueprint-bright:#86d1f6; --pencil:#ff7d5f;
+    --node-face:#0e2033; --node-stroke:#86b6d8;
+    --ink-home:#5aa9e0; --ink-walk:#60a5fa; --ink-ll:#34d399; --ink-bit:#2dd4bf;
+    --ink-rec:#a78bfa; --ink-sort:#fbbf24; --ink-stack:#fb7185;
+    --ok:#34d399; --warn:#fbbf24; --danger:#ff7d5f;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4); --shadow-md:0 12px 28px rgba(0,0,0,.5);
+    --shadow-lift:0 22px 46px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  img,svg { max-width:100%; }
+  body {
+    margin:0; color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.6;
+    background-color:var(--paper);
+    background-image:
+      linear-gradient(var(--grid-major) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:140px 140px,140px 140px,28px 28px,28px 28px;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection { background:var(--pencil); color:#fff; }
+  a { color:var(--blueprint); }
+  :focus-visible { outline:2.5px solid var(--pencil); outline-offset:2px; border-radius:2px; }
+
+  /* ── shell: title block + index + content ── */
+  .shell { max-width:1240px; margin:0 auto; padding:20px 20px 80px; }
+
+  .titleblock {
+    display:flex; align-items:stretch; flex-wrap:wrap; border:1.5px solid var(--ink);
+    background:color-mix(in srgb, var(--panel) 84%, transparent); backdrop-filter:blur(5px);
+    position:sticky; top:10px; z-index:40;
+  }
+  .tb-cell { padding:9px 15px; border-right:1.5px solid var(--ink); display:flex; flex-direction:column; justify-content:center; }
+  .tb-cell:last-child { border-right:none; }
+  .tb-brand { flex-direction:row; align-items:center; gap:11px; }
+  .tb-stamp { width:34px; height:34px; display:grid; place-items:center; border:1.5px solid var(--blueprint); color:var(--blueprint); font-family:var(--mono); font-size:15px; transform:rotate(-3deg); }
+  .tb-name { font-family:var(--display); font-weight:700; font-size:21px; letter-spacing:.02em; text-transform:uppercase; line-height:1; }
+  .tb-k { font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--graphite); }
+  .tb-v { font-family:var(--mono); font-size:13px; }
+  .tb-grow { flex:1; border-right:1.5px solid var(--ink); }
+  .theme-btn { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:8px 13px; background:transparent; color:var(--ink); border:1.5px solid var(--ink); cursor:pointer; }
+  .theme-btn:hover { color:var(--blueprint); border-color:var(--blueprint); }
+
+  .layout { display:grid; grid-template-columns:210px 1fr; gap:34px; margin-top:26px; align-items:start; }
+  nav.index { position:sticky; top:84px; border:1.5px solid var(--line-strong); background:var(--panel); border-radius:var(--r-plate); overflow:hidden; }
+  .index-h { font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--graphite); padding:11px 14px; border-bottom:1.5px solid var(--line); }
+  .index a { display:flex; gap:9px; align-items:baseline; padding:8px 14px; text-decoration:none; color:var(--graphite); border-left:2.5px solid transparent; font-size:13.5px; transition:color var(--d-fast), background var(--d-fast); }
+  .index a:hover { color:var(--ink); background:var(--panel-2); }
+  .index a.on { color:var(--ink); border-left-color:var(--pencil); background:var(--panel-2); }
+  .index a .no { font-family:var(--mono); font-size:10.5px; color:var(--blueprint); min-width:30px; }
+
+  main { min-width:0; }
+  section.sheet { margin-bottom:64px; scroll-margin-top:88px; }
+  .sheet-head { display:flex; align-items:baseline; gap:12px; padding-bottom:12px; margin-bottom:22px; border-bottom:1.5px solid var(--line-strong); flex-wrap:wrap; }
+  .sheet-no { font-family:var(--mono); font-size:12px; letter-spacing:.12em; color:var(--blueprint); }
+  h2.sheet-t { font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:clamp(26px,3.6vw,38px); letter-spacing:.02em; line-height:.95; margin:0; }
+  .sheet-sub { color:var(--graphite); margin:0 0 0 auto; font-size:13.5px; max-width:44ch; }
+
+  h3 { font-family:var(--display); font-weight:500; text-transform:uppercase; letter-spacing:.03em; font-size:20px; margin:30px 0 12px; }
+  h4 { font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--graphite); margin:20px 0 10px; }
+  p { margin:0 0 12px; max-width:68ch; }
+  p.lead { font-size:17px; }
+  strong { font-weight:600; }
+  code.k { font-family:var(--mono); font-size:.88em; background:var(--panel-2); border:1px solid var(--line); padding:1px 6px; border-radius:5px; color:var(--blueprint); }
+  .note { font-family:var(--note); font-size:22px; color:var(--pencil); line-height:1.15; }
+  .kicker { font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin:0 0 6px; }
+
+  .panel { border:1.5px solid var(--line-strong); background:var(--panel); border-radius:var(--r-plate); box-shadow:var(--shadow-sm); }
+  .panel-h { font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--graphite); padding:10px 15px; border-bottom:1.5px solid var(--line); display:flex; justify-content:space-between; gap:10px; align-items:center; }
+  .panel-b { padding:16px; }
+  .grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+  .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+
+  /* ── overview hero ── */
+  .cover { border:1.5px solid var(--ink); background:color-mix(in srgb,var(--panel) 70%,transparent); border-radius:var(--r-plate); overflow:hidden; box-shadow:var(--shadow-md); }
+  .cover-bar { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding:9px 15px; border-bottom:1.5px solid var(--ink); background:color-mix(in srgb,var(--blueprint) 8%,transparent); font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--graphite); }
+  .cover-body { padding:30px 24px 26px; }
+  .cover h1 { font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:clamp(40px,8vw,88px); line-height:.9; letter-spacing:.008em; margin:0; max-width:16ch; text-wrap:balance; }
+  .cover h1 .b { color:var(--blueprint); }
+  .cover .lead { color:var(--graphite); max-width:62ch; margin-top:16px; font-size:clamp(16px,2.1vw,18px); }
+  .svg-wrap { overflow-x:auto; padding:10px 4px 2px; }
+  svg.schem { display:block; width:100%; height:auto; min-width:520px; }
+  .s-face { fill:var(--node-face); stroke:var(--node-stroke); stroke-width:1.6; }
+  .s-val { fill:var(--ink); font-family:var(--mono); font-weight:500; font-size:22px; }
+  .s-slot { fill:none; stroke:var(--node-stroke); stroke-width:1.1; opacity:.5; }
+  .s-arrow { fill:none; stroke:var(--blueprint); stroke-width:2.2; }
+  .s-pill { fill:var(--blueprint); } .s-pill-t { fill:#fff; font-family:var(--mono); font-size:12px; font-weight:500; }
+  .s-tick { stroke:var(--blueprint); stroke-width:1.5; }
+  .s-none { fill:none; stroke:var(--graphite); stroke-width:1.3; stroke-dasharray:4 3; } .s-none-t { fill:var(--graphite); font-family:var(--mono); font-size:12px; }
+  .s-note { fill:var(--pencil); font-family:var(--note); font-size:24px; } .s-note-l { fill:none; stroke:var(--pencil); stroke-width:1.7; stroke-linecap:round; }
+  .node { opacity:1; transform:translateY(0); } .arrow { stroke-dashoffset:0; } .note-g { opacity:1; }
+  .js .node { opacity:0; transform:translateY(10px); transition:opacity .42s ease, transform .42s var(--e-out); }
+  .js .arrow { stroke-dasharray:1; stroke-dashoffset:1; transition:stroke-dashoffset var(--d-draw) ease; }
+  .js .note-g { opacity:0; transition:opacity .5s ease; }
+  .built .node { opacity:1; transform:translateY(0); } .built .arrow { stroke-dashoffset:0; } .built .note-g { opacity:1; }
+
+  .stat-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+  .stat { border:1.5px solid var(--line-strong); border-radius:var(--r-plate); padding:10px 15px; background:var(--panel); }
+  .stat b { font-family:var(--display); font-weight:700; font-size:26px; display:block; line-height:1; }
+  .stat span { font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--graphite); }
+
+  /* ── color ── */
+  .swrow { display:flex; align-items:center; gap:13px; padding:10px 0; border-bottom:1px solid var(--line); }
+  .swrow:last-child { border-bottom:none; }
+  .chip { width:34px; height:34px; border-radius:6px; border:1.5px solid var(--line-strong); flex:none; }
+  .swrow .nm { font-weight:600; font-size:14px; } .swrow .vr { font-family:var(--mono); font-size:12px; color:var(--graphite); }
+  .swrow .use { margin-left:auto; font-size:12.5px; color:var(--graphite); text-align:right; }
+  .ink-strip { display:flex; flex-wrap:wrap; gap:10px; }
+  .ink-chip { display:flex; align-items:center; gap:9px; border:1.5px solid var(--line-strong); border-radius:var(--r-pill); padding:6px 13px 6px 8px; background:var(--panel); font-family:var(--mono); font-size:12px; }
+  .ink-dot { width:16px; height:16px; border-radius:50%; }
+
+  /* ── type ── */
+  .spec { padding:14px 0; border-bottom:1px solid var(--line); }
+  .spec:last-child { border-bottom:none; }
+  .spec .role { font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--graphite); margin-bottom:4px; }
+  .eg-d { font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:38px; line-height:.95; letter-spacing:.02em; }
+  .eg-b { font-size:17px; } .eg-m { font-family:var(--mono); font-size:14px; color:var(--blueprint); } .eg-n { font-family:var(--note); font-size:27px; color:var(--pencil); line-height:1; }
+  table.scale { width:100%; border-collapse:collapse; font-size:13.5px; }
+  table.scale th,table.scale td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); }
+  table.scale th { font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--graphite); }
+  table.scale td.px { font-family:var(--mono); color:var(--blueprint); }
+
+  /* ── space ── */
+  .space-bar { height:16px; background:color-mix(in srgb,var(--blueprint) 26%,transparent); border:1px solid var(--blueprint); border-radius:3px; }
+  .space-item { display:flex; align-items:center; gap:12px; margin-bottom:8px; font-family:var(--mono); font-size:12px; color:var(--graphite); }
+  .space-item .lbl { min-width:74px; }
+
+  /* ── buttons/components ── */
+  .btn { font-family:var(--sans); font-weight:600; font-size:14px; padding:10px 16px; border-radius:var(--r-control); border:1.5px solid var(--line-strong); background:var(--panel); color:var(--ink); cursor:pointer; min-height:42px; transition:transform var(--d-fast), background var(--d-fast), box-shadow var(--d-fast); }
+  .btn:hover { transform:translateY(-1px); background:var(--panel-2); }
+  .btn-primary { background:var(--blueprint); border-color:var(--blueprint); color:#fff; box-shadow:0 3px 10px color-mix(in srgb,var(--blueprint) 30%,transparent); }
+  .btn-primary:hover { background:var(--blueprint-bright); }
+  .btn-op { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .btn-ghost { background:transparent; }
+  .btn-row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+  .tag { font-family:var(--mono); font-size:11.5px; padding:4px 10px; border-radius:var(--r-pill); border:1px solid var(--line-strong); color:var(--graphite); background:var(--panel); }
+  .tag.accent { color:var(--accent); border-color:color-mix(in srgb,var(--accent) 45%,transparent); background:color-mix(in srgb,var(--accent) 9%,transparent); }
+  .crumb { display:flex; gap:8px; align-items:center; font-family:var(--mono); font-size:12px; color:var(--graphite); }
+  .crumb b { color:var(--accent); font-weight:500; }
+
+  /* topic card */
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+  .tcard { border:1.5px solid var(--line-strong); background:var(--panel); border-radius:var(--r-card); padding:18px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:9px; cursor:pointer; transition:transform var(--d-mid) var(--e-out), box-shadow var(--d-mid); }
+  .tcard:hover { transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .tcard .ic { width:48px; height:48px; border:1.5px solid var(--accent); border-radius:10px; display:grid; place-items:center; color:var(--accent); background:color-mix(in srgb,var(--accent) 8%,transparent); }
+  .tcard h5 { font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:19px; letter-spacing:.02em; margin:2px 0 0; }
+  .tcard p { font-size:13.5px; color:var(--graphite); margin:0; }
+  .tcard .meta { display:flex; flex-wrap:wrap; gap:6px; margin-top:2px; }
+  .tcard .arw { font-family:var(--mono); font-size:12px; color:var(--accent); margin-top:6px; }
+
+  /* module plate */
+  .plate { border:1.5px solid var(--line-strong); background:var(--panel); border-radius:var(--r-plate); box-shadow:var(--shadow-sm); overflow:hidden; }
+  .plate-cap { display:flex; align-items:baseline; gap:10px; padding:11px 15px; border-bottom:1.5px solid var(--line); }
+  .plate-no { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
+  .plate-t { font-family:var(--display); font-weight:500; text-transform:uppercase; font-size:18px; letter-spacing:.03em; }
+  .plate-b { padding:15px; display:flex; flex-direction:column; gap:13px; }
+  .diagram { border:1px solid var(--line); border-radius:var(--r-plate); background-color:var(--panel-2);
+    background-image:radial-gradient(circle at 1px 1px,var(--grid-major) 1px,transparent 0); background-size:20px 20px; padding:8px; overflow-x:auto; }
+
+  /* analogy — field note */
+  .analogy { display:flex; gap:13px; padding:14px 16px; border:1.5px solid var(--line); border-left:4px solid var(--accent); border-radius:0 var(--r-plate) var(--r-plate) 0; background:color-mix(in srgb,var(--accent) 6%,transparent); }
+  .analogy .ic { flex:none; color:var(--accent); }
+  .analogy .h { font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:3px; }
+  .analogy p { margin:0; font-size:14.5px; }
+
+  /* transport (redesigned) */
+  .transport { border:1.5px solid var(--line-strong); border-radius:var(--r-plate); background:var(--panel); overflow:hidden; }
+  .tp-caption { min-height:46px; display:flex; align-items:center; gap:10px; padding:11px 15px; border-bottom:1px solid var(--line); background:var(--panel-2); font-size:14.5px; }
+  .tp-caption .sn { font-family:var(--mono); font-size:11px; color:var(--accent); flex:none; }
+  .tp-controls { display:flex; align-items:center; gap:10px; padding:12px 15px; flex-wrap:wrap; }
+  .tp-btn { width:42px; height:42px; display:grid; place-items:center; border:1.5px solid var(--line-strong); background:var(--panel); border-radius:var(--r-control); cursor:pointer; color:var(--ink); font-size:14px; }
+  .tp-btn.play { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .tp-btn:hover { background:var(--panel-2); }
+  .tp-btn.play:hover { filter:brightness(1.08); }
+  .tp-scrub { flex:1; min-width:120px; display:flex; align-items:center; gap:10px; }
+  .tp-scrub input[type=range] { flex:1; accent-color:var(--accent); }
+  .tp-count { font-family:var(--mono); font-size:12px; color:var(--graphite); min-width:64px; text-align:right; font-variant-numeric:tabular-nums; }
+  .tp-speed { display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11px; color:var(--graphite); }
+  .tp-speed input { width:82px; accent-color:var(--accent); }
+  .tp-dots { display:flex; gap:5px; flex-wrap:wrap; }
+  .tp-dot { width:8px; height:8px; border-radius:50%; border:1px solid var(--accent); }
+  .tp-dot.on { background:var(--accent); }
+  .kb-hint { font-family:var(--mono); font-size:11px; color:var(--faint); padding:0 15px 12px; }
+  .kb-hint kbd { border:1px solid var(--line-strong); border-bottom-width:2px; border-radius:4px; padding:1px 6px; font-size:11px; }
+
+  /* code block */
+  .code { border:1.5px solid var(--line-strong); border-radius:var(--r-plate); overflow:hidden; background:var(--panel-2); }
+  .code-h { font-family:var(--mono); font-size:11px; color:var(--graphite); padding:8px 14px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; }
+  .code pre { margin:0; padding:12px 14px; overflow-x:auto; font-family:var(--mono); font-size:13px; line-height:1.7; }
+  .code .ln { color:var(--faint); display:inline-block; width:22px; user-select:none; }
+  .code .hl { background:color-mix(in srgb,var(--accent) 12%,transparent); display:block; margin:0 -14px; padding:0 14px; border-left:2px solid var(--accent); }
+  .tok-k { color:var(--ink-rec); } .tok-f { color:var(--blueprint); } .tok-c { color:var(--faint); font-style:italic; } .tok-n { color:var(--ink-sort); }
+
+  /* state chips */
+  .state { display:flex; gap:10px; align-items:flex-start; padding:12px; border:1.5px solid var(--line); border-radius:var(--r-plate); background:var(--panel); }
+  .state .dot { width:10px; height:10px; border-radius:50%; margin-top:6px; flex:none; }
+  .skeleton { height:12px; border-radius:4px; background:linear-gradient(90deg,var(--panel-2),var(--line),var(--panel-2)); background-size:200% 100%; animation:sk 1.3s linear infinite; }
+  @keyframes sk { to { background-position:-200% 0; } }
+
+  /* wireframes */
+  .wf { border:1.5px solid var(--line-strong); border-radius:var(--r-plate); background:var(--panel);
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px); background-size:22px 22px; padding:14px; }
+  .wf-title { font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--blueprint); margin-bottom:10px; display:flex; gap:8px; }
+  .zone { border:1.4px dashed var(--line-strong); border-radius:5px; background:color-mix(in srgb,var(--panel-2) 70%,transparent); padding:10px 12px; color:var(--graphite); font-family:var(--mono); font-size:11.5px; display:flex; flex-direction:column; gap:6px; min-height:44px; justify-content:center; }
+  .zone.solid { border-style:solid; }
+  .zone.accent { border-color:var(--accent); color:var(--accent); background:color-mix(in srgb,var(--accent) 7%,transparent); }
+  .zone .zt { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); }
+  .wf-col { display:flex; flex-direction:column; gap:8px; }
+  .wf-row { display:flex; gap:8px; } .wf-row > * { flex:1; }
+  .phone { max-width:270px; margin:0 auto; border:2px solid var(--ink); border-radius:22px; padding:12px 10px; background:var(--panel); }
+
+  /* upgrades table */
+  table.up { width:100%; border-collapse:collapse; font-size:13.5px; }
+  table.up th,table.up td { text-align:left; padding:10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  table.up th { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--graphite); position:sticky; }
+  table.up td.now { color:var(--graphite); }
+  .pri { font-family:var(--mono); font-size:10px; font-weight:500; padding:2px 8px; border-radius:var(--r-pill); white-space:nowrap; }
+  .p1 { background:color-mix(in srgb,var(--danger) 15%,transparent); color:var(--danger); border:1px solid color-mix(in srgb,var(--danger) 40%,transparent); }
+  .p2 { background:color-mix(in srgb,var(--warn) 15%,transparent); color:var(--warn); border:1px solid color-mix(in srgb,var(--warn) 40%,transparent); }
+  .p3 { background:color-mix(in srgb,var(--blueprint) 12%,transparent); color:var(--blueprint); border:1px solid color-mix(in srgb,var(--blueprint) 35%,transparent); }
+  .tbl-wrap { overflow-x:auto; border:1.5px solid var(--line-strong); border-radius:var(--r-plate); }
+  table.up { min-width:660px; }
+
+  /* checklist / roadmap */
+  ul.check { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:9px; }
+  ul.check li { display:flex; gap:11px; align-items:flex-start; font-size:14.5px; }
+  ul.check .bx { width:18px; height:18px; border:1.5px solid var(--accent); border-radius:4px; flex:none; margin-top:2px; color:var(--accent); display:grid; place-items:center; font-size:12px; }
+  .phase { border:1.5px solid var(--line-strong); border-radius:var(--r-plate); background:var(--panel); padding:15px; }
+  .phase .pn { font-family:var(--mono); font-size:11px; color:var(--accent); letter-spacing:.1em; text-transform:uppercase; }
+  .phase h5 { font-family:var(--display); font-weight:500; text-transform:uppercase; font-size:18px; letter-spacing:.03em; margin:4px 0 8px; }
+  .phase p { font-size:13.5px; color:var(--graphite); margin:0; }
+
+  .kbd-map { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
+  .kbd-map div { display:flex; justify-content:space-between; gap:8px; padding:9px 12px; border:1.5px solid var(--line); border-radius:var(--r-plate); background:var(--panel); font-size:13px; }
+  .kbd-map kbd { font-family:var(--mono); border:1px solid var(--line-strong); border-bottom-width:2px; border-radius:4px; padding:1px 7px; font-size:12px; }
+
+  footer { border-top:1.5px solid var(--line-strong); margin-top:40px; padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--graphite); }
+  footer .fn { font-family:var(--note); font-size:22px; color:var(--pencil); text-transform:none; letter-spacing:0; }
+
+  @media (max-width:900px) {
+    .layout { grid-template-columns:1fr; }
+    nav.index { position:static; display:flex; overflow-x:auto; }
+    .index-h { display:none; }
+    nav.index a { white-space:nowrap; border-left:none; border-bottom:2.5px solid transparent; }
+    nav.index a.on { border-left:none; border-bottom-color:var(--pencil); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior:auto; }
+    * { animation-duration:.001ms !important; }
+    .js .node,.js .arrow,.js .note-g { transition:none; opacity:1; transform:none; stroke-dashoffset:0; }
+    .tcard,.btn { transition:none; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="titleblock">
+    <div class="tb-cell tb-brand"><span class="tb-stamp">{ }</span><span class="tb-name">InteractLab</span></div>
+    <div class="tb-cell"><span class="tb-k">Document</span><span class="tb-v">UI / UX Sheets</span></div>
+    <div class="tb-cell"><span class="tb-k">Rev</span><span class="tb-v">A · 2026-09-11</span></div>
+    <div class="tb-grow"></div>
+    <div class="tb-cell"><button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme">Dark</button></div>
+  </header>
+
+  <div class="layout">
+    <nav class="index" aria-label="Sheet index">
+      <div class="index-h">Sheet index</div>
+      <a href="#s00"><span class="no">S-00</span> Overview</a>
+      <a href="#s01"><span class="no">S-01</span> Principles</a>
+      <a href="#s02"><span class="no">S-02</span> Colour</a>
+      <a href="#s03"><span class="no">S-03</span> Type</a>
+      <a href="#s04"><span class="no">S-04</span> Space &amp; grid</a>
+      <a href="#s05"><span class="no">S-05</span> Motion</a>
+      <a href="#s06"><span class="no">S-06</span> Components</a>
+      <a href="#s07"><span class="no">S-07</span> Wireframes</a>
+      <a href="#s08"><span class="no">S-08</span> Flows</a>
+      <a href="#s09"><span class="no">S-09</span> UX upgrades</a>
+      <a href="#s10"><span class="no">S-10</span> Access.</a>
+      <a href="#s11"><span class="no">S-11</span> Responsive</a>
+      <a href="#s12"><span class="no">S-12</span> Roadmap</a>
+    </nav>
+
+    <main>
+
+      <!-- S-00 OVERVIEW -->
+      <section class="sheet" id="s00">
+        <div class="cover" id="cover">
+          <div class="cover-bar"><span>InteractLab · design system</span><span>Warmed Blueprint · Rev A</span></div>
+          <div class="cover-body">
+            <p class="kicker">Visual learning lab</p>
+            <h1>Algorithms you can <span class="b">watch</span> work</h1>
+            <p class="lead">A complete UI/UX system for InteractLab — an interactive site that teaches data structures and algorithms to first-time programmers. The identity treats the whole site as an engineer's graph-paper notebook, where every structure is <strong>drawn, annotated, and animated live</strong>. These sheets define the foundations, the component kit, wireframes for every screen, and the prioritised upgrades that raise the current build to this standard.</p>
+            <div class="svg-wrap">
+              <svg class="schem" viewBox="0 0 720 236" role="img" aria-label="A linked list of 12, 99, 37, 5 pointing to None, with a head pointer and hand-drawn notes.">
+                <defs><marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--blueprint)"></path></marker></defs>
+                <g class="note-g" style="transition-delay:1.1s"><rect class="s-pill" x="34" y="30" width="56" height="24" rx="4"></rect><text class="s-pill-t" x="62" y="47" text-anchor="middle">head</text><line class="s-tick" x1="62" y1="54" x2="62" y2="86"></line></g>
+                <g class="node" style="transition-delay:.05s"><rect class="s-face" x="30" y="90" width="118" height="60" rx="6"></rect><line class="s-slot" x1="112" y1="90" x2="112" y2="150"></line><text class="s-val" x="71" y="128" text-anchor="middle">12</text></g>
+                <g class="node" style="transition-delay:.32s"><rect class="s-face" x="198" y="90" width="118" height="60" rx="6"></rect><line class="s-slot" x1="280" y1="90" x2="280" y2="150"></line><text class="s-val" x="239" y="128" text-anchor="middle">99</text></g>
+                <g class="node" style="transition-delay:.59s"><rect class="s-face" x="366" y="90" width="118" height="60" rx="6"></rect><line class="s-slot" x1="448" y1="90" x2="448" y2="150"></line><text class="s-val" x="407" y="128" text-anchor="middle">37</text></g>
+                <g class="node" style="transition-delay:.86s"><rect class="s-face" x="534" y="90" width="118" height="60" rx="6"></rect><line class="s-slot" x1="616" y1="90" x2="616" y2="150"></line><text class="s-val" x="575" y="128" text-anchor="middle">5</text></g>
+                <path class="arrow" pathLength="1" d="M130 120 L188 120" marker-end="url(#ah)" style="transition-delay:.30s"></path>
+                <path class="arrow" pathLength="1" d="M298 120 L356 120" marker-end="url(#ah)" style="transition-delay:.57s"></path>
+                <path class="arrow" pathLength="1" d="M466 120 L524 120" marker-end="url(#ah)" style="transition-delay:.84s"></path>
+                <path class="arrow" pathLength="1" d="M634 120 L682 120" marker-end="url(#ah)" style="transition-delay:1.05s"></path>
+                <g class="node" style="transition-delay:1.02s"><circle class="s-none" cx="700" cy="120" r="17"></circle><text class="s-none-t" x="700" y="124" text-anchor="middle">∅</text></g>
+                <g class="note-g" style="transition-delay:1.35s"><text class="s-note" x="150" y="198">each node points to the next</text><path class="s-note-l" d="M158 204 q70 10 150 4"></path></g>
+                <g class="note-g" style="transition-delay:1.55s"><text class="s-note" x="576" y="196" text-anchor="middle">end of the chain</text><path class="s-note-l" d="M636 184 q40 -16 60 -44"></path></g>
+              </svg>
+            </div>
+            <div class="stat-row">
+              <div class="stat"><b>6</b><span>Tools</span></div>
+              <div class="stat"><b>13</b><span>Sheets</span></div>
+              <div class="stat"><b>1</b><span>Visual language</span></div>
+              <div class="stat"><b>AA</b><span>Access. floor</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S-01 PRINCIPLES -->
+      <section class="sheet" id="s01">
+        <div class="sheet-head"><span class="sheet-no">S-01</span><h2 class="sheet-t">Design principles</h2><p class="sheet-sub">Six rules every screen is measured against. When choices conflict, the earlier rule wins.</p></div>
+        <div class="grid2">
+          <div class="panel"><div class="panel-h">01 · The diagram is the hero</div><div class="panel-b"><p>Every page earns its keep by <strong>showing</strong> an idea moving, not describing it. The largest, most animated thing on screen is always the visualisation — copy supports it, never the reverse.</p></div></div>
+          <div class="panel"><div class="panel-h">02 · Analogy before abstraction</div><div class="panel-b"><p>A learner meets every concept first as an everyday picture (a chain of clues, a stack of plates), reused every time it returns. The formal term arrives second, once the picture holds.</p></div></div>
+          <div class="panel"><div class="panel-h">03 · Technical, but warm</div><div class="panel-b"><p><strong>Crisp lines for what is drawn; soft edges for what is touched.</strong> Diagrams use thin ink strokes on graph paper; cards, buttons and copy stay rounded, roomy, and plainly worded so a beginner is never intimidated.</p></div></div>
+          <div class="panel"><div class="panel-h">04 · One language, many inks</div><div class="panel-b"><p>The paper, grid, ink text and red pencil never change. Each tool is simply <strong>drawn in its own accent ink</strong> — Linked Lists in green, Recursion in purple — so the site feels whole while every tool stays findable.</p></div></div>
+          <div class="panel"><div class="panel-h">05 · Motion teaches, never decorates</div><div class="panel-b"><p>Animation is reserved for showing change: a pointer moving, an array settling. Nothing loops for flourish. Every motion has an off switch (<code class="k">prefers-reduced-motion</code>) and a manual replay.</p></div></div>
+          <div class="panel"><div class="panel-h">06 · Nobody gets stuck</div><div class="panel-b"><p>Full keyboard control, visible focus, 4.5:1 contrast, plain English, and no dead ends. No auto-grading and no week numbers — the mentor drives, the tool never judges.</p></div></div>
+        </div>
+      </section>
+
+      <!-- S-02 COLOUR -->
+      <section class="sheet" id="s02">
+        <div class="sheet-head"><span class="sheet-no">S-02</span><h2 class="sheet-t">Colour</h2><p class="sheet-sub">A constant blueprint ground, plus one accent "ink" per tool. Light is warm-lit paper; dark is a cyanotype board.</p></div>
+        <div class="grid2">
+          <div class="panel"><div class="panel-h">Constant ground <span>light</span></div><div class="panel-b">
+            <div class="swrow"><span class="chip" style="background:#e7ecf2"></span><span><span class="nm">Paper</span><br><span class="vr">#e7ecf2</span></span><span class="use">page ground + grid</span></div>
+            <div class="swrow"><span class="chip" style="background:#f8fafc"></span><span><span class="nm">Panel</span><br><span class="vr">#f8fafc</span></span><span class="use">cards, plates</span></div>
+            <div class="swrow"><span class="chip" style="background:#16263d"></span><span><span class="nm">Ink</span><br><span class="vr">#16263d</span></span><span class="use">text, node strokes</span></div>
+            <div class="swrow"><span class="chip" style="background:#55677b"></span><span><span class="nm">Graphite</span><br><span class="vr">#55677b</span></span><span class="use">secondary text</span></div>
+            <div class="swrow"><span class="chip" style="background:#1f5f8b"></span><span><span class="nm">Blueprint</span><br><span class="vr">#1f5f8b</span></span><span class="use">links, pointers, brand</span></div>
+            <div class="swrow"><span class="chip" style="background:#c8452f"></span><span><span class="nm">Red pencil</span><br><span class="vr">#c8452f</span></span><span class="use">annotations · the one bold accent</span></div>
+          </div></div>
+          <div class="panel"><div class="panel-h">Constant ground <span>dark · cyanotype</span></div><div class="panel-b">
+            <div class="swrow"><span class="chip" style="background:#0b1622"></span><span><span class="nm">Board</span><br><span class="vr">#0b1622</span></span><span class="use">page ground</span></div>
+            <div class="swrow"><span class="chip" style="background:#12233a"></span><span><span class="nm">Panel</span><br><span class="vr">#12233a</span></span><span class="use">cards, plates</span></div>
+            <div class="swrow"><span class="chip" style="background:#e9f1f8"></span><span><span class="nm">Chalk</span><br><span class="vr">#e9f1f8</span></span><span class="use">text</span></div>
+            <div class="swrow"><span class="chip" style="background:#5aa9e0"></span><span><span class="nm">Cyan line</span><br><span class="vr">#5aa9e0</span></span><span class="use">links, grid, pointers</span></div>
+            <div class="swrow"><span class="chip" style="background:#ff7d5f"></span><span><span class="nm">Coral pencil</span><br><span class="vr">#ff7d5f</span></span><span class="use">annotations</span></div>
+            <div class="swrow"><span style="font-family:var(--note);font-size:20px;color:var(--pencil)">flip the theme toggle, top-right, to see it →</span></div>
+          </div></div>
+        </div>
+        <h3>Tool inks</h3>
+        <p>Each tool keeps the accent it already ships with — now reframed as "the ink this sheet is drawn in." The paper stays the same; only the accent used for kickers, pointers, card icons and the module's diagram changes. This preserves wayfinding while unifying the identity.</p>
+        <div class="ink-strip">
+          <span class="ink-chip"><span class="ink-dot" style="background:#1f5f8b"></span>Home / brand · blueprint</span>
+          <span class="ink-chip"><span class="ink-dot" style="background:#2563eb"></span>Walkthroughs · blue</span>
+          <span class="ink-chip"><span class="ink-dot" style="background:#059669"></span>Linked Lists · green</span>
+          <span class="ink-chip"><span class="ink-dot" style="background:#0d9488"></span>Bitwise · teal</span>
+          <span class="ink-chip"><span class="ink-dot" style="background:#7c3aed"></span>Recursion · purple</span>
+          <span class="ink-chip"><span class="ink-dot" style="background:#c2790f"></span>Sorting · amber</span>
+          <span class="ink-chip"><span class="ink-dot" style="background:#e11d48"></span>Stacks &amp; Queues · rose</span>
+        </div>
+        <p style="margin-top:14px"><span class="note">note:</span> red pencil (<code class="k">#c8452f</code>) is reserved for hand annotations only, never as a tool ink — it must never sit next to the sorting amber as two "reds". Semantic colours (ok / warn / danger) are separate again from all of the above.</p>
+      </section>
+
+      <!-- S-03 TYPE -->
+      <section class="sheet" id="s03">
+        <div class="sheet-head"><span class="sheet-no">S-03</span><h2 class="sheet-t">Type</h2><p class="sheet-sub">Four roles, each grounded in the subject: industrial drafting, engineering documentation, and a pencil hand.</p></div>
+        <div class="grid2">
+          <div class="panel"><div class="panel-h">Roles</div><div class="panel-b">
+            <div class="spec"><div class="role">Display · Big Shoulders Display</div><div class="eg-d">Push · Pop · Peek</div><p style="font-size:12.5px;color:var(--graphite);margin:6px 0 0">Headings only, uppercase, tracked. Industrial title-block character. Never for body.</p></div>
+            <div class="spec"><div class="role">Body · IBM Plex Sans</div><div class="eg-b">Follow the clue to the next node, then repeat until you reach None.</div></div>
+            <div class="spec"><div class="role">Mono · IBM Plex Mono</div><div class="eg-m">head = curr.next   # labels · values · code · kickers</div></div>
+            <div class="spec"><div class="role">Note · Caveat</div><div class="eg-n">save it before you overwrite!</div><p style="font-size:12.5px;color:var(--graphite);margin:6px 0 0">Red-pencil margin notes only — the human touch. Never a UI label.</p></div>
+          </div></div>
+          <div class="panel"><div class="panel-h">Type scale</div><div class="panel-b">
+            <table class="scale"><thead><tr><th>Token</th><th>Size</th><th>Face / use</th></tr></thead><tbody>
+              <tr><td>display</td><td class="px">40–80</td><td>Big Shoulders · hero</td></tr>
+              <tr><td>h1</td><td class="px">30–44</td><td>Big Shoulders · page title</td></tr>
+              <tr><td>h2</td><td class="px">22–30</td><td>Big Shoulders · section</td></tr>
+              <tr><td>h3</td><td class="px">20</td><td>Big Shoulders · module</td></tr>
+              <tr><td>body</td><td class="px">16</td><td>Plex Sans · 1.6 line-height</td></tr>
+              <tr><td>small</td><td class="px">14</td><td>Plex Sans · captions</td></tr>
+              <tr><td>label</td><td class="px">11–12</td><td>Plex Mono · +0.14em, uppercase</td></tr>
+              <tr><td>note</td><td class="px">20–26</td><td>Caveat · annotations</td></tr>
+            </tbody></table>
+            <p style="font-size:12.5px;color:var(--graphite);margin-top:12px">Body never below 16px. Headings get <code class="k">text-wrap:balance</code> and a bounded measure (~20ch). Running text caps near 68ch.</p>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- S-04 SPACE -->
+      <section class="sheet" id="s04">
+        <div class="sheet-head"><span class="sheet-no">S-04</span><h2 class="sheet-t">Space &amp; grid</h2><p class="sheet-sub">An 8px base scale that snaps to the graph paper. Layout does the spacing — flex/grid gaps, never stray margins.</p></div>
+        <div class="grid2">
+          <div class="panel"><div class="panel-h">Spacing scale · 8px base</div><div class="panel-b">
+            <div class="space-item"><span class="lbl">4 · xs</span><div class="space-bar" style="width:4px"></div></div>
+            <div class="space-item"><span class="lbl">8 · sm</span><div class="space-bar" style="width:8px"></div></div>
+            <div class="space-item"><span class="lbl">12 · sm+</span><div class="space-bar" style="width:12px"></div></div>
+            <div class="space-item"><span class="lbl">16 · md</span><div class="space-bar" style="width:16px"></div></div>
+            <div class="space-item"><span class="lbl">24 · lg</span><div class="space-bar" style="width:24px"></div></div>
+            <div class="space-item"><span class="lbl">32 · xl</span><div class="space-bar" style="width:32px"></div></div>
+            <div class="space-item"><span class="lbl">48 · 2xl</span><div class="space-bar" style="width:48px"></div></div>
+            <div class="space-item"><span class="lbl">64 · 3xl</span><div class="space-bar" style="width:64px"></div></div>
+          </div></div>
+          <div class="panel"><div class="panel-h">Frame tokens</div><div class="panel-b">
+            <h4 style="margin-top:0">Radius — softness by touchability</h4>
+            <div class="btn-row" style="margin-bottom:14px">
+              <span style="border:1.5px solid var(--line-strong);border-radius:6px;padding:10px 14px;font-family:var(--mono);font-size:12px">plate · 6</span>
+              <span style="border:1.5px solid var(--line-strong);border-radius:8px;padding:10px 14px;font-family:var(--mono);font-size:12px">control · 8</span>
+              <span style="border:1.5px solid var(--line-strong);border-radius:14px;padding:10px 14px;font-family:var(--mono);font-size:12px">card · 14</span>
+              <span style="border:1.5px solid var(--line-strong);border-radius:999px;padding:10px 14px;font-family:var(--mono);font-size:12px">pill · ∞</span>
+            </div>
+            <h4>Content widths</h4>
+            <p style="font-size:13.5px;color:var(--graphite);margin:0">Wide (tools) <code class="k">1120px</code> · Narrow (reading) <code class="k">820px</code> · Side gutter ≥ <code class="k">16px</code> at every width.</p>
+            <h4>Shadow</h4>
+            <p style="font-size:13.5px;color:var(--graphite);margin:0">Soft and warm — <code class="k">sm</code> resting cards, <code class="k">md</code> raised panels, <code class="k">lift</code> on hover. Borders carry structure; shadows only lift the one thing that needs it.</p>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- S-05 MOTION -->
+      <section class="sheet" id="s05">
+        <div class="sheet-head"><span class="sheet-no">S-05</span><h2 class="sheet-t">Motion</h2><p class="sheet-sub">Motion shows change and nothing else. One easing, three durations, always interruptible, always with an off switch.</p></div>
+        <div class="grid3">
+          <div class="panel"><div class="panel-h">Durations</div><div class="panel-b" style="font-family:var(--mono);font-size:13px;line-height:2"><div>fast · <b>140ms</b> — hover, press</div><div>mid · <b>280ms</b> — reveal, crossfade</div><div>draw · <b>520ms</b> — arrow / node build</div></div></div>
+          <div class="panel"><div class="panel-h">Easing</div><div class="panel-b" style="font-size:13.5px;color:var(--graphite)"><code class="k">cubic-bezier(.22,1,.36,1)</code><p style="margin:10px 0 0">One "ease-out" curve for everything that enters. Exits are faster than entrances. No bounce, no spring — this is a drafting table, not a toy.</p></div></div>
+          <div class="panel"><div class="panel-h">Rules</div><div class="panel-b"><ul class="check" style="gap:7px"><li><span class="bx">✓</span><span style="font-size:13.5px">Reveal from a <strong>visible</strong> rest state, never opacity:0 forever</span></li><li><span class="bx">✓</span><span style="font-size:13.5px">Nothing loops except a true loader</span></li><li><span class="bx">✓</span><span style="font-size:13.5px"><code class="k">prefers-reduced-motion</code> → jump to final frame</span></li></ul></div></div>
+        </div>
+        <div class="panel" style="margin-top:16px"><div class="panel-h">Signature moment</div><div class="panel-b"><p style="margin:0">The one orchestrated sequence is the <strong>self-drawing schematic</strong> in the hero (see S-00): nodes fade up left-to-right, arrows extend by <code class="k">stroke-dashoffset</code>, then red-pencil notes settle in. It runs once on load and on demand via a <em>Replay the build</em> control. Everywhere else, motion is a single micro-transition tied to a real state change.</p></div></div>
+      </section>
+
+      <!-- S-06 COMPONENTS -->
+      <section class="sheet" id="s06">
+        <div class="sheet-head"><span class="sheet-no">S-06</span><h2 class="sheet-t">Component kit</h2><p class="sheet-sub">The drawing kit — every part rendered live in the system so it stays honest. Set an accent per tool by swapping one token.</p></div>
+
+        <h3>Buttons &amp; tags</h3>
+        <div class="panel"><div class="panel-b">
+          <div class="btn-row" style="margin-bottom:14px">
+            <button class="btn btn-primary">Try the visualizer</button>
+            <button class="btn btn-op">Insert node</button>
+            <button class="btn btn-ghost">Open a topic →</button>
+            <button class="btn" disabled style="opacity:.45">Disabled</button>
+          </div>
+          <div class="btn-row">
+            <span class="tag accent">nodes &amp; pointers</span><span class="tag">doubly linked</span><span class="tag">Floyd's cycle</span><span class="tag">animated</span>
+          </div>
+          <div class="crumb" style="margin-top:16px"><span>Home</span><span>›</span><span>Topics</span><span>›</span><b aria-current="page">Linked Lists</b></div>
+        </div></div>
+
+        <h3>Topic cards</h3>
+        <p>Home &amp; Topics grid. Emoji icons are replaced with <strong>drawn schematic glyphs</strong> — a tiny preview of what the tool teaches, inked in the tool's accent.</p>
+        <div class="cards">
+          <div class="tcard" style="--accent:var(--ink-ll)">
+            <div class="ic"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="9" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="17" y="9" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 13 H16" stroke="currentColor" stroke-width="1.6" marker-end=""/><path d="M13 13 l3 0 M14 11 l2 2 -2 2" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></div>
+            <h5>Linked Lists</h5><p>Build, insert, break the chain, and race the tortoise &amp; hare.</p>
+            <div class="meta"><span class="tag accent">pointers</span><span class="tag">cycles</span></div>
+            <span class="arw">Open visualizer →</span>
+          </div>
+          <div class="tcard" style="--accent:var(--ink-rec)">
+            <div class="ic"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="2" y="2" width="22" height="22" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="6" y="6" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="10" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>
+            <h5>Recursion</h5><p>Step the call stack frame by frame; watch a Fibonacci tree explode.</p>
+            <div class="meta"><span class="tag accent">call stack</span><span class="tag">Big-O</span></div>
+            <span class="arw">Open visualizer →</span>
+          </div>
+          <div class="tcard" style="--accent:var(--ink-sort)">
+            <div class="ic"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="2" y="15" width="4" height="9" fill="currentColor"/><rect x="8" y="10" width="4" height="14" fill="currentColor"/><rect x="14" y="6" width="4" height="18" fill="currentColor"/><rect x="20" y="2" width="4" height="22" fill="currentColor"/></svg></div>
+            <h5>Sorting</h5><p>Step bubble, selection &amp; insertion bar by bar; replay merge &amp; quick.</p>
+            <div class="meta"><span class="tag accent">O(n²)</span><span class="tag">O(n log n)</span></div>
+            <span class="arw">Open visualizer →</span>
+          </div>
+        </div>
+
+        <h3>Module plate</h3>
+        <p>The repeating unit of every tool page: a numbered figure, an analogy field-note, a diagram on graph paper, and the transport beneath. This is where a learner spends 90% of their time.</p>
+        <div class="plate" style="--accent:var(--ink-ll)">
+          <div class="plate-cap"><span class="plate-no">Fig. 1</span><span class="plate-t">Build the chain</span></div>
+          <div class="plate-b">
+            <div class="analogy"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h6"/></svg></span><div><div class="h">Think of it like…</div><p>a treasure hunt. Each clue tells you only where the <em>next</em> clue is hidden — lose one and the rest of the trail is gone.</p></div></div>
+            <div class="diagram">
+              <svg class="schem" viewBox="0 0 560 120" role="img" aria-label="Demo linked list used by the transport below.">
+                <defs><marker id="ah2" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"></path></marker></defs>
+                <g id="demoNodes"></g>
+              </svg>
+            </div>
+            <!-- Transport (redesigned) -->
+            <div class="transport" id="tp" role="group" aria-label="Playback controls">
+              <div class="tp-caption"><span class="sn" id="tpStep">Step 1 / 6</span><span id="tpCap" aria-live="polite">Start with an empty list. head points to None.</span></div>
+              <div class="tp-controls">
+                <button class="tp-btn" id="tpPrev" aria-label="Previous step">⏮</button>
+                <button class="tp-btn play" id="tpPlay" aria-label="Play">▶</button>
+                <button class="tp-btn" id="tpNext" aria-label="Next step">⏭</button>
+                <div class="tp-scrub"><input type="range" id="tpRange" min="0" max="5" value="0" aria-label="Step scrubber"><span class="tp-count" id="tpCount">1 / 6</span></div>
+                <label class="tp-speed">speed <input type="range" id="tpSpeed" min="0.5" max="3" step="0.5" value="1"><span id="tpSpeedV">1×</span></label>
+              </div>
+              <div class="kb-hint"><kbd>Space</kbd> play/pause · <kbd>←</kbd><kbd>→</kbd> step · <kbd>R</kbd> replay</div>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:10px"><span class="note">the fix →</span> progress <strong>dots</strong> alone don't scale past ~30 steps (today one <code class="k">&lt;span&gt;</code> is rendered per step). The transport now leads with a <strong>“Step X / Y” readout + a draggable scrubber</strong>; dots stay only as a secondary cue for short sequences.</p>
+
+        <h3>Code block</h3>
+        <div class="grid2">
+          <div class="code" style="--accent:var(--ink-ll)">
+            <div class="code-h"><span>append.py</span><span>Python</span></div>
+            <pre><span class="ln">1</span><span class="tok-k">def</span> <span class="tok-f">append</span>(head, value):
+<span class="ln">2</span>    node = <span class="tok-f">Node</span>(value)
+<span class="hl"><span class="ln">3</span>    curr = head              <span class="tok-c"># walk to the tail</span></span>
+<span class="ln">4</span>    <span class="tok-k">while</span> curr.next:
+<span class="ln">5</span>        curr = curr.next
+<span class="ln">6</span>    curr.next = node</pre>
+          </div>
+          <div class="wf-col">
+            <h4 style="margin-top:0">States</h4>
+            <div class="state"><span class="dot" style="background:var(--ok)"></span><div><strong style="font-size:14px">Empty</strong><p style="margin:2px 0 0;font-size:13px;color:var(--graphite)">“Add a node to start your chain.” — an invitation, never a blank box.</p></div></div>
+            <div class="state"><span class="dot" style="background:var(--warn)"></span><div><strong style="font-size:14px">Invalid input</strong><p style="margin:2px 0 0;font-size:13px;color:var(--graphite)">Message sits <em>beside the field</em>: “Enter a whole number, like 42.”</p></div></div>
+            <div class="state"><span class="dot" style="background:var(--faint)"></span><div><strong style="font-size:14px">Loading</strong><div class="skeleton" style="width:80%;margin-top:8px"></div><div class="skeleton" style="width:55%;margin-top:6px"></div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S-07 WIREFRAMES -->
+      <section class="sheet" id="s07">
+        <div class="sheet-head"><span class="sheet-no">S-07</span><h2 class="sheet-t">Wireframes</h2><p class="sheet-sub">Low-fidelity layouts for every screen — structure and hierarchy only. Dashed = container, solid accent = the primary action or focal diagram.</p></div>
+
+        <h3>Home</h3>
+        <div class="wf"><div class="wf-title"><span>WF-01</span> Home · desktop</div>
+          <div class="wf-col">
+            <div class="zone solid"><span class="zt">sticky · title block</span>Logo · Topics · Linked Lists · Walkthroughs · theme</div>
+            <div class="wf-row">
+              <div class="zone accent" style="flex:1.4"><span class="zt">hero</span>Thesis headline “watch algorithms work” + lead + primary CTA<br><span style="color:var(--faint)">self-drawing schematic ▸ replay</span></div>
+            </div>
+            <div class="zone"><span class="zt">section · topics</span>Feature grid — 6 topic cards (2–3 cols), each a drawn glyph + title + tags</div>
+            <div class="wf-row"><div class="zone">card</div><div class="zone">card</div><div class="zone">card</div></div>
+            <div class="wf-row"><div class="zone">card</div><div class="zone">card</div><div class="zone">card</div></div>
+            <div class="zone"><span class="zt">section · how it helps</span>3 short value notes — step-by-step · built-in examples · no setup</div>
+            <div class="zone solid"><span class="zt">footer / drafting note</span></div>
+          </div>
+        </div>
+
+        <h3>Tool page — Linked Lists (the exemplar)</h3>
+        <div class="wf" style="--accent:var(--ink-ll)"><div class="wf-title"><span>WF-02</span> Tool · desktop</div>
+          <div class="wf-col">
+            <div class="zone solid"><span class="zt">sticky · title block + breadcrumb</span>Home › Topics › <b style="color:var(--accent)">Linked Lists</b></div>
+            <div class="zone accent"><span class="zt">tool hero</span>H1 “Linked Lists — chains of clues” + one-line promise + jump-to-module chips</div>
+            <div class="zone"><span class="zt">module rail (right, sticky on desktop)</span>Fig 1 · Fig 2 · Fig 3 · Fig 4 — progress ticks</div>
+            <div class="wf-row"><div class="zone accent" style="flex:2"><span class="zt">Fig 1 · plate</span>analogy · diagram · transport</div><div class="zone" style="flex:.6"><span class="zt">on this sheet</span>module list</div></div>
+            <div class="zone accent"><span class="zt">Fig 2 · plate</span>Doubly linked · analogy · diagram · transport</div>
+            <div class="zone accent"><span class="zt">Fig 3 · plate</span>Cycle race · bug toggle · diagram · transport</div>
+            <div class="zone accent"><span class="zt">Fig 4 · plate</span>Playlist manager · diagram · transport</div>
+            <div class="zone"><span class="zt">where this connects</span>back to arrays · forward to stacks &amp; trees</div>
+            <div class="zone solid"><span class="zt">footer</span></div>
+          </div>
+        </div>
+
+        <h3>Module anatomy (zoom)</h3>
+        <div class="wf" style="--accent:var(--ink-ll)"><div class="wf-title"><span>WF-03</span> The repeating unit</div>
+          <div class="wf-col">
+            <div class="wf-row"><div class="zone" style="flex:.4"><span class="zt">Fig. N</span></div><div class="zone" style="flex:2"><span class="zt">module title</span></div></div>
+            <div class="zone accent"><span class="zt">analogy field-note</span>everyday picture, one sentence</div>
+            <div class="zone accent" style="min-height:80px"><span class="zt">diagram · graph paper</span>the focal, animated SVG — the hero of the module</div>
+            <div class="zone solid"><span class="zt">transport</span>caption (aria-live) · ⏮ ▶ ⏭ · Step X/Y + scrubber · speed</div>
+            <div class="zone" style="border-style:dotted"><span class="zt">optional</span>controls (add / delete / bug toggle) · legend</div>
+          </div>
+        </div>
+
+        <h3>Walkthrough player</h3>
+        <div class="wf" style="--accent:var(--ink-walk)"><div class="wf-title"><span>WF-04</span> Problem walkthrough</div>
+          <div class="wf-col">
+            <div class="zone solid"><span class="zt">title block + breadcrumb</span>Home › Walkthroughs › <b style="color:var(--accent)">Two Sum</b></div>
+            <div class="zone accent"><span class="zt">big idea</span>the intuition callout (gradient allowed here only)</div>
+            <div class="wf-row">
+              <div class="zone accent" style="flex:1.5"><span class="zt">stage · animated</span>array + pointers moving</div>
+              <div class="zone" style="flex:1"><span class="zt">synced code</span>pseudocode, current line highlighted</div>
+            </div>
+            <div class="zone solid"><span class="zt">transport</span>narrated caption · Step X/Y + scrubber</div>
+            <div class="zone"><span class="zt">recap</span>complexity · what to remember</div>
+          </div>
+        </div>
+
+        <h3>Empty roadmap (404 → “coming soon”)</h3>
+        <div class="wf"><div class="wf-title"><span>WF-05</span> Roadmap placeholder</div>
+          <div class="wf-col">
+            <div class="zone solid"><span class="zt">title block</span></div>
+            <div class="zone accent" style="min-height:70px"><span class="zt">friendly note</span>“This sheet isn't drawn yet.” + a sketch + link back to Topics</div>
+            <div class="zone"><span class="zt">what's coming</span>Stacks &amp; Queues · Trees · Graphs — as pencil sketches</div>
+          </div>
+        </div>
+
+        <h3>Mobile</h3>
+        <div class="grid3">
+          <div class="phone"><div class="wf-col">
+            <div class="zone solid" style="font-size:10px"><span class="zt">header</span>≡ · logo · ☀</div>
+            <div class="zone accent" style="font-size:10px;min-height:60px"><span class="zt">hero</span>headline + schematic (stacks)</div>
+            <div class="zone" style="font-size:10px">card</div><div class="zone" style="font-size:10px">card</div><div class="zone" style="font-size:10px">card</div>
+          </div><div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--graphite);margin-top:8px">Home · 375px</div></div>
+          <div class="phone" style="--accent:var(--ink-ll)"><div class="wf-col">
+            <div class="zone solid" style="font-size:10px"><span class="zt">header</span></div>
+            <div class="zone accent" style="font-size:10px"><span class="zt">chip bar (sticky)</span>Fig1·2·3·4 ▸ scroll</div>
+            <div class="zone accent" style="font-size:10px;min-height:56px"><span class="zt">diagram</span>full-width, scrolls x</div>
+            <div class="zone solid" style="font-size:10px"><span class="zt">transport (docked)</span>▶ Step 3/8 ▬▬▬</div>
+          </div><div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--graphite);margin-top:8px">Tool · 375px</div></div>
+          <div class="phone"><div class="wf-col">
+            <div class="zone" style="font-size:10px;min-height:52px"><span class="zt">drawer</span>jump to module — replaces hidden sidebar</div>
+            <div class="zone" style="font-size:10px">Fig 1 · Build</div><div class="zone" style="font-size:10px">Fig 2 · Doubly</div><div class="zone" style="font-size:10px">Fig 3 · Cycle</div>
+          </div><div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--graphite);margin-top:8px">Module drawer</div></div>
+        </div>
+        <p style="margin-top:12px"><span class="note">mobile fix →</span> today the topic sidebar is simply hidden below 700px, so there's no way to jump between modules. The wireframes add a <strong>sticky chip bar</strong> (or drawer) and a <strong>docked transport</strong> so playback controls stay in reach without scrolling.</p>
+      </section>
+
+      <!-- S-08 FLOWS -->
+      <section class="sheet" id="s08">
+        <div class="sheet-head"><span class="sheet-no">S-08</span><h2 class="sheet-t">Key flows</h2><p class="sheet-sub">The three journeys the whole design serves. Each avoids dead ends and keeps the learner in control.</p></div>
+        <div class="grid3">
+          <div class="panel"><div class="panel-h">A · First visit</div><div class="panel-b" style="font-size:13.5px"><p style="margin:0">Land on home → the hero <strong>draws itself</strong> (proof, not promise) → scan 6 topic cards → open one → a one-time, <strong>skippable</strong> coach-mark: “Press play to watch it build.” → first module autoplays once.</p></div></div>
+          <div class="panel"><div class="panel-h">B · Doing a lesson</div><div class="panel-b" style="font-size:13.5px"><p style="margin:0">Read analogy → press play / step with <kbd style="font-family:var(--mono);font-size:11px">→</kbd> → scrub back to re-watch a tricky step → flip the “bug” toggle to see it break → move to next Fig via the rail. Mentor narrates alongside.</p></div></div>
+          <div class="panel"><div class="panel-h">C · On a phone</div><div class="panel-b" style="font-size:13.5px"><p style="margin:0">Chip bar shows module list → tap a Fig → diagram fills width (scrolls sideways with a fade cue) → transport is <strong>docked</strong> at the bottom, thumb-reachable → drawer to jump elsewhere.</p></div></div>
+        </div>
+      </section>
+
+      <!-- S-09 UX UPGRADES -->
+      <section class="sheet" id="s09">
+        <div class="sheet-head"><span class="sheet-no">S-09</span><h2 class="sheet-t">UX upgrades</h2><p class="sheet-sub">The prioritised gap between today's build and this system. P1 = do first (correctness / access), P2 = high value, P3 = polish.</p></div>
+        <div class="tbl-wrap"><table class="up">
+          <thead><tr><th>Area</th><th>Today</th><th>Upgrade</th><th>Why</th><th>Pri</th></tr></thead>
+          <tbody>
+            <tr><td>Playback progress</td><td class="now">One dot per step; breaks past ~30 steps</td><td>“Step X / Y” readout + draggable scrubber; dots only when short</td><td>Scales &amp; orients (progress-indicator rule)</td><td><span class="pri p1">P1</span></td></tr>
+            <tr><td>Keyboard control</td><td class="now">Mouse-only transport</td><td><kbd>Space</kbd> play/pause · <kbd>←</kbd><kbd>→</kbd> step · <kbd>Home/End</kbd> jump · <kbd>R</kbd> replay; visible focus</td><td>Keyboard access is a WCAG must</td><td><span class="pri p1">P1</span></td></tr>
+            <tr><td>Topic icons</td><td class="now">Emoji (⛓️ 🎬 01 02 03)</td><td>Drawn schematic glyphs in the tool's ink</td><td>Identity + “no emoji as icons”</td><td><span class="pri p1">P1</span></td></tr>
+            <tr><td>Hero</td><td class="now">Gradient headline text (template look)</td><td>Self-drawing schematic — the thesis</td><td>Distinctiveness; shows the product</td><td><span class="pri p1">P1</span></td></tr>
+            <tr><td>Caption for AT</td><td class="now">Visual crossfade only</td><td><code class="k">aria-live="polite"</code> region announces each step</td><td>Screen-reader parity</td><td><span class="pri p1">P1</span></td></tr>
+            <tr><td>Step captions</td><td class="now">Every module opens with the same muted box</td><td>Analogy field-note + varied rhythm; full-bleed diagram breaks</td><td>Scanning &amp; visual rhythm</td><td><span class="pri p2">P2</span></td></tr>
+            <tr><td>First-run guidance</td><td class="now">None</td><td>One skippable coach-mark, remembered in <code class="k">localStorage</code></td><td>Onboarding (must be skippable)</td><td><span class="pri p2">P2</span></td></tr>
+            <tr><td>Loading</td><td class="now">Bare wait on font/route</td><td>Skeleton sized to final layout; reserve space</td><td>Perceived speed; CLS &lt; 0.1</td><td><span class="pri p2">P2</span></td></tr>
+            <tr><td>Mobile module nav</td><td class="now">Sidebar hidden &lt; 700px</td><td>Sticky chip bar + drawer; docked transport</td><td>No wayfinding on phones today</td><td><span class="pri p2">P2</span></td></tr>
+            <tr><td>Input errors</td><td class="now">Generic / top-of-form</td><td>Inline message beside the field, plain English</td><td>Error clarity (forms rule)</td><td><span class="pri p2">P2</span></td></tr>
+            <tr><td>Theme</td><td class="now">System preference only</td><td>Explicit Light/Dark toggle, persisted</td><td>User control (also demoed here)</td><td><span class="pri p3">P3</span></td></tr>
+            <tr><td>“Now playing” pulse</td><td class="now">Infinite decorative pulse</td><td>Pulse only while actually playing</td><td>Continuous-animation anti-pattern</td><td><span class="pri p3">P3</span></td></tr>
+            <tr><td>Long diagrams</td><td class="now">Silent horizontal overflow</td><td>Edge fade + scroll affordance in the frame</td><td>Discoverability of off-screen nodes</td><td><span class="pri p3">P3</span></td></tr>
+            <tr><td>Breadcrumb</td><td class="now">Inconsistent across tools</td><td>Standard Home › Topic on every tool; <code class="k">aria-current</code></td><td>Consistent wayfinding</td><td><span class="pri p3">P3</span></td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- S-10 ACCESSIBILITY -->
+      <section class="sheet" id="s10">
+        <div class="sheet-head"><span class="sheet-no">S-10</span><h2 class="sheet-t">Accessibility</h2><p class="sheet-sub">WCAG 2.1 AA is the floor, not the ceiling — this audience needs it most. Verified against the ui/ux checklist.</p></div>
+        <div class="grid2">
+          <div class="panel"><div class="panel-h">Must hold on every screen</div><div class="panel-b"><ul class="check">
+            <li><span class="bx">✓</span><span>Body text ≥ 4.5:1, large text ≥ 3:1 — ink on paper clears both in light &amp; dark</span></li>
+            <li><span class="bx">✓</span><span>Every control keyboard-reachable, tab order = visual order, no traps</span></li>
+            <li><span class="bx">✓</span><span>Visible <code class="k">:focus-visible</code> ring (red pencil, 2.5px) on all interactive parts</span></li>
+            <li><span class="bx">✓</span><span>State never by colour alone — pair with label, icon, or position</span></li>
+            <li><span class="bx">✓</span><span>SVG diagrams carry <code class="k">role="img"</code> + a plain-English <code class="k">aria-label</code></span></li>
+            <li><span class="bx">✓</span><span>Sequential headings h1→h2→h3; one h1 per page</span></li>
+            <li><span class="bx">✓</span><span>Touch targets ≥ 44×44px; ≥ 8px apart</span></li>
+            <li><span class="bx">✓</span><span><code class="k">prefers-reduced-motion</code> jumps to the final frame, autoplay off</span></li>
+          </ul></div></div>
+          <div class="panel"><div class="panel-h">Transport · keyboard map</div><div class="panel-b">
+            <div class="kbd-map">
+              <div><span>Play / pause</span><kbd>Space</kbd></div>
+              <div><span>Previous step</span><kbd>←</kbd></div>
+              <div><span>Next step</span><kbd>→</kbd></div>
+              <div><span>First step</span><kbd>Home</kbd></div>
+              <div><span>Last step</span><kbd>End</kbd></div>
+              <div><span>Replay build</span><kbd>R</kbd></div>
+            </div>
+            <h4>Language</h4>
+            <p style="font-size:13.5px;color:var(--graphite);margin:0">Short sentences, common words, second person. Define a term the first time in the analogy. No idioms — the learner reads English as a second language.</p>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- S-11 RESPONSIVE -->
+      <section class="sheet" id="s11">
+        <div class="sheet-head"><span class="sheet-no">S-11</span><h2 class="sheet-t">Responsive</h2><p class="sheet-sub">Mobile-first. Content stacks to one column; only diagrams, code and tables may scroll sideways — each in its own frame.</p></div>
+        <div class="tbl-wrap"><table class="up" style="min-width:560px">
+          <thead><tr><th>Breakpoint</th><th>Layout</th><th>Transport</th><th>Module nav</th></tr></thead>
+          <tbody>
+            <tr><td class="px" style="font-family:var(--mono);color:var(--blueprint)">375 · phone</td><td>1 col, full-bleed diagrams</td><td>Docked at bottom, thumb-reach</td><td>Sticky chip bar + drawer</td></tr>
+            <tr><td class="px" style="font-family:var(--mono);color:var(--blueprint)">768 · tablet</td><td>1–2 col cards</td><td>Inline under diagram</td><td>Chip bar</td></tr>
+            <tr><td class="px" style="font-family:var(--mono);color:var(--blueprint)">1024 · laptop</td><td>Cards 2–3 col; tool gains right rail</td><td>Inline</td><td>Sticky right rail</td></tr>
+            <tr><td class="px" style="font-family:var(--mono);color:var(--blueprint)">1440 · desktop</td><td>Max 1120px tool / 820px reading, centred</td><td>Inline</td><td>Sticky right rail</td></tr>
+          </tbody>
+        </table></div>
+        <p style="margin-top:14px">The page body never scrolls horizontally. A diagram wider than the screen lives in an <code class="k">overflow-x:auto</code> frame with an edge fade; the grid paper continues under it so it still reads as one drawing.</p>
+      </section>
+
+      <!-- S-12 ROADMAP -->
+      <section class="sheet" id="s12">
+        <div class="sheet-head"><span class="sheet-no">S-12</span><h2 class="sheet-t">Build roadmap</h2><p class="sheet-sub">How this rolls into the live <code class="k">web/</code> app — tokens first, then shared parts, then per-tool, so nothing regresses.</p></div>
+        <div class="grid2">
+          <div class="phase" style="--accent:var(--ink-home)"><div class="pn">Phase 1 · Foundations</div><h5>Tokens &amp; type</h5><p>Replace the palette + fonts in <code class="k">globals.css</code> / <code class="k">layout.tsx</code> with the blueprint ground, tool inks, scale, radius, motion tokens. Graph-paper background utility. Ship behind the existing dark-mode structure.</p></div>
+          <div class="phase" style="--accent:var(--ink-walk)"><div class="pn">Phase 2 · Shared kit</div><h5>Header, cards, transport</h5><p>Title-block header, drawn topic-card glyphs, the redesigned <code class="k">StepTransport</code> (Step X/Y + scrubber + keyboard + aria-live), analogy field-note, code block, states. One place, reused everywhere.</p></div>
+          <div class="phase" style="--accent:var(--ink-ll)"><div class="pn">Phase 3 · Home + one tool</div><h5>Prove it in production</h5><p>Rebuild the home hero (self-drawing schematic) and re-skin <strong>Linked Lists</strong> as the reference tool. Review on device, then confirm the pattern before rolling on.</p></div>
+          <div class="phase" style="--accent:var(--ink-sort)"><div class="pn">Phase 4 · Roll out</div><h5>Remaining tools + polish</h5><p>Apply the ink-swap to Bitwise, Recursion, Sorting, Walkthroughs; build Stacks &amp; Queues natively in the system. Then P2/P3 upgrades: coach-mark, skeletons, mobile drawer, refresh <code class="k">CLAUDE.md</code>.</p></div>
+        </div>
+        <div class="analogy" style="--accent:var(--ink-home);margin-top:18px"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg></span><div><div class="h">Non-negotiables carried forward</div><p>Client-only static export · analogy-before-abstraction · no week numbers · no auto-grading · pure tested logic in <code class="k">lib/</code> → SVG components → scoped CSS.</p></div></div>
+      </section>
+
+      <footer>
+        <span>InteractLab · UI/UX design system</span>
+        <span class="fn">drawn to be watched, not just read</span>
+        <span>Rev A · Sheet set 1 / 1</span>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  root.classList.add("js");
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* hero self-draw */
+  var cover=document.getElementById("cover");
+  function build(){ if(!cover)return; if(reduce){cover.classList.add("built");return;} cover.classList.remove("built"); void cover.offsetWidth; requestAnimationFrame(function(){cover.classList.add("built");}); }
+  setTimeout(build,240);
+
+  /* theme toggle */
+  var btn=document.getElementById("themeBtn");
+  function stored(){ try{return localStorage.getItem("il-theme");}catch(e){return null;} }
+  function sysDark(){ return window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches; }
+  function apply(t){ if(t==="dark"||t==="light")root.setAttribute("data-theme",t); else root.removeAttribute("data-theme"); var dark=t==="dark"||(t!=="light"&&sysDark()); btn.textContent=dark?"Light":"Dark"; }
+  apply(stored());
+  btn.addEventListener("click",function(){ var cur=root.getAttribute("data-theme"); var dark=cur==="dark"||(!cur&&sysDark()); var next=dark?"light":"dark"; apply(next); try{localStorage.setItem("il-theme",next);}catch(e){} });
+
+  /* scrollspy */
+  var links=[].slice.call(document.querySelectorAll("nav.index a"));
+  var map={}; links.forEach(function(a){ map[a.getAttribute("href").slice(1)]=a; });
+  if("IntersectionObserver" in window){
+    var obs=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove("on");}); var a=map[e.target.id]; if(a)a.classList.add("on"); } }); },{rootMargin:"-20% 0px -70% 0px"});
+    document.querySelectorAll("section.sheet").forEach(function(s){obs.observe(s);});
+  }
+
+  /* transport demo — the redesigned control, live */
+  var STEPS=[
+    {cap:"Start with an empty list. head points to None.", n:0, head:false},
+    {cap:"Create a node holding 12. Its next is None.", n:1, head:false},
+    {cap:"Point head at node 12. The chain has begun.", n:1, head:true},
+    {cap:"Append 99: node 12's next now points to it.", n:2, head:true},
+    {cap:"Append 37: node 99's next now points to it.", n:3, head:true},
+    {cap:"Done. Traverse head → 12 → 99 → 37 → None.", n:3, head:true, done:true}
+  ];
+  var VALS=[12,99,37];
+  var g=document.getElementById("demoNodes");
+  var cap=document.getElementById("tpCap"), stepLbl=document.getElementById("tpStep"), count=document.getElementById("tpCount");
+  var range=document.getElementById("tpRange"), play=document.getElementById("tpPlay");
+  var speed=document.getElementById("tpSpeed"), speedV=document.getElementById("tpSpeedV");
+  var i=0, timer=null, playing=false;
+  var W=112,H=54,GAP=34,X0=14,Y=30;
+  function svg(tag){return document.createElementNS("http://www.w3.org/2000/svg",tag);}
+  function render(){
+    var s=STEPS[i]; g.textContent="";
+    for(var k=0;k<s.n;k++){
+      var x=X0+k*(W+GAP);
+      var r=svg("rect"); r.setAttribute("x",x);r.setAttribute("y",Y);r.setAttribute("width",W);r.setAttribute("height",H);r.setAttribute("rx",6);r.setAttribute("class","s-face"); g.appendChild(r);
+      var sl=svg("line"); sl.setAttribute("x1",x+W-34);sl.setAttribute("y1",Y);sl.setAttribute("x2",x+W-34);sl.setAttribute("y2",Y+H);sl.setAttribute("class","s-slot"); g.appendChild(sl);
+      var t=svg("text"); t.setAttribute("x",x+(W-34)/2);t.setAttribute("y",Y+H/2+7);t.setAttribute("text-anchor","middle");t.setAttribute("class","s-val");t.textContent=VALS[k]; g.appendChild(t);
+      if(k>0){ var p=svg("path"); var px=X0+(k-1)*(W+GAP)+W; p.setAttribute("d","M"+px+" "+(Y+H/2)+" L"+(x)+" "+(Y+H/2)); p.setAttribute("class","s-arrow"); p.setAttribute("marker-end","url(#ah2)"); g.insertBefore(p,g.firstChild); }
+    }
+    if(s.head&&s.n>0){ var pill=svg("rect");pill.setAttribute("x",X0);pill.setAttribute("y",2);pill.setAttribute("width",50);pill.setAttribute("height",20);pill.setAttribute("rx",4);pill.setAttribute("fill","var(--accent)");g.appendChild(pill); var pt=svg("text");pt.setAttribute("x",X0+25);pt.setAttribute("y",16);pt.setAttribute("text-anchor","middle");pt.setAttribute("fill","#fff");pt.setAttribute("font-family","var(--mono)");pt.setAttribute("font-size","11");pt.textContent="head";g.appendChild(pt); }
+    if(s.n>0||s.done){ var lastx=s.n>0?X0+(s.n-1)*(W+GAP)+W:X0; var na=svg("path"); na.setAttribute("d","M"+lastx+" "+(Y+H/2)+" l30 0"); na.setAttribute("class","s-arrow"); na.setAttribute("marker-end","url(#ah2)"); g.appendChild(na); var nc=svg("circle");nc.setAttribute("cx",lastx+46);nc.setAttribute("cy",Y+H/2);nc.setAttribute("r",13);nc.setAttribute("class","s-none");g.appendChild(nc); var nt=svg("text");nt.setAttribute("x",lastx+46);nt.setAttribute("y",Y+H/2+4);nt.setAttribute("text-anchor","middle");nt.setAttribute("class","s-none-t");nt.textContent="∅";g.appendChild(nt); }
+    cap.textContent=s.cap; stepLbl.textContent="Step "+(i+1)+" / "+STEPS.length; count.textContent=(i+1)+" / "+STEPS.length; range.value=i;
+  }
+  function go(n){ i=Math.max(0,Math.min(STEPS.length-1,n)); render(); }
+  function stop(){ playing=false; play.textContent="▶"; play.setAttribute("aria-label","Play"); if(timer){clearTimeout(timer);timer=null;} }
+  function tick(){ if(i>=STEPS.length-1){stop();return;} go(i+1); timer=setTimeout(tick, 1100/parseFloat(speed.value)); }
+  function start(){ if(i>=STEPS.length-1)go(0); playing=true; play.textContent="⏸"; play.setAttribute("aria-label","Pause"); timer=setTimeout(tick,900/parseFloat(speed.value)); }
+  play.addEventListener("click",function(){ playing?stop():start(); });
+  document.getElementById("tpPrev").addEventListener("click",function(){stop();go(i-1);});
+  document.getElementById("tpNext").addEventListener("click",function(){stop();go(i+1);});
+  range.addEventListener("input",function(){stop();go(parseInt(range.value,10));});
+  speed.addEventListener("input",function(){speedV.textContent=parseFloat(speed.value)+"×";});
+  var tp=document.getElementById("tp");
+  tp.addEventListener("keydown",function(e){
+    if(e.key===" "){e.preventDefault();playing?stop():start();}
+    else if(e.key==="ArrowLeft"){e.preventDefault();stop();go(i-1);}
+    else if(e.key==="ArrowRight"){e.preventDefault();stop();go(i+1);}
+    else if(e.key==="Home"){e.preventDefault();stop();go(0);}
+    else if(e.key==="End"){e.preventDefault();stop();go(STEPS.length-1);}
+    else if(e.key==="r"||e.key==="R"){e.preventDefault();stop();go(0);start();}
+  });
+  render();
+})();
+</script>
+</body>
+</html>
