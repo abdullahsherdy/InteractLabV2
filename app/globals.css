@@ -3,67 +3,218 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #fafaf9;
-  --bg-elevated: #ffffff;
-  --bg-muted: #f5f5f4;
-  --bg-subtle: #eeede9;
-  --text: #0f172a;
-  --text-secondary: #64748b;
-  --text-tertiary: #94a3b8;
-  --border: rgba(15, 23, 42, 0.08);
-  --border-strong: rgba(15, 23, 42, 0.14);
-  --radius: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.06);
-  --shadow-lg: 0 20px 50px rgba(15, 23, 42, 0.08);
-  --teal: #0d9488;
-  --teal-dark: #0f766e;
-  --teal-light: #ccfbf1;
-  --teal-glow: rgba(13, 148, 136, 0.25);
-  --purple: #7c3aed;
-  --purple-light: #ede9fe;
-  --amber: #d97706;
-  --amber-light: #fef3c7;
-  --blue: #2563eb;
-  --blue-light: #dbeafe;
-  --green: #059669;
-  --green-light: #d1fae5;
+  color-scheme: light;
+
+  /* ── Warmed Blueprint — constant ground (light) ── */
+  --paper: #e7ecf2;
+  --paper-2: #dde4ec;
+  --panel: #f8fafc;
+  --panel-2: #eef2f7;
+  --ink: #16263d;
+  --graphite: #55677b;
+  --faint: #8496a8;
+  --line: rgba(22, 38, 61, 0.16);
+  --line-strong: rgba(22, 38, 61, 0.34);
+  --grid: rgba(31, 95, 139, 0.1);
+  --grid-major: rgba(31, 95, 139, 0.16);
+  --blueprint: #1f5f8b;
+  --blueprint-bright: #2f88c2;
+  --pencil: #c8452f;
+  --node-face: #ffffff;
+  --node-stroke: #16263d;
+
+  /* per-tool "drawing inks" — the accent each sheet is drawn in (D1).
+     Base hues are 1:1 with the shipped accents, so the aliases below are near-lossless. */
+  --ink-home: #1f5f8b;
+  --ink-walk: #2563eb;
+  --ink-ll: #059669;
+  --ink-bit: #0d9488;
+  --ink-rec: #7c3aed;
+  --ink-sort: #c2790f;
+  --ink-stack: #e11d48;
+  --accent: var(--ink-home);
+
+  /* semantic */
+  --ok: #0f9d63;
+  --warn: #c2790f;
+  --danger: #c8452f;
+
+  /* elevation / shape / motion */
+  --shadow-sm: 0 1px 2px rgba(22, 38, 61, 0.05), 0 2px 6px rgba(22, 38, 61, 0.05);
+  --shadow-md: 0 1px 2px rgba(22, 38, 61, 0.06), 0 10px 26px rgba(22, 38, 61, 0.09);
+  --shadow-lift: 0 2px 4px rgba(22, 38, 61, 0.08), 0 20px 44px rgba(22, 38, 61, 0.14);
+  --r-plate: 6px;
+  --r-card: 14px;
+  --r-control: 8px;
+  --r-pill: 999px;
+  --e-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --d-fast: 140ms;
+  --d-mid: 280ms;
+  --d-draw: 520ms;
+
+  /* type — next/font sets --display/--sans/--mono/--note on <body>; these are fallbacks */
+  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --display: "Big Shoulders", "IBM Plex Sans", sans-serif;
+  --note: "Caveat", "Comic Sans MS", cursive;
+
+  /* structural (retained from the shipped system) */
   --header-h: 60px;
   --content-wide: 1120px;
   --content-narrow: 820px;
+
+  /* ── back-compat aliases — bridge the old token names to the blueprint system
+       so shipped components keep rendering unchanged until they are redesigned.
+       Base accents map 1:1 to inks (and auto-flip in dark); the *-dark / *-light /
+       *-glow variants have no blueprint equivalent, so they keep their old literals.
+       Removed in Phase 4 once every component uses the new tokens. ── */
+  --bg: var(--paper);
+  --bg-elevated: var(--panel);
+  --bg-muted: var(--panel-2);
+  --bg-subtle: var(--panel-2);
+  --text: var(--ink);
+  --text-secondary: var(--graphite);
+  --text-tertiary: var(--faint);
+  --border: var(--line);
+  --border-strong: var(--line-strong);
+  --radius: var(--r-control);
+  --radius-lg: var(--r-card);
+  --radius-xl: 24px;
+  --shadow-lg: var(--shadow-lift);
+  --font-sans: var(--sans);
+  --font-mono: var(--mono);
+  --teal: var(--ink-bit);
+  --teal-dark: #0f766e;
+  --teal-light: #ccfbf1;
+  --teal-glow: rgba(13, 148, 136, 0.25);
+  --purple: var(--ink-rec);
+  --purple-light: #ede9fe;
+  --amber: var(--ink-sort);
+  --amber-light: #fef3c7;
+  --blue: var(--ink-walk);
+  --blue-light: #dbeafe;
+  --green: var(--ink-ll);
+  --green-light: #d1fae5;
 }
 
+/* Three-state theme.
+   1) System dark — applies on a dark-OS unless the user has explicitly forced light. */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0c0c0b;
-    --bg-elevated: #1c1c1a;
-    --bg-muted: #252523;
-    --bg-subtle: #2e2e2b;
-    --text: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --text-tertiary: #64748b;
-    --border: rgba(255, 255, 255, 0.08);
-    --border-strong: rgba(255, 255, 255, 0.14);
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0b1622;
+    --paper-2: #0e1c2c;
+    --panel: #12233a;
+    --panel-2: #0f1e30;
+    --ink: #e9f1f8;
+    --graphite: #90a6bb;
+    --faint: #65798d;
+    --line: rgba(134, 182, 216, 0.2);
+    --line-strong: rgba(134, 182, 216, 0.4);
+    --grid: rgba(90, 169, 224, 0.12);
+    --grid-major: rgba(90, 169, 224, 0.2);
+    --blueprint: #5aa9e0;
+    --blueprint-bright: #86d1f6;
+    --pencil: #ff7d5f;
+    --node-face: #0e2033;
+    --node-stroke: #86b6d8;
+    --ink-home: #5aa9e0;
+    --ink-walk: #60a5fa;
+    --ink-ll: #34d399;
+    --ink-bit: #2dd4bf;
+    --ink-rec: #a78bfa;
+    --ink-sort: #fbbf24;
+    --ink-stack: #fb7185;
+    --ok: #34d399;
+    --warn: #fbbf24;
+    --danger: #ff7d5f;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5);
+    --shadow-lift: 0 22px 46px rgba(0, 0, 0, 0.6);
+    /* dark back-compat aliases (only the light-tint backgrounds differ in dark) */
     --teal-light: #042f2e;
     --purple-light: #2e1065;
     --amber-light: #451a03;
     --blue-light: #1e3a8a;
     --green-light: #064e3b;
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
-    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.45);
   }
+}
+
+/* 2) Explicit dark toggle — wins on any OS (set by the no-flash script from il-theme). */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0b1622;
+  --paper-2: #0e1c2c;
+  --panel: #12233a;
+  --panel-2: #0f1e30;
+  --ink: #e9f1f8;
+  --graphite: #90a6bb;
+  --faint: #65798d;
+  --line: rgba(134, 182, 216, 0.2);
+  --line-strong: rgba(134, 182, 216, 0.4);
+  --grid: rgba(90, 169, 224, 0.12);
+  --grid-major: rgba(90, 169, 224, 0.2);
+  --blueprint: #5aa9e0;
+  --blueprint-bright: #86d1f6;
+  --pencil: #ff7d5f;
+  --node-face: #0e2033;
+  --node-stroke: #86b6d8;
+  --ink-home: #5aa9e0;
+  --ink-walk: #60a5fa;
+  --ink-ll: #34d399;
+  --ink-bit: #2dd4bf;
+  --ink-rec: #a78bfa;
+  --ink-sort: #fbbf24;
+  --ink-stack: #fb7185;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --danger: #ff7d5f;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5);
+  --shadow-lift: 0 22px 46px rgba(0, 0, 0, 0.6);
+  --teal-light: #042f2e;
+  --purple-light: #2e1065;
+  --amber-light: #451a03;
+  --blue-light: #1e3a8a;
+  --green-light: #064e3b;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-sans);
-  line-height: 1.5;
   min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 140px 140px, 140px 140px, 28px 28px, 28px 28px;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+a {
+  color: var(--blueprint);
+}
+
+::selection {
+  background: var(--pencil);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--pencil);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* ─── Header ─── */
@@ -554,5 +705,15 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  /* self-drawing schematic + drawn glyphs jump straight to their final frame
+     (forward-compat for the Phase-3 hero and drawn-line reveals). */
+  .js .node,
+  .js .arrow,
+  .js .note-g {
+    transition: none;
+    opacity: 1;
+    transform: none;
+    stroke-dashoffset: 0;
   }
 }
