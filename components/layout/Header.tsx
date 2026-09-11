@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const LINKS = [
   { href: "/", label: "Home" },
@@ -12,27 +12,17 @@ const LINKS = [
 ];
 
 export function Header() {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   return (
-    <header className="site-header">
-      <Link className="site-logo" href="/">
-        <span className="logo-mark">{"{ }"}</span>
-        <span className="logo-text">
-          Interact<span>Lab</span>
+    <header className="titleblock">
+      <Link className="tb-cell tb-brand" href="/" aria-label="InteractLab — home">
+        <span className="tb-stamp" aria-hidden="true">
+          {"{ }"}
         </span>
+        <span className="tb-name">InteractLab</span>
       </Link>
-      <button
-        className="nav-toggle"
-        type="button"
-        aria-label={open ? "Close menu" : "Open menu"}
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-      >
-        ☰
-      </button>
-      <nav className={`site-nav${open ? " open" : ""}`} aria-label="Main">
+      <nav className="tb-nav" aria-label="Main">
         {LINKS.map((l) => {
           const base = l.href.replace(/\/$/, "");
           const active =
@@ -43,14 +33,18 @@ export function Header() {
             <Link
               key={l.href}
               href={l.href}
-              className={`nav-link${active ? " active" : ""}`}
-              onClick={() => setOpen(false)}
+              className={`tb-link${active ? " on" : ""}`}
+              aria-current={active ? "page" : undefined}
             >
               {l.label}
             </Link>
           );
         })}
       </nav>
+      <div className="tb-grow" aria-hidden="true" />
+      <div className="tb-cell tb-theme">
+        <ThemeToggle />
+      </div>
     </header>
   );
 }
