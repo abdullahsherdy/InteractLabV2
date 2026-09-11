@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>InteractLab Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@600&display=swap">
+
+<style>
+  :root {
+    /* light — warm-lit blueprint paper */
+    --paper:      #e7ecf2;
+    --paper-2:    #dde4ec;
+    --panel:      #f7f9fc;
+    --ink:        #16263d;
+    --graphite:   #55677b;
+    --blueprint:  #1f5f8b;
+    --blueprint-bright: #2f88c2;
+    --pencil:     #c8452f;
+    --grid:       rgba(31, 95, 139, 0.11);
+    --grid-major: rgba(31, 95, 139, 0.17);
+    --node-face:  #ffffff;
+    --node-stroke:#16263d;
+    --shadow:     0 1px 2px rgba(22,38,61,.06), 0 10px 30px rgba(22,38,61,.08);
+    --shadow-lift:0 2px 4px rgba(22,38,61,.08), 0 20px 44px rgba(22,38,61,.14);
+
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+    --display: "Big Shoulders Display", "IBM Plex Sans", sans-serif;
+    --note: "Caveat", "Comic Sans MS", cursive;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      /* dark — cyanotype drafting board */
+      --paper:      #0b1622;
+      --paper-2:    #0e1c2c;
+      --panel:      #12233a;
+      --ink:        #e9f1f8;
+      --graphite:   #90a6bb;
+      --blueprint:  #5aa9e0;
+      --blueprint-bright: #86d1f6;
+      --pencil:     #ff7d5f;
+      --grid:       rgba(90, 169, 224, 0.13);
+      --grid-major: rgba(90, 169, 224, 0.22);
+      --node-face:  #0e2033;
+      --node-stroke:#86b6d8;
+      --shadow:     0 1px 2px rgba(0,0,0,.4), 0 12px 30px rgba(0,0,0,.5);
+      --shadow-lift:0 2px 4px rgba(0,0,0,.5), 0 22px 46px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0b1622;
+    --paper-2:    #0e1c2c;
+    --panel:      #12233a;
+    --ink:        #e9f1f8;
+    --graphite:   #90a6bb;
+    --blueprint:  #5aa9e0;
+    --blueprint-bright: #86d1f6;
+    --pencil:     #ff7d5f;
+    --grid:       rgba(90, 169, 224, 0.13);
+    --grid-major: rgba(90, 169, 224, 0.22);
+    --node-face:  #0e2033;
+    --node-stroke:#86b6d8;
+    --shadow:     0 1px 2px rgba(0,0,0,.4), 0 12px 30px rgba(0,0,0,.5);
+    --shadow-lift:0 2px 4px rgba(0,0,0,.5), 0 22px 46px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--grid-major) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 132px 132px, 132px 132px, 26.4px 26.4px, 26.4px 26.4px;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; }
+
+  a { color: inherit; }
+  ::selection { background: var(--pencil); color: #fff; }
+
+  /* ── Title block (header) ── */
+  .titleblock {
+    display: flex; align-items: stretch; flex-wrap: wrap;
+    gap: 0; margin-top: 22px;
+    border: 1.5px solid var(--ink);
+    background: color-mix(in srgb, var(--panel) 82%, transparent);
+    backdrop-filter: blur(4px);
+  }
+  .tb-cell { padding: 10px 16px; border-right: 1.5px solid var(--ink); display: flex; flex-direction: column; justify-content: center; }
+  .tb-cell:last-child { border-right: none; }
+  .tb-brand { flex-direction: row; align-items: center; gap: 11px; }
+  .tb-stamp {
+    width: 34px; height: 34px; display: grid; place-items: center;
+    border: 1.5px solid var(--blueprint); color: var(--blueprint);
+    font-family: var(--mono); font-weight: 500; font-size: 15px;
+    transform: rotate(-3deg);
+  }
+  .tb-name { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: .02em; text-transform: uppercase; line-height: 1; }
+  .tb-k { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--graphite); }
+  .tb-v { font-family: var(--mono); font-size: 13px; color: var(--ink); }
+  .tb-grow { flex: 1; border-right: 1.5px solid var(--ink); }
+  .tb-tabs { flex-direction: row; align-items: center; gap: 4px; padding: 8px; }
+  .tb-tab { font-family: var(--mono); font-size: 12px; padding: 5px 10px; color: var(--graphite); text-decoration: none; border: 1px solid transparent; }
+  .tb-tab.on { color: var(--blueprint); border-color: color-mix(in srgb, var(--blueprint) 40%, transparent); background: color-mix(in srgb, var(--blueprint) 9%, transparent); }
+  .tb-tab:hover { color: var(--ink); }
+  .theme-btn {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 7px 12px; background: transparent; color: var(--ink);
+    border: 1.5px solid var(--ink); cursor: pointer;
+  }
+  .theme-btn:hover { color: var(--blueprint); border-color: var(--blueprint); }
+
+  /* ── Hero ── */
+  .hero { padding-block: 46px 30px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--blueprint); margin: 0 0 18px;
+  }
+  .eyebrow::before { content: ""; width: 26px; height: 1.5px; background: var(--blueprint); display: inline-block; }
+
+  h1 {
+    font-family: var(--display); font-weight: 700; text-transform: uppercase;
+    font-size: clamp(42px, 8.4vw, 92px); line-height: .9; letter-spacing: .006em;
+    margin: 0; text-wrap: balance; max-width: 15ch;
+  }
+  h1 .b { color: var(--blueprint); }
+  .lead {
+    margin: 20px 0 0; max-width: 60ch; font-size: clamp(16px, 2.2vw, 18.5px);
+    color: var(--graphite); line-height: 1.62;
+  }
+  .lead strong { color: var(--ink); font-weight: 600; }
+
+  /* ── Board (the animated schematic) ── */
+  .board {
+    margin-top: 30px; position: relative;
+    border: 1.5px solid var(--ink); background: color-mix(in srgb, var(--panel) 70%, transparent);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .board-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    padding: 9px 14px; border-bottom: 1.5px solid var(--ink);
+    background: color-mix(in srgb, var(--blueprint) 8%, transparent);
+  }
+  .board-fig { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--graphite); }
+  .board-fig b { color: var(--blueprint); font-weight: 500; }
+  .replay {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .05em;
+    padding: 7px 13px; background: var(--blueprint); color: #fff;
+    border: none; cursor: pointer;
+  }
+  .replay:hover { background: var(--blueprint-bright); }
+  .replay .tri { font-size: 10px; }
+  .board-svg-wrap { overflow-x: auto; padding: 8px 6px 10px; }
+  svg.schematic { display: block; width: 100%; height: auto; min-width: 560px; }
+
+  /* schematic pieces */
+  .s-node-face { fill: var(--node-face); stroke: var(--node-stroke); stroke-width: 1.6; }
+  .s-node-val  { fill: var(--ink); font-family: var(--mono); font-weight: 500; font-size: 22px; }
+  .s-node-slot { fill: none; stroke: var(--node-stroke); stroke-width: 1.2; opacity: .55; }
+  .s-arrow     { fill: none; stroke: var(--blueprint); stroke-width: 2.2; }
+  .s-none-c    { fill: none; stroke: var(--graphite); stroke-width: 1.4; stroke-dasharray: 4 3; }
+  .s-none-t    { fill: var(--graphite); font-family: var(--mono); font-size: 12px; }
+  .s-pill      { fill: var(--blueprint); }
+  .s-pill-t    { fill: #fff; font-family: var(--mono); font-size: 12px; font-weight: 500; }
+  .s-tick      { stroke: var(--blueprint); stroke-width: 1.6; }
+  .s-note      { fill: var(--pencil); font-family: var(--note); font-size: 25px; }
+  .s-note-line { fill: none; stroke: var(--pencil); stroke-width: 1.8; stroke-linecap: round; }
+
+  /* build animation (progressive enhancement: default = fully drawn) */
+  .node { opacity: 1; transform: translateY(0); }
+  .arrow { stroke-dashoffset: 0; }
+  .note-g { opacity: 1; }
+  .js .node  { opacity: 0; transform: translateY(10px); transition: opacity .42s ease, transform .42s cubic-bezier(.22,1,.36,1); }
+  .js .arrow { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .5s ease; }
+  .js .note-g{ opacity: 0; transition: opacity .5s ease; }
+  .board.built .node  { opacity: 1; transform: translateY(0); }
+  .board.built .arrow { stroke-dashoffset: 0; }
+  .board.built .note-g{ opacity: 1; }
+
+  /* ── Section scaffold ── */
+  section.blk { padding-block: 34px; }
+  .kicker { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--blueprint); margin: 0 0 8px; }
+  h2 { font-family: var(--display); font-weight: 500; text-transform: uppercase; font-size: clamp(24px, 3.6vw, 34px); letter-spacing: .03em; margin: 0; line-height: 1; }
+  .sub { color: var(--graphite); margin: 10px 0 0; max-width: 58ch; }
+
+  /* drawing kit / legend */
+  .kit { margin-top: 24px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
+  .kit-panel { border: 1.5px solid var(--ink); background: var(--panel); box-shadow: var(--shadow); }
+  .kit-head { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--graphite); padding: 9px 14px; border-bottom: 1.5px solid var(--ink); }
+  .swatches { display: flex; flex-direction: column; }
+  .sw { display: flex; align-items: center; gap: 13px; padding: 11px 14px; border-bottom: 1px solid var(--grid-major); }
+  .sw:last-child { border-bottom: none; }
+  .sw-chip { width: 30px; height: 30px; border: 1.5px solid var(--ink); flex: none; }
+  .sw-name { font-weight: 600; font-size: 14px; }
+  .sw-hex { font-family: var(--mono); font-size: 12px; color: var(--graphite); margin-left: auto; }
+  .specimens { padding: 6px 0; }
+  .spec { padding: 11px 14px; border-bottom: 1px solid var(--grid-major); }
+  .spec:last-child { border-bottom: none; }
+  .spec-role { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--graphite); }
+  .spec-eg { margin-top: 3px; }
+  .eg-display { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 30px; line-height: 1; letter-spacing: .02em; }
+  .eg-body { font-family: var(--sans); font-size: 16px; }
+  .eg-mono { font-family: var(--mono); font-size: 14px; color: var(--blueprint); }
+  .eg-note { font-family: var(--note); font-size: 26px; color: var(--pencil); line-height: 1; }
+
+  /* figure plates (how a lesson module looks) */
+  .plates { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  .plate { border: 1.5px solid var(--ink); background: var(--panel); box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform .18s ease, box-shadow .18s ease; }
+  .plate:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+  .plate-cap { display: flex; align-items: baseline; gap: 10px; padding: 12px 15px; border-bottom: 1.5px solid var(--ink); }
+  .plate-no { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--blueprint); }
+  .plate-title { font-family: var(--display); font-weight: 500; text-transform: uppercase; font-size: 19px; letter-spacing: .03em; }
+  .plate-body { padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+  .plate-svg { width: 100%; height: auto; }
+  .plate-txt { font-size: 13.5px; color: var(--graphite); margin: 0; }
+  .plate-note { font-family: var(--note); font-size: 21px; color: var(--pencil); line-height: 1.1; }
+  .mini-transport { display: flex; align-items: center; gap: 7px; }
+  .mini-btn { font-family: var(--mono); font-size: 12px; width: 30px; height: 26px; display: grid; place-items: center; border: 1.2px solid var(--ink); background: transparent; color: var(--ink); }
+  .mini-btn.play { background: var(--blueprint); color: #fff; border-color: var(--blueprint); }
+  .mini-dots { display: flex; gap: 4px; margin-left: 4px; }
+  .mini-dot { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--blueprint); }
+  .mini-dot.on { background: var(--blueprint); }
+
+  footer { padding-block: 26px 40px; margin-top: 20px; border-top: 1.5px solid var(--ink); }
+  .foot-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--graphite); }
+  .foot-note { font-family: var(--note); font-size: 22px; color: var(--pencil); text-transform: none; letter-spacing: 0; }
+
+  :focus-visible { outline: 2.5px solid var(--pencil); outline-offset: 2px; }
+
+  @media (max-width: 760px) {
+    .kit { grid-template-columns: 1fr; }
+    .tb-grow { display: none; }
+    .titleblock { border-right: 1.5px solid var(--ink); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .node, .js .arrow, .js .note-g { transition: none; opacity: 1; transform: none; stroke-dashoffset: 0; }
+    .plate { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="titleblock">
+    <div class="tb-cell tb-brand">
+      <span class="tb-stamp">{ }</span>
+      <span class="tb-name">InteractLab</span>
+    </div>
+    <div class="tb-cell">
+      <span class="tb-k">Drawing</span>
+      <span class="tb-v">LL&#8209;01</span>
+    </div>
+    <div class="tb-cell">
+      <span class="tb-k">Sheet</span>
+      <span class="tb-v">Linked&nbsp;Lists</span>
+    </div>
+    <div class="tb-grow"></div>
+    <div class="tb-cell tb-tabs">
+      <a class="tb-tab" href="#">Topics</a>
+      <a class="tb-tab on" href="#">Linked Lists</a>
+      <a class="tb-tab" href="#">Walkthroughs</a>
+    </div>
+    <div class="tb-cell">
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme">Dark</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">Visual learning lab</p>
+    <h1>Algorithms you can <span class="b">watch</span> work</h1>
+    <p class="lead">
+      Every lesson is a diagram you step through, not a wall of text. Pointers, call stacks
+      and sorts are <strong>drawn live on the board</strong> — one move at a time, at your pace.
+      Below is a linked list building itself.
+    </p>
+
+    <div class="board" id="board">
+      <div class="board-bar">
+        <span class="board-fig"><b>Fig. 1</b> &nbsp;·&nbsp; Singly linked list &nbsp;·&nbsp; append + traverse</span>
+        <button class="replay" id="replayBtn" type="button"><span class="tri">&#9654;</span> Replay the build</button>
+      </div>
+      <div class="board-svg-wrap">
+        <!-- viewBox leaves room for pointer pills (top) and pencil notes -->
+        <svg class="schematic" viewBox="0 0 720 250" role="img"
+             aria-label="A singly linked list: node 12 points to 99, points to 37, points to 5, points to None. A head pointer marks the first node.">
+          <defs>
+            <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="var(--blueprint)"></path>
+            </marker>
+          </defs>
+
+          <!-- head pointer pill -->
+          <g class="note-g" style="transition-delay:1.15s">
+            <rect class="s-pill" x="34" y="40" width="56" height="24" rx="4"></rect>
+            <text class="s-pill-t" x="62" y="57" text-anchor="middle">head</text>
+            <line class="s-tick" x1="62" y1="64" x2="62" y2="92"></line>
+          </g>
+
+          <!-- NODES: rect (value slot | pointer slot) -->
+          <!-- node 1 -->
+          <g class="node" style="transition-delay:.05s">
+            <rect class="s-node-face" x="30" y="96" width="118" height="60" rx="6"></rect>
+            <line class="s-node-slot" x1="112" y1="96" x2="112" y2="156"></line>
+            <text class="s-node-val" x="71" y="134" text-anchor="middle">12</text>
+          </g>
+          <!-- node 2 -->
+          <g class="node" style="transition-delay:.32s">
+            <rect class="s-node-face" x="198" y="96" width="118" height="60" rx="6"></rect>
+            <line class="s-node-slot" x1="280" y1="96" x2="280" y2="156"></line>
+            <text class="s-node-val" x="239" y="134" text-anchor="middle">99</text>
+          </g>
+          <!-- node 3 -->
+          <g class="node" style="transition-delay:.59s">
+            <rect class="s-node-face" x="366" y="96" width="118" height="60" rx="6"></rect>
+            <line class="s-node-slot" x1="448" y1="96" x2="448" y2="156"></line>
+            <text class="s-node-val" x="407" y="134" text-anchor="middle">37</text>
+          </g>
+          <!-- node 4 -->
+          <g class="node" style="transition-delay:.86s">
+            <rect class="s-node-face" x="534" y="96" width="118" height="60" rx="6"></rect>
+            <line class="s-node-slot" x1="616" y1="96" x2="616" y2="156"></line>
+            <text class="s-node-val" x="575" y="134" text-anchor="middle">5</text>
+          </g>
+
+          <!-- ARROWS (pathLength=1 so one dash spans the whole line) -->
+          <path class="arrow" pathLength="1" d="M130 126 L188 126" marker-end="url(#ah)" style="transition-delay:.30s"></path>
+          <path class="arrow" pathLength="1" d="M298 126 L356 126" marker-end="url(#ah)" style="transition-delay:.57s"></path>
+          <path class="arrow" pathLength="1" d="M466 126 L524 126" marker-end="url(#ah)" style="transition-delay:.84s"></path>
+          <path class="arrow" pathLength="1" d="M634 126 L682 126" marker-end="url(#ah)" style="transition-delay:1.05s"></path>
+
+          <!-- None terminal -->
+          <g class="node" style="transition-delay:1.02s">
+            <circle class="s-none-c" cx="700" cy="126" r="17"></circle>
+            <text class="s-none-t" x="700" y="130" text-anchor="middle">∅</text>
+          </g>
+
+          <!-- pencil annotations -->
+          <g class="note-g" style="transition-delay:1.35s">
+            <text class="s-note" x="150" y="210">each node points to the next</text>
+            <path class="s-note-line" d="M158 216 q70 10 150 4"></path>
+            <path class="s-note-line" d="M226 190 q6 -18 22 -40"></path>
+          </g>
+          <g class="note-g" style="transition-delay:1.55s">
+            <text class="s-note" x="576" y="205" text-anchor="middle">end of the chain</text>
+            <path class="s-note-line" d="M636 192 q40 -18 60 -46"></path>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <p class="kicker">The drawing kit</p>
+    <h2>One visual language, every tool</h2>
+    <p class="sub">The same ink, blue and pencil that draw the board above draw every card, control
+      and diagram on the site. Nothing is decorative — every part means something.</p>
+
+    <div class="kit">
+      <div class="kit-panel">
+        <div class="kit-head">Palette</div>
+        <div class="swatches">
+          <div class="sw"><span class="sw-chip" style="background:var(--ink)"></span><span class="sw-name">Ink</span><span class="sw-hex">text &amp; node outlines</span></div>
+          <div class="sw"><span class="sw-chip" style="background:var(--blueprint)"></span><span class="sw-name">Blueprint</span><span class="sw-hex">pointers &amp; links</span></div>
+          <div class="sw"><span class="sw-chip" style="background:var(--pencil)"></span><span class="sw-name">Red pencil</span><span class="sw-hex">notes &amp; warnings</span></div>
+          <div class="sw"><span class="sw-chip" style="background:var(--graphite)"></span><span class="sw-name">Graphite</span><span class="sw-hex">secondary text</span></div>
+          <div class="sw"><span class="sw-chip" style="background:var(--paper);border-color:var(--graphite)"></span><span class="sw-name">Paper</span><span class="sw-hex">the graph ground</span></div>
+        </div>
+      </div>
+      <div class="kit-panel">
+        <div class="kit-head">Type</div>
+        <div class="specimens">
+          <div class="spec"><div class="spec-role">Display · Big Shoulders</div><div class="spec-eg eg-display">Push · Pop · Peek</div></div>
+          <div class="spec"><div class="spec-role">Body · IBM Plex Sans</div><div class="spec-eg eg-body">Follow the clue to the next node.</div></div>
+          <div class="spec"><div class="spec-role">Mono · IBM Plex Mono</div><div class="spec-eg eg-mono">head = curr.next  # O(1)</div></div>
+          <div class="spec"><div class="spec-role">Note · Caveat</div><div class="spec-eg eg-note">save it before you overwrite!</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <p class="kicker">On the sheet</p>
+    <h2>How a lesson looks</h2>
+    <p class="sub">Each module is a numbered figure with its own live diagram and step controls —
+      the same transport you already built, dressed in the drawing language.</p>
+
+    <div class="plates">
+      <article class="plate">
+        <div class="plate-cap"><span class="plate-no">Fig. 2</span><span class="plate-title">Tortoise &amp; Hare</span></div>
+        <div class="plate-body">
+          <svg class="plate-svg" viewBox="0 0 300 120" role="img" aria-label="A looping track with a slow and fast runner used for cycle detection.">
+            <path d="M40 84 h150 a34 34 0 1 1 0 -0.1" fill="none" stroke="var(--blueprint)" stroke-width="2.2" stroke-linecap="round"></path>
+            <circle cx="96" cy="84" r="9" fill="none" stroke="var(--ink)" stroke-width="2"></circle>
+            <text x="96" y="88" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="var(--ink)">T</text>
+            <circle cx="150" cy="84" r="9" fill="var(--pencil)"></circle>
+            <text x="150" y="88" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="#fff">H</text>
+            <text x="40" y="66" font-family="var(--note)" font-size="19" fill="var(--pencil)">they meet = a loop</text>
+          </svg>
+          <p class="plate-txt">Two runners, one twice as fast. If the track loops, they collide on the same node.</p>
+          <div class="mini-transport" aria-hidden="true">
+            <span class="mini-btn">&#9198;</span><span class="mini-btn play">&#9654;</span><span class="mini-btn">&#9197;</span>
+            <span class="mini-dots"><i class="mini-dot on"></i><i class="mini-dot on"></i><i class="mini-dot on"></i><i class="mini-dot"></i><i class="mini-dot"></i></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="plate">
+        <div class="plate-cap"><span class="plate-no">Fig. 3</span><span class="plate-title">Bug toggle</span></div>
+        <div class="plate-body">
+          <svg class="plate-svg" viewBox="0 0 300 120" role="img" aria-label="A node whose pointer was overwritten, leaving a later node orphaned.">
+            <defs>
+              <marker id="ah-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="var(--pencil)"></path>
+              </marker>
+            </defs>
+            <rect x="20" y="46" width="70" height="42" rx="5" fill="var(--node-face)" stroke="var(--node-stroke)" stroke-width="1.6"></rect>
+            <text x="55" y="73" text-anchor="middle" font-family="var(--mono)" font-size="17" fill="var(--ink)">a</text>
+            <path d="M92 67 h44" fill="none" stroke="var(--pencil)" stroke-width="2.2" stroke-dasharray="5 4" marker-end="url(#ah-red)"></path>
+            <rect x="150" y="46" width="70" height="42" rx="5" fill="var(--node-face)" stroke="var(--graphite)" stroke-width="1.6" opacity=".5"></rect>
+            <text x="185" y="73" text-anchor="middle" font-family="var(--mono)" font-size="17" fill="var(--graphite)">b</text>
+            <text x="150" y="34" font-family="var(--note)" font-size="18" fill="var(--pencil)">orphaned!</text>
+          </svg>
+          <p class="plate-txt">Flip the bug switch to overwrite a pointer too early and watch a node float away, unreachable.</p>
+          <div class="mini-transport" aria-hidden="true">
+            <span class="mini-btn">&#9198;</span><span class="mini-btn play">&#9654;</span><span class="mini-btn">&#9197;</span>
+            <span class="mini-dots"><i class="mini-dot on"></i><i class="mini-dot on"></i><i class="mini-dot"></i><i class="mini-dot"></i></span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-row">
+      <span>InteractLab · Design concept</span>
+      <span class="foot-note">warmed-blueprint direction — for your sign-off</span>
+      <span>Sheet 1 / 1</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var board = document.getElementById("board");
+    board.parentElement && root.classList.add("js"); // mark JS present so build can animate
+
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function play() {
+      if (reduce) { board.classList.add("built"); return; }
+      board.classList.remove("built");
+      // force reflow so the reset "sticks" before we re-add the class
+      void board.offsetWidth;
+      requestAnimationFrame(function () { board.classList.add("built"); });
+    }
+
+    // first build shortly after load
+    setTimeout(play, 220);
+    document.getElementById("replayBtn").addEventListener("click", play);
+
+    // theme toggle (persisted, storage-safe)
+    var btn = document.getElementById("themeBtn");
+    function stored() { try { return localStorage.getItem("il-theme"); } catch (e) { return null; } }
+    function apply(t) {
+      if (t === "dark" || t === "light") root.setAttribute("data-theme", t);
+      else root.removeAttribute("data-theme");
+      var dark = t === "dark" || (t !== "light" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      btn.textContent = dark ? "Light" : "Dark";
+    }
+    apply(stored());
+    btn.addEventListener("click", function () {
+      var curDark = root.getAttribute("data-theme") === "dark" ||
+        (!root.getAttribute("data-theme") && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = curDark ? "light" : "dark";
+      apply(next);
+      try { localStorage.setItem("il-theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
