@@ -11,7 +11,7 @@
 | **Branch** | `feat/ui-design` |
 | **Repo** | `abdullahsherdy/InteractLabV2` (git root = `web/`) |
 | **Opened** | 2026-09-11 |
-| **Status** | 🟢 Phase 1 (foundations) implemented — gates green (build + 106 tests), paused for review |
+| **Status** | 🟢 Phase 2 (shared kit) implemented — gates green (build + 117 tests), paused for review |
 
 ---
 
@@ -38,7 +38,7 @@ what's touched."*
 |---|---|---|
 | Design system + wireframes + UX playbook (13 sheets) | [`ui-ux-design-system.html`](./ui-ux-design-system.html) | v Rev A — revising |
 | Implementation plan (master) | [`implementation-plan.md`](./implementation-plan.md) | living |
-| Per-phase plan + progress logs | [`phases/`](./phases/) | Phase 1 done |
+| Per-phase plan + progress logs | [`phases/`](./phases/) | Phases 1–2 done |
 | This phase log | `ui-redesign-log.md` | living |
 | Legacy reference sheet (current shipped tokens) | `design-system.svg` | superseded at impl. |
 | Stacks & Queues mockup | `stacks-queues-mockup.svg` | pending build |
@@ -75,8 +75,9 @@ file outside git.) See memory `git-repo-root-is-web`.
 1. ✅ **Foundations** — blueprint tokens + back-compat aliases, three-state theme,
    graph-paper body + a11y, drafting fonts via `next/font`, no-flash theme script.
    Files: `app/globals.css`, `app/layout.tsx`. *(Built 2026-09-11; gates green.)*
-2. ⬜ **Shared kit** — title-block header + theme toggle; ONE unified `StepEngine` +
+2. ✅ **Shared kit** — title-block header + theme toggle; ONE unified `StepEngine` +
    ONE `StepTransport`; extended `CodeBlock`; drawn glyphs; analogy field-note; states.
+   *(Built 2026-09-12; gates green. Header/theme wired globally; rest built, adopted in P3/P4.)*
 3. ⬜ **Home + Linked Lists** — self-drawing hero; drawn card glyphs; re-skin LL;
    migrate LL onto the shared kit. Review on device before Phase 4.
 4. ⬜ **Roll out** — ink-swap + migrate Recursion / Sorting / Walkthroughs / Bitwise;
@@ -99,3 +100,4 @@ Record each change to the sheets here as we iterate. Newest at the bottom.
 |---|---|---|---|
 | 2026-09-11 | all | Rev A authored — 13-sheet design system delivered. | D1–D6 |
 | 2026-09-11 | `app/globals.css`, `app/layout.tsx` | **Phase 1 (foundations) implemented** in the live Next app: blueprint token system + back-compat aliases, three-state theme (system-dark + explicit `data-theme`), graph-paper body + global a11y (focus ring, selection), drafting fonts via `next/font`, no-flash theme script, reduced-motion forward-compat. Font reconciled: "Big Shoulders Display" → **Big Shoulders** (opsz-variable, `adjustFontFallback:false`). Gates: `pnpm build` clean static export + `pnpm test` 106/106. | D1, D3, D4, D5, D6 |
+| 2026-09-12 | `components/layout/Header.tsx` + new `ThemeToggle.tsx`, `app/globals.css`; new shared kit `components/shared/{StepTransport,useStepEngine,Glyph,Analogy,Skeleton,StateNote}` + `CodeBlock` (extended) + `lib/step/transitions{,.test}` | **Phase 2 (shared kit) implemented.** *Sole global visible change:* `.site-header` → engineer's `.titleblock` (brand stamp · nav with active state · `<ThemeToggle>` writing `il-theme`, the key the Phase-1 no-flash script already reads). *Built but not yet wired (adopted in P3/P4):* one unified step engine — pure `lib/step/transitions.ts` (11 tests) + controlled `useStepEngine` superset — driving one `StepTransport` (Step X/Y + scrubber + speed + keyboard Space/←→/Home/End/R + `aria-live` caption, reduced-motion aware); `CodeBlock` **extended** (bare dark `.code-block` unchanged; opt-in framed light `.code` plate via `filename`/`lang`/`highlight`/`showLineNumbers`, reusing the one tokenizer); drawn `Glyph` set (D5); analogy field-note as **new `.fieldnote`** / `<Analogy>` (legacy `.analogy` + its 23 usages untouched, migrated P3/P4); `Skeleton` + `StateNote`. Gates: `pnpm build` clean static export + `pnpm test` 117/117 (106 + 11 new). | D3, D5 |

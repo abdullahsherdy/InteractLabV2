@@ -217,108 +217,115 @@ a {
   border-radius: 2px;
 }
 
-/* ─── Header ─── */
-.site-header {
+/* ─── Title-block header (Phase 2) ─── */
+/* Engineer's title block: a bordered, sticky plate holding the brand stamp,
+   nav, and the theme toggle. Replaces the shipped `.site-header`. */
+.titleblock {
   position: sticky;
-  top: 0;
-  z-index: 100;
-  height: var(--header-h);
+  top: 10px;
+  z-index: 40;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 0 24px;
-  background: color-mix(in srgb, var(--bg-elevated) 88%, transparent);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-}
-
-.site-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: var(--text);
-  font-weight: 600;
-  font-size: 17px;
-  letter-spacing: -0.02em;
-}
-
-.logo-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
-  color: #fff;
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 4px 12px var(--teal-glow);
-}
-
-.logo-text span { color: var(--teal); }
-
-.site-nav {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  align-items: stretch;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  width: min(var(--content-wide), calc(100% - 40px));
+  margin: 14px auto 0;
+  border: 1.5px solid var(--ink);
+  background: color-mix(in srgb, var(--panel) 84%, transparent);
+  backdrop-filter: blur(5px);
 }
 
-.nav-link {
-  padding: 8px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-secondary);
+.tb-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 9px 15px;
+  border-right: 1.5px solid var(--ink);
+}
+.tb-cell:last-child { border-right: none; }
+
+.tb-brand {
+  flex-direction: row;
+  align-items: center;
+  gap: 11px;
   text-decoration: none;
-  border-radius: var(--radius);
-  transition: color 0.15s, background 0.15s;
+  color: var(--ink);
 }
 
-.nav-link:hover {
-  color: var(--text);
-  background: var(--bg-muted);
+.tb-stamp {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--blueprint);
+  color: var(--blueprint);
+  font-family: var(--mono);
+  font-size: 15px;
+  transform: rotate(-3deg);
 }
 
-.nav-link.active {
-  color: var(--teal-dark);
-  background: var(--teal-light);
+.tb-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
-@media (prefers-color-scheme: dark) {
-  .nav-link.active { color: #5eead4; }
+.tb-nav {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  border-right: 1.5px solid var(--ink);
 }
 
-.nav-toggle {
-  display: none;
-  padding: 8px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--bg-elevated);
+.tb-link {
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--graphite);
+  border-left: 2.5px solid transparent;
+  transition: color var(--d-fast), background var(--d-fast);
+}
+.tb-link:first-child { border-left: none; }
+.tb-link:hover { color: var(--ink); background: var(--panel-2); }
+.tb-link.on {
+  color: var(--ink);
+  border-left-color: var(--pencil);
+  background: var(--panel-2);
+}
+
+.tb-grow { flex: 1; border-right: 1.5px solid var(--ink); }
+
+.theme-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 13px;
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
   cursor: pointer;
-  color: var(--text);
 }
+.theme-btn:hover { color: var(--blueprint); border-color: var(--blueprint); }
 
 @media (max-width: 640px) {
-  .nav-toggle { display: block; }
-  .site-nav {
-    display: none;
-    position: absolute;
-    top: var(--header-h);
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    padding: 12px;
-    background: var(--bg-elevated);
-    border-bottom: 1px solid var(--border);
-    box-shadow: var(--shadow-md);
+  .titleblock { width: calc(100% - 24px); }
+  .tb-grow { display: none; }
+  .tb-theme { margin-left: auto; border-left: 1.5px solid var(--ink); border-right: none; }
+  .tb-nav {
+    order: 3;
+    flex-basis: 100%;
+    border-right: none;
+    border-top: 1.5px solid var(--ink);
   }
-  .site-nav.open { display: flex; }
-  .nav-link { width: 100%; text-align: left; }
+  .tb-link { flex: 1 1 auto; justify-content: center; min-height: 44px; }
 }
 
 /* ─── Footer ─── */
@@ -673,6 +680,56 @@ a {
 .tok-kw { color: #93c5fd; font-weight: 600; }
 .tok-fn { color: #fcd34d; }
 
+/* ─── Framed code plate (Phase 2) — opt-in variant of CodeBlock ─── */
+/* The bare `.code-block` above stays the dark inline snippet. Passing a
+   filename/lang/highlight/line-numbers renders this framed, light-ground plate
+   instead — same tokenizer, recoloured for the paper background below. */
+.code {
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--r-plate);
+  overflow: hidden;
+  background: var(--panel-2);
+}
+.code-h {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--graphite);
+}
+.code pre {
+  margin: 0;
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.code .cl { display: block; }
+.code .ln {
+  display: inline-block;
+  width: 22px;
+  color: var(--faint);
+  user-select: none;
+}
+.code .hl {
+  display: block;
+  margin: 0 -14px;
+  padding: 0 14px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-left: 2px solid var(--accent);
+}
+/* Light-ground token palette — reuses the tokenizer's `.tok-*` classes, scoped
+   under `.code` so the dark `.code-block` snippets keep their own colours. */
+.code .tok-kw { color: var(--ink-rec); font-weight: 600; }
+.code .tok-fn { color: var(--blueprint); }
+.code .tok-comment { color: var(--faint); font-style: italic; }
+.code .tok-num { color: var(--ink-sort); }
+.code .tok-str { color: var(--ink-ll); }
+
 /* ─── Shared analogy callout ─── */
 /* The "remember this" / "where this connects" note that every tutorial opens
    its modules with. One definition so the box reads identically across bitwise,
@@ -698,6 +755,151 @@ a {
   border-radius: 4px;
   color: var(--text);
 }
+
+/* ─── Analogy field-note (Phase 2) ─── */
+/* The redesigned analogy-before-abstraction note. New `.fieldnote` class so the
+   23 shipped `.analogy` boxes above keep rendering until they migrate onto the
+   <Analogy> component in Phase 3/4 (then the legacy rule is removed). */
+.fieldnote {
+  display: flex;
+  gap: 13px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--r-plate) var(--r-plate) 0;
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+.fieldnote .ic { flex: none; display: flex; color: var(--accent); }
+.fieldnote .h {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 3px;
+}
+.fieldnote p { margin: 0; font-size: 14.5px; line-height: 1.6; }
+
+/* ─── Step transport (Phase 2) — the one player UI for every stepped tool ─── */
+.transport {
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--r-plate);
+  background: var(--panel);
+  overflow: hidden;
+}
+.tp-caption {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 15px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel-2);
+  font-size: 14.5px;
+}
+.tp-caption .sn {
+  flex: none;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+}
+.tp-cap-live { display: inline-flex; }
+.tp-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  flex-wrap: wrap;
+}
+.tp-btn {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--r-control);
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 14px;
+  cursor: pointer;
+}
+.tp-btn:hover { background: var(--panel-2); }
+.tp-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.tp-btn.play { background: var(--accent); border-color: var(--accent); color: #fff; }
+.tp-btn.play:hover { filter: brightness(1.08); }
+.tp-scrub {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tp-scrub input[type="range"] { flex: 1; accent-color: var(--accent); }
+.tp-count {
+  min-width: 64px;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--graphite);
+  font-variant-numeric: tabular-nums;
+}
+.tp-speed {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--graphite);
+}
+.tp-speed input { width: 82px; accent-color: var(--accent); }
+.tp-dots { display: flex; gap: 5px; flex-wrap: wrap; padding: 0 15px 10px; }
+.tp-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--accent); }
+.tp-dot.on { background: var(--accent); }
+.kb-hint {
+  padding: 0 15px 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+}
+.kb-hint kbd {
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 11px;
+}
+
+/* ─── States + skeleton (Phase 2) ─── */
+.state {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-plate);
+  background: var(--panel);
+  font-size: 14px;
+}
+.state .dot {
+  width: 10px;
+  height: 10px;
+  margin-top: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--faint);
+}
+.state .dot.ok { background: var(--ok); }
+.state .dot.warn { background: var(--warn); }
+.state .dot.faint { background: var(--faint); }
+.skeleton {
+  height: 12px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--panel-2), var(--line), var(--panel-2));
+  background-size: 200% 100%;
+  animation: sk 1.3s linear infinite;
+}
+.skeleton-stack { display: flex; flex-direction: column; gap: 9px; }
+@keyframes sk { to { background-position: -200% 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
