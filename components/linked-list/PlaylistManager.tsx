@@ -9,25 +9,26 @@ import {
   removeSongSteps,
 } from "@/lib/linked-list/operations";
 import type { ListState, Step } from "@/lib/linked-list/types";
+import { StepTransport } from "@/components/shared/StepTransport";
+import { useStepEngine } from "@/components/shared/useStepEngine";
 import { ListCanvas } from "./ListCanvas";
-import { StepTransport } from "./StepTransport";
-import { useStepPlayer } from "./useStepPlayer";
 
 const START_SONGS = ["Intro", "Sunrise", "Groove", "Outro"];
 
 export function PlaylistManager() {
   const [committed, setCommitted] = useState<ListState>(() => makePlaylist(START_SONGS));
   const [title, setTitle] = useState("");
-  const player = useStepPlayer([
+  const [steps, setSteps] = useState<Step[]>(() => [
     {
       state: makePlaylist(START_SONGS),
       caption: "A playlist is a doubly linked list — that is how “previous song” can work.",
-    } as Step,
+    },
   ]);
+  const engine = useStepEngine(steps, { baseInterval: 1400, autoPlayOnChange: true });
 
-  function commit(steps: Step[]) {
-    setCommitted(steps[steps.length - 1].state);
-    player.load(steps);
+  function commit(next: Step[]) {
+    setCommitted(next[next.length - 1].state);
+    setSteps(next);
   }
 
   const nowPlaying = committed.nodes.find((n) => n.id === committed.cursor)?.value ?? "—";
@@ -74,8 +75,8 @@ export function PlaylistManager() {
           🗑 remove current
         </button>
       </div>
-      {player.current && <ListCanvas step={player.current} showPrev cursorLabel="♪ playing" />}
-      <StepTransport player={player} />
+      {engine.current && <ListCanvas step={engine.current} showPrev cursorLabel="♪ playing" />}
+      <StepTransport engine={engine} caption={engine.current?.caption} />
     </div>
   );
 }

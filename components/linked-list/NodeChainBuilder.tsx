@@ -9,9 +9,9 @@ import {
   makeSingly,
 } from "@/lib/linked-list/operations";
 import type { ListState, Step } from "@/lib/linked-list/types";
+import { StepTransport } from "@/components/shared/StepTransport";
+import { useStepEngine } from "@/components/shared/useStepEngine";
 import { ListCanvas } from "./ListCanvas";
-import { StepTransport } from "./StepTransport";
-import { useStepPlayer } from "./useStepPlayer";
 
 function idle(state: ListState, caption: string): Step {
   return { state, caption };
@@ -21,20 +21,23 @@ export function NodeChainBuilder() {
   const [committed, setCommitted] = useState<ListState>(() => makeSingly([3, 7, 12]));
   const [value, setValue] = useState("");
   const [buggy, setBuggy] = useState(false);
-  const player = useStepPlayer([idle(makeSingly([3, 7, 12]), "Try an operation — every pointer move is animated step by step.")]);
+  const [steps, setSteps] = useState<Step[]>(() => [
+    idle(makeSingly([3, 7, 12]), "Try an operation — every pointer move is animated step by step."),
+  ]);
+  const engine = useStepEngine(steps, { baseInterval: 1400, autoPlayOnChange: true });
 
   function run(op: (s: ListState, v: string | number) => Step[]) {
     const v: string | number = value.trim() === "" ? Math.floor(Math.random() * 90) + 10 : isNaN(Number(value)) ? value.trim() : Number(value);
-    const steps = op(committed, v);
-    setCommitted(steps[steps.length - 1].state);
-    player.load(steps);
+    const next = op(committed, v);
+    setCommitted(next[next.length - 1].state);
+    setSteps(next);
     setValue("");
   }
 
   function reset() {
     const fresh = makeSingly([3, 7, 12]);
     setCommitted(fresh);
-    player.load([idle(fresh, "Back to the starting chain: 3 → 7 → 12.")]);
+    setSteps([idle(fresh, "Back to the starting chain: 3 → 7 → 12.")]);
   }
 
   return (
@@ -69,8 +72,8 @@ export function NodeChainBuilder() {
           🐛 break the chain (skip saving <code>next</code>)
         </label>
       </div>
-      {player.current && <ListCanvas step={player.current} />}
-      <StepTransport player={player} />
+      {engine.current && <ListCanvas step={engine.current} />}
+      <StepTransport engine={engine} caption={engine.current?.caption} />
     </div>
   );
 }

@@ -58,14 +58,15 @@ export function useStepEngine<T>(
   { baseInterval = 1100, autoPlayOnChange = false }: StepEngineOptions = {},
 ): StepEngineApi<T> {
   const [index, setIndex] = useState(0);
-  const [playing, setPlaying] = useState(autoPlayOnChange && steps.length > 0);
+  const [playing, setPlaying] = useState(autoPlayOnChange && steps.length > 1);
   const [speed, setSpeed] = useState(1);
   const total = steps.length;
 
-  // New step list → back to the start; play or pause per option.
+  // New step list → back to the start; play or pause per option. A lone step
+  // (e.g. an idle placeholder) has nothing to auto-advance, so never autoplays.
   useEffect(() => {
     setIndex(0);
-    setPlaying(autoPlayOnChange && steps.length > 0);
+    setPlaying(autoPlayOnChange && steps.length > 1);
   }, [steps, autoPlayOnChange]);
 
   // Auto-advance while playing; stop when the tick reports the end.

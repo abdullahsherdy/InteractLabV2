@@ -1,50 +1,64 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { Reveal } from "@/components/layout/Reveal";
+import { HomeHero } from "@/components/home/HomeHero";
+import { Glyph, type GlyphName } from "@/components/shared/Glyph";
 
-const CARDS = [
+interface TopicCard {
+  href: string;
+  glyph: GlyphName;
+  /** per-tool accent ink token */
+  ink: string;
+  title: string;
+  desc: string;
+  meta: string[];
+  arrow: string;
+}
+
+const CARDS: TopicCard[] = [
   {
     href: "/walkthroughs/",
-    icon: "🎬",
-    iconClass: "blue",
+    glyph: "walkthrough",
+    ink: "var(--ink-walk)",
     title: "Problem Walkthroughs",
     desc: "Whiteboard-style animated solutions to classic problems. Watch the array, pointers, and pseudocode move together, one narrated step at a time.",
-    meta: ["step-by-step", "synced code", "narrated", "animated"],
+    meta: ["step-by-step", "synced code", "narrated"],
     arrow: "Watch walkthroughs →",
   },
   {
     href: "/linked-lists/",
-    icon: "⛓️",
-    iconClass: "green",
+    glyph: "linked-list",
+    ink: "var(--ink-ll)",
     title: "Linked Lists",
     desc: "Animated node chains: build, insert, delete, break the chain on purpose, race the tortoise and hare, and drive a playlist.",
-    meta: ["nodes & pointers", "doubly linked", "Floyd's cycle", "animated"],
+    meta: ["nodes & pointers", "doubly linked", "Floyd's cycle"],
     arrow: "Open visualizer →",
   },
   {
     href: "/bitwise/",
-    icon: "01",
-    iconClass: "teal",
+    glyph: "bitwise",
+    ink: "var(--ink-bit)",
     title: "Bitwise & Number Systems",
     desc: "A byte as 8 light switches: flip bits, watch decimal→binary conversion animate, and compare bytes in a live AND/OR/XOR/shift playground.",
-    meta: ["place value", "decimal → binary", "bitwise ops", "animated"],
+    meta: ["place value", "decimal → binary", "bitwise ops"],
     arrow: "Open visualizer →",
   },
   {
     href: "/recursion/",
-    icon: "02",
-    iconClass: "purple",
+    glyph: "recursion",
+    ink: "var(--ink-rec)",
     title: "Recursion & Big-O",
     desc: "Step through the call stack frame by frame, watch a Fibonacci tree explode with repeated work, compare Big-O growth live, and learn a 6-step method for any problem.",
-    meta: ["call stack", "Fibonacci tree", "Big-O", "animated"],
+    meta: ["call stack", "Fibonacci tree", "Big-O"],
     arrow: "Open visualizer →",
   },
   {
     href: "/sorting/",
-    icon: "03",
-    iconClass: "amber",
+    glyph: "sorting",
+    ink: "var(--ink-sort)",
     title: "Sorting Algorithms",
     desc: "Step through bubble, selection and insertion bar by bar, replay merge and quick sort's recursion, compare growth rates live, and see why stable, in-place and adaptive matter.",
-    meta: ["O(n²)", "O(n log n)", "sort by key", "animated"],
+    meta: ["O(n²)", "O(n log n)", "sort by key"],
     arrow: "Open visualizer →",
   },
 ];
@@ -52,30 +66,7 @@ const CARDS = [
 export default function HomePage() {
   return (
     <>
-      <section className="home-hero">
-        <div className="home-hero-inner">
-          <Reveal>
-            <p className="home-eyebrow">Interactive learning</p>
-            <h1>
-              See algorithms <em>work</em>, not just read about them
-            </h1>
-            <p className="home-lead">
-              Live, step-through visualizers that show how algorithms change
-              state and why they behave the way they do.
-            </p>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <div className="home-cta-row">
-              <Link className="btn btn-primary" href="/linked-lists/">
-                Try the Linked Lists visualizer
-              </Link>
-              <Link className="btn btn-ghost" href="/topics/">
-                Open a topic →
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <HomeHero />
 
       <section id="tutorials" className="home-section">
         <Reveal>
@@ -84,11 +75,23 @@ export default function HomePage() {
             <p>Interactive tutorials with live visualizers and runnable examples.</p>
           </div>
         </Reveal>
-        <div className="tutorial-grid">
+        <div className="cards">
           {CARDS.map((c, i) => (
             <Reveal key={c.href} delay={i * 0.06}>
-              <Link className="tutorial-card" href={c.href}>
-                <CardBody card={c} />
+              <Link className="tcard" href={c.href} style={{ "--accent": c.ink } as CSSProperties}>
+                <span className="ic">
+                  <Glyph name={c.glyph} size={26} />
+                </span>
+                <h5>{c.title}</h5>
+                <p>{c.desc}</p>
+                <div className="meta">
+                  {c.meta.map((m) => (
+                    <span key={m} className="tag">
+                      {m}
+                    </span>
+                  ))}
+                </div>
+                <span className="arw">{c.arrow}</span>
               </Link>
             </Reveal>
           ))}
@@ -116,24 +119,6 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-    </>
-  );
-}
-
-function CardBody({ card }: { card: (typeof CARDS)[number] }) {
-  return (
-    <>
-      <div className={`card-icon ${card.iconClass}`} aria-hidden="true">
-        {card.icon}
-      </div>
-      <h3>{card.title}</h3>
-      <p>{card.desc}</p>
-      <div className="card-meta">
-        {card.meta.map((m) => (
-          <span key={m}>{m}</span>
-        ))}
-      </div>
-      <span className="card-arrow">{card.arrow}</span>
     </>
   );
 }

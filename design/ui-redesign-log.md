@@ -11,7 +11,7 @@
 | **Branch** | `feat/ui-design` |
 | **Repo** | `abdullahsherdy/InteractLabV2` (git root = `web/`) |
 | **Opened** | 2026-09-11 |
-| **Status** | 🟢 Phase 2 (shared kit) implemented — gates green (build + 117 tests), paused for review |
+| **Status** | 🟢 Phase 3 (Home + Linked Lists) implemented — gates green (build + 117 tests), paused for on-device review |
 
 ---
 
@@ -38,7 +38,7 @@ what's touched."*
 |---|---|---|
 | Design system + wireframes + UX playbook (13 sheets) | [`ui-ux-design-system.html`](./ui-ux-design-system.html) | v Rev A — revising |
 | Implementation plan (master) | [`implementation-plan.md`](./implementation-plan.md) | living |
-| Per-phase plan + progress logs | [`phases/`](./phases/) | Phases 1–2 done |
+| Per-phase plan + progress logs | [`phases/`](./phases/) | Phases 1–3 done |
 | This phase log | `ui-redesign-log.md` | living |
 | Legacy reference sheet (current shipped tokens) | `design-system.svg` | superseded at impl. |
 | Stacks & Queues mockup | `stacks-queues-mockup.svg` | pending build |
@@ -78,8 +78,8 @@ file outside git.) See memory `git-repo-root-is-web`.
 2. ✅ **Shared kit** — title-block header + theme toggle; ONE unified `StepEngine` +
    ONE `StepTransport`; extended `CodeBlock`; drawn glyphs; analogy field-note; states.
    *(Built 2026-09-12; gates green. Header/theme wired globally; rest built, adopted in P3/P4.)*
-3. ⬜ **Home + Linked Lists** — self-drawing hero; drawn card glyphs; re-skin LL;
-   migrate LL onto the shared kit. Review on device before Phase 4.
+3. ✅ **Home + Linked Lists** — self-drawing hero; drawn card glyphs; re-skin LL;
+   migrate LL onto the shared kit. *(Built 2026-09-12; gates green. Review on device before Phase 4.)*
 4. ⬜ **Roll out** — ink-swap + migrate Recursion / Sorting / Walkthroughs / Bitwise;
    build Stacks & Queues natively (D2 rose); P2/P3 UX upgrades; remove token aliases;
    refresh `web/.claude/CLAUDE.md`.
@@ -101,3 +101,4 @@ Record each change to the sheets here as we iterate. Newest at the bottom.
 | 2026-09-11 | all | Rev A authored — 13-sheet design system delivered. | D1–D6 |
 | 2026-09-11 | `app/globals.css`, `app/layout.tsx` | **Phase 1 (foundations) implemented** in the live Next app: blueprint token system + back-compat aliases, three-state theme (system-dark + explicit `data-theme`), graph-paper body + global a11y (focus ring, selection), drafting fonts via `next/font`, no-flash theme script, reduced-motion forward-compat. Font reconciled: "Big Shoulders Display" → **Big Shoulders** (opsz-variable, `adjustFontFallback:false`). Gates: `pnpm build` clean static export + `pnpm test` 106/106. | D1, D3, D4, D5, D6 |
 | 2026-09-12 | `components/layout/Header.tsx` + new `ThemeToggle.tsx`, `app/globals.css`; new shared kit `components/shared/{StepTransport,useStepEngine,Glyph,Analogy,Skeleton,StateNote}` + `CodeBlock` (extended) + `lib/step/transitions{,.test}` | **Phase 2 (shared kit) implemented.** *Sole global visible change:* `.site-header` → engineer's `.titleblock` (brand stamp · nav with active state · `<ThemeToggle>` writing `il-theme`, the key the Phase-1 no-flash script already reads). *Built but not yet wired (adopted in P3/P4):* one unified step engine — pure `lib/step/transitions.ts` (11 tests) + controlled `useStepEngine` superset — driving one `StepTransport` (Step X/Y + scrubber + speed + keyboard Space/←→/Home/End/R + `aria-live` caption, reduced-motion aware); `CodeBlock` **extended** (bare dark `.code-block` unchanged; opt-in framed light `.code` plate via `filename`/`lang`/`highlight`/`showLineNumbers`, reusing the one tokenizer); drawn `Glyph` set (D5); analogy field-note as **new `.fieldnote`** / `<Analogy>` (legacy `.analogy` + its 23 usages untouched, migrated P3/P4); `Skeleton` + `StateNote`. Gates: `pnpm build` clean static export + `pnpm test` 117/117 (106 + 11 new). | D3, D5 |
+| 2026-09-12 | `app/page.tsx` + new `components/home/HomeHero.tsx`, `app/globals.css`; `app/linked-lists/page.tsx` + 4 LL modules + `linked-lists.css`; `components/shared/useStepEngine.ts`; deleted `components/linked-list/{StepTransport,useStepPlayer}` | **Phase 3 (Home + Linked Lists) implemented.** *Home:* gradient hero → self-drawing linked-list schematic as a client island (`HomeHero`, D6 — wrapper `.js`→`.built` triggers staggered CSS draw via per-element `transition-delay`; arrows `pathLength=1` + `stroke-dashoffset`; `useReducedMotion` jumps to built, global reduced-motion block backstops; ▸ replay). Topic cards: emoji + colour-class → drawn `<Glyph>` (D5) + per-tool ink on the shared `.cards`/`.tcard`. *Linked Lists (the reference tool):* crumb breadcrumb + `.tag accent` jump-chip hero; each module framed in a `.plate` (`Fig. N` cap) whose `.plate-b` leads with its analogy as an `<Analogy>` field-note; `--accent: var(--ink-ll)` on hero + main themes the whole kit (crumb/tags/plate/field-note/transport all read `--accent`). All 4 interactive modules (`NodeChainBuilder`/`DoublyListDemo`/`CycleRace`/`PlaylistManager`) migrated from the imperative `useStepPlayer([idle]).load()` to the controlled `useStepEngine(steps,{baseInterval:1400,autoPlayOnChange:true})` (steps held in `useState`, array swapped per op → rewind + autoplay) + the shared `StepTransport`; the LL-local `StepTransport` + `useStepPlayer` deleted. Engine autoplay guard tightened `>0`→`>1` so a lone idle step never flashes the pause icon. Shared primitives `.plate*`/`.diagram`/`.crumb`/`.tag(.accent)`/`.fieldnote code` added to `globals.css` (reused by every P4 tool). `ListCanvas` + all `lib/linked-list` generators unchanged — no tested logic moved. Gates: `pnpm build` clean static export + `pnpm test` 117/117. | D3, D5, D6 |
