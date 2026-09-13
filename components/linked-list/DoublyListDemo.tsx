@@ -8,23 +8,24 @@ import {
   removeNodeDoublySteps,
 } from "@/lib/linked-list/operations";
 import type { ListState, Step } from "@/lib/linked-list/types";
+import { StepTransport } from "@/components/shared/StepTransport";
+import { useStepEngine } from "@/components/shared/useStepEngine";
 import { ListCanvas } from "./ListCanvas";
-import { StepTransport } from "./StepTransport";
-import { useStepPlayer } from "./useStepPlayer";
 
 export function DoublyListDemo() {
   const [committed, setCommitted] = useState<ListState>(() => makeDoubly(["A", "B", "C"]));
   const [value, setValue] = useState("");
-  const player = useStepPlayer([
+  const [steps, setSteps] = useState<Step[]>(() => [
     {
       state: makeDoubly(["A", "B", "C"]),
       caption: "Each dancer holds two hands: next (teal, above) and prev (purple, below).",
-    } as Step,
+    },
   ]);
+  const engine = useStepEngine(steps, { baseInterval: 1400, autoPlayOnChange: true });
 
-  function commit(steps: Step[]) {
-    setCommitted(steps[steps.length - 1].state);
-    player.load(steps);
+  function commit(next: Step[]) {
+    setCommitted(next[next.length - 1].state);
+    setSteps(next);
   }
 
   function append() {
@@ -67,7 +68,7 @@ export function DoublyListDemo() {
           onClick={() => {
             const fresh = makeDoubly(["A", "B", "C"]);
             setCommitted(fresh);
-            player.load([{ state: fresh, caption: "Back to the starting dance line: A ⇄ B ⇄ C." }]);
+            setSteps([{ state: fresh, caption: "Back to the starting dance line: A ⇄ B ⇄ C." }]);
           }}
         >
           reset
@@ -77,8 +78,8 @@ export function DoublyListDemo() {
         <span><i className="ll-swatch" style={{ background: "var(--teal)" }} /> next</span>
         <span><i className="ll-swatch" style={{ background: "var(--purple)" }} /> prev</span>
       </div>
-      {player.current && <ListCanvas step={player.current} showPrev />}
-      <StepTransport player={player} />
+      {engine.current && <ListCanvas step={engine.current} showPrev />}
+      <StepTransport engine={engine} caption={engine.current?.caption} />
     </div>
   );
 }

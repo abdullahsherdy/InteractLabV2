@@ -1,9 +1,9 @@
+/* Linked Lists — module chrome. The .plate (globals) now frames each module,
+   so .ll-module is just the inner stack. Buttons, focus rings and the canvas
+   read var(--accent) (= --ink-ll on this page). Playback is the shared
+   .transport; the old per-tool dot transport CSS has been removed. */
+
 .ll-module {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -20,15 +20,15 @@
   width: 110px;
   padding: 10px 12px;
   font-size: 15px;
-  font-family: var(--font-mono);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--mono);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-control);
+  background: var(--panel);
+  color: var(--ink);
 }
 
 .ll-input:focus {
-  outline: 2px solid var(--teal);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -36,11 +36,11 @@
   padding: 10px 16px;
   font-size: 14px;
   font-weight: 600;
-  font-family: var(--font-sans);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--bg-elevated);
-  color: var(--text);
+  font-family: var(--sans);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-control);
+  background: var(--panel);
+  color: var(--ink);
   cursor: pointer;
   transition: transform 0.12s, background 0.12s, box-shadow 0.12s;
   min-height: 42px;
@@ -48,36 +48,29 @@
 
 .ll-btn:hover:not(:disabled) {
   transform: translateY(-1px);
-  background: var(--bg-muted);
+  background: var(--panel-2);
 }
 
 .ll-btn:disabled { opacity: 0.4; cursor: default; }
 
 .ll-btn-op {
-  background: var(--teal);
-  border-color: var(--teal);
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
-  box-shadow: 0 3px 10px var(--teal-glow);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
-.ll-btn-op:hover:not(:disabled) { background: var(--teal-dark); }
-
-.ll-btn-play {
-  background: var(--purple);
-  border-color: var(--purple);
-  color: #fff;
-  min-width: 52px;
-}
+.ll-btn-op:hover:not(:disabled) { background: color-mix(in srgb, var(--accent) 88%, #000); }
 
 .ll-btn-node {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
   padding: 8px 12px;
 }
 
 .ll-hint {
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .ll-bug-toggle {
@@ -87,10 +80,10 @@
   padding: 9px 14px;
   font-size: 13px;
   font-weight: 500;
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--radius);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-control);
   cursor: pointer;
-  color: var(--text-secondary);
+  color: var(--graphite);
   transition: all 0.15s;
   user-select: none;
 }
@@ -103,13 +96,13 @@
 }
 
 .ll-bug-toggle input { accent-color: var(--amber); }
-.ll-bug-toggle code { font-family: var(--font-mono); font-size: 12px; }
+.ll-bug-toggle code { font-family: var(--mono); font-size: 12px; }
 
 .ll-legend {
   display: flex;
   gap: 18px;
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .ll-legend span { display: inline-flex; align-items: center; gap: 6px; }
@@ -121,13 +114,14 @@
   display: inline-block;
 }
 
+/* the diagram surface (matches .diagram in globals) */
 .ll-canvas-wrap {
   overflow-x: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background:
-    radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0) 0 0 / 22px 22px,
-    var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-plate);
+  background-color: var(--panel-2);
+  background-image: radial-gradient(circle at 1px 1px, var(--grid-major) 1px, transparent 0);
+  background-size: 20px 20px;
   padding: 8px;
 }
 
@@ -137,103 +131,50 @@
   width: 100%;
 }
 
+/* canvas text — the diagram keeps its own next/prev/highlight colour scheme
+   (teal / purple / amber), independent of the page accent. */
 .ll-node-text {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 16px;
   font-weight: 600;
-  fill: var(--text);
+  fill: var(--ink);
 }
 
 .ll-none-text {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 11px;
-  fill: var(--text-tertiary);
+  fill: var(--faint);
 }
 
 .ll-pointer-text {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 11px;
   font-weight: 600;
   fill: #fff;
 }
 
 .ll-cursor-text {
-  font-family: var(--font-sans);
+  font-family: var(--sans);
   font-size: 12px;
   font-weight: 700;
   fill: var(--teal);
 }
 
 .ll-orphan-label {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 12px;
   fill: var(--amber);
 }
 
-.ll-transport {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.ll-caption {
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  padding: 10px 16px;
-  font-size: 15px;
-  line-height: 1.5;
-  background: var(--bg-muted);
-  border-left: 3px solid var(--teal);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  color: var(--text);
-}
-
-.ll-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-}
-
-.ll-progress {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  flex: 1;
-  min-width: 80px;
-}
-
-.ll-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-strong);
-  transition: background 0.2s;
-}
-
-.ll-dot.on { background: var(--teal); border-color: var(--teal); }
-
-.ll-speed {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-
-.ll-speed input { accent-color: var(--teal); width: 100px; }
-.ll-speed-val { font-family: var(--font-mono); min-width: 30px; }
-
+/* Playlist "now playing" banner */
 .ll-nowplaying {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 12px 16px;
-  border-radius: var(--radius);
+  border-radius: var(--r-control);
   background: linear-gradient(135deg, var(--teal-light), var(--purple-light));
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
 }
 
 .ll-np-icon {
@@ -258,37 +199,8 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
+  color: var(--graphite);
+  font-family: var(--mono);
 }
 
 .ll-np-title { font-size: 17px; font-weight: 700; }
-
-.ll-section {
-  margin-bottom: 48px;
-}
-
-.ll-section-head {
-  margin-bottom: 16px;
-}
-
-.ll-section-head .ll-kicker {
-  font-size: 12px;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--teal-dark);
-  margin-bottom: 6px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .ll-section-head .ll-kicker { color: #5eead4; }
-}
-
-.ll-section-head h2 {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 6px;
-}
-
