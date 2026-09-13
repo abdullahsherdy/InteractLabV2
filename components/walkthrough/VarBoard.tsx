@@ -12,11 +12,11 @@ export function VarBoard({ vars }: { vars: VarBinding[] }) {
           className="wt-var"
           animate={
             v.changed
-              ? { scale: [1, 1.06, 1], borderColor: [v.color ?? "var(--border-strong)", v.color ?? "var(--teal)"] }
+              ? { scale: [1, 1.06, 1], borderColor: [v.color ?? "var(--line-strong)", v.color ?? "var(--accent)"] }
               : {}
           }
           transition={{ duration: 0.4 }}
-          style={{ borderLeftColor: v.color ?? "var(--border-strong)" }}
+          style={{ borderLeftColor: v.color ?? "var(--line-strong)" }}
         >
           <span className="wt-var-name">{v.name}</span>
           <motion.span

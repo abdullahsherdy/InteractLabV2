@@ -90,8 +90,12 @@ export function ArrayCanvas({ viz }: { viz: ArrayViz }) {
                 height={CELL}
                 rx={10}
                 animate={{
-                  fill: inWindow ? "var(--teal-light)" : "var(--bg-elevated)",
-                  stroke: isFlash ? "var(--amber)" : inWindow ? "var(--teal)" : "var(--border-strong)",
+                  // Draw in the page ink (--accent = --ink-walk): in-window cells
+                  // take a light accent tint; a flash borrows the sort-amber as a
+                  // distinct "attention" hue. Marker/window colours still come
+                  // from the lib data below.
+                  fill: inWindow ? "color-mix(in srgb, var(--accent) 14%, var(--panel))" : "var(--panel)",
+                  stroke: isFlash ? "var(--ink-sort)" : inWindow ? "var(--accent)" : "var(--line-strong)",
                   strokeWidth: isFlash ? 3.5 : inWindow ? 2.5 : 1.5,
                   scale: isFlash ? [1, 1.08, 1] : 1,
                 }}

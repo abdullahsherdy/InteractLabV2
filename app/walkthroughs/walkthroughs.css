@@ -1,66 +1,24 @@
-/* Problem Walkthroughs — whiteboard-accent visual style.
-   Builds on the shared design tokens in globals.css. */
+/* Problem Walkthroughs — module chrome, drawn in the walkthrough ink.
+   The page sets --accent: var(--ink-walk) on the hero + main, so the shared
+   kit (crumb, .tag.accent, .plate caps, the <Analogy> field-note, the
+   .transport, and the .code plate's highlighted line) all draw in walkthrough
+   blue. Sections are framed by the shared .plate; playback is the shared
+   .transport; code is the shared .code plate. This file is only the player
+   stage, the array/variable diagram, the worked-example cards, and the
+   complexity chips. */
 
-.wt-section {
-  margin-bottom: 44px;
-}
-
-.wt-section-head {
-  margin-bottom: 16px;
-}
-
-.wt-kicker {
-  font-size: 12px;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--teal-dark);
-  margin-bottom: 6px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .wt-kicker { color: #5eead4; }
-}
-
-.wt-section-head h2 {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 6px;
-}
-
-/* Handwriting accent — used for whiteboard-y labels only, never body text. */
-.wt-hand {
-  font-family: "Comic Sans MS", "Comic Sans", "Segoe Print", "Bradley Hand", cursive;
-}
-
-/* Callouts ---------------------------------------------------------------- */
-.wt-intuition {
-  display: flex;
-  gap: 12px;
-  padding: 16px 18px;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--text);
-  background: linear-gradient(135deg, var(--teal-light), var(--purple-light));
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  max-width: 74ch;
-}
-
-.wt-intuition .wt-intuition-icon { font-size: 22px; line-height: 1.3; }
-
+/* Statement ---------------------------------------------------------------- */
 .wt-statement {
   max-width: 72ch;
   font-size: 15px;
   line-height: 1.7;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .wt-statement p { margin: 0 0 12px; }
 .wt-statement p:last-child { margin-bottom: 0; }
 
-/* Examples --------------------------------------------------------------- */
+/* Worked examples ---------------------------------------------------------- */
 .wt-examples {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -68,34 +26,23 @@
 }
 
 .wt-example {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 16px;
-  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding: 14px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
 }
 
-.wt-example-io { font-family: var(--font-mono); font-size: 13px; }
-.wt-example-io b { color: var(--text); }
-.wt-example-in { color: var(--text-secondary); word-break: break-word; }
-.wt-example-out { color: var(--teal-dark); font-weight: 600; }
+.wt-example-io { font-family: var(--mono); font-size: 13px; color: var(--graphite); }
+.wt-example-io b { color: var(--ink); }
+.wt-example-in { word-break: break-word; }
+.wt-example-out { color: var(--accent); font-weight: 600; }
+.wt-example-why { font-size: 13px; line-height: 1.5; color: var(--graphite); }
 
-@media (prefers-color-scheme: dark) {
-  .wt-example-out { color: #5eead4; }
-}
-
-.wt-example-why { font-size: 13px; line-height: 1.5; color: var(--text-secondary); }
-
-/* Player ------------------------------------------------------------------ */
+/* Player ------------------------------------------------------------------- */
 .wt-player {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 18px;
-  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -119,14 +66,14 @@
   min-width: 0;
 }
 
-/* Canvas — the dry-erase board */
+/* Array diagram — the graph-paper surface (matches .diagram in globals) */
 .wt-canvas-wrap {
   overflow-x: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background:
-    radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0) 0 0 / 22px 22px,
-    var(--bg-muted);
+  border: 1px solid var(--line);
+  border-radius: var(--r-plate);
+  background-color: var(--panel-2);
+  background-image: radial-gradient(circle at 1px 1px, var(--grid-major) 1px, transparent 0);
+  background-size: 20px 20px;
   padding: 10px;
 }
 
@@ -137,37 +84,34 @@
 }
 
 .wt-cell-text {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 22px;
   font-weight: 600;
-  fill: var(--text);
+  fill: var(--ink);
 }
 
 .wt-index-text {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 12px;
-  fill: var(--text-tertiary);
+  fill: var(--faint);
 }
 
 .wt-marker-text {
-  font-family: var(--font-sans);
+  font-family: var(--sans);
   font-size: 11px;
   font-weight: 700;
   fill: #fff;
 }
 
+/* Hand-lettered bracket label — the blueprint pencil hand (Caveat, --note). */
 .wt-bracket-label {
-  font-size: 15px;
+  font-family: var(--note);
+  font-size: 17px;
   font-weight: 600;
-  fill: var(--teal-dark);
-  font-family: "Comic Sans MS", "Segoe Print", "Bradley Hand", cursive;
+  fill: var(--accent);
 }
 
-@media (prefers-color-scheme: dark) {
-  .wt-bracket-label { fill: #5eead4; }
-}
-
-/* Variable board */
+/* Variable board ----------------------------------------------------------- */
 .wt-vars {
   display: flex;
   flex-wrap: wrap;
@@ -181,198 +125,37 @@
   flex-direction: column;
   gap: 2px;
   padding: 10px 12px;
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--border-strong);
-  border-radius: var(--radius);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--r-control);
 }
 
 .wt-var-name {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .wt-var-value {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 22px;
   font-weight: 700;
   line-height: 1.1;
 }
 
-/* Code panel -------------------------------------------------------------- */
-.wt-code {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: #0f172a;
-  min-width: 0;
-}
-
-.wt-code-head {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  background: #1e293b;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.wt-code-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #475569;
-}
-
-.wt-code-lang {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #94a3b8;
-}
-
-.wt-code-body {
-  margin: 0;
-  padding: 10px 0;
-  overflow-x: auto;
-  font-family: var(--font-mono);
-  font-size: 13.5px;
-  line-height: 1.7;
-}
-
-.wt-code-line {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 0 14px;
-  white-space: pre;
-}
-
-.wt-code-highlight {
-  position: absolute;
-  inset: 0;
-  background: rgba(45, 212, 191, 0.16);
-  border-left: 3px solid var(--teal);
-}
-
-.wt-code-gutter {
-  position: relative;
-  z-index: 1;
-  width: 22px;
-  flex: none;
-  text-align: right;
-  margin-right: 14px;
-  color: #475569;
-  user-select: none;
-}
-
-.wt-code-text {
-  position: relative;
-  z-index: 1;
-  color: #cbd5e1;
-}
-
-.wt-code-line.active .wt-code-text { color: #f0fdfa; }
-
-/* Transport --------------------------------------------------------------- */
-.wt-transport {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.wt-narration-wrap {
-  position: relative;
-  min-height: 60px;
-  padding: 14px 16px 14px 18px;
-  background: var(--bg-muted);
-  border-left: 3px solid var(--teal);
-  border-radius: 0 var(--radius) var(--radius) 0;
-}
-
-.wt-narration-marker {
-  display: inline-block;
-  font-family: var(--font-mono);
+/* Phase label — folded into the shared transport's caption as a mono prefix. */
+.wt-phase {
+  font-family: var(--mono);
   font-size: 10px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--teal-dark);
-  margin-bottom: 4px;
+  color: var(--accent);
+  margin-right: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .wt-narration-marker { color: #5eead4; }
-}
-
-.wt-narration {
-  margin: 0;
-  font-size: 15.5px;
-  line-height: 1.55;
-  color: var(--text);
-}
-
-.wt-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-}
-
-.wt-btn {
-  padding: 9px 14px;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: var(--font-sans);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--bg-elevated);
-  color: var(--text);
-  cursor: pointer;
-  transition: transform 0.12s, background 0.12s;
-  min-height: 40px;
-  min-width: 44px;
-}
-
-.wt-btn:hover:not(:disabled) { transform: translateY(-1px); background: var(--bg-muted); }
-.wt-btn:disabled { opacity: 0.4; cursor: default; }
-
-.wt-btn-play {
-  background: var(--teal);
-  border-color: var(--teal);
-  color: #fff;
-  box-shadow: 0 3px 10px var(--teal-glow);
-}
-
-.wt-btn-play:hover:not(:disabled) { background: var(--teal-dark); }
-.wt-btn-ghost { font-size: 16px; }
-
-.wt-scrubber { flex: 1; min-width: 120px; accent-color: var(--teal); }
-
-.wt-step-count {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--text-secondary);
-  min-width: 44px;
-  text-align: center;
-}
-
-.wt-speed {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-
-.wt-speed input { accent-color: var(--teal); width: 90px; }
-.wt-speed-val { font-family: var(--font-mono); min-width: 30px; }
-
-/* Complexity chips -------------------------------------------------------- */
+/* Complexity chips --------------------------------------------------------- */
 .wt-complexity {
   display: flex;
   flex-wrap: wrap;
@@ -385,29 +168,31 @@
   align-items: baseline;
   gap: 8px;
   padding: 8px 14px;
-  border-radius: 999px;
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  font-family: var(--font-mono);
+  border-radius: var(--r-pill);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  font-family: var(--mono);
   font-size: 14px;
 }
 
-.wt-chip b { color: var(--teal-dark); }
+.wt-chip b { color: var(--accent); }
 
-@media (prefers-color-scheme: dark) {
-  .wt-chip b { color: #5eead4; }
+.wt-chip-label {
+  font-size: 11px;
+  color: var(--graphite);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
-
-.wt-chip-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
 
 .wt-complexity-note {
   font-size: 14px;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--graphite);
   max-width: 70ch;
 }
 
-/* Respect reduced motion — motion/react also reads this, but stop the pulse. */
+/* Respect reduced motion — motion/react also reads this, but stop the canvas
+   transitions outright. */
 @media (prefers-reduced-motion: reduce) {
   .wt-canvas * { transition: none !important; }
 }
