@@ -23,7 +23,7 @@ export default function NotFound() {
             <g filter="url(#shadow)">
               <ellipse cx="100" cy="140" rx="58" ry="18" fill="rgba(13,148,136,0.12)" />
               <path
-                fill="var(--teal)"
+                fill="var(--ink-bit)"
                 d="M60 120c-6-10-8-26 4-36 8-7 18-6 26-10 6-3 10-10 18-10s12 7 18 10c8 4 18 3 26 10 12 10 10 26 4 36-6 10-18 16-40 16s-34-6-40-16z"
               />
               <circle className="cat-eye" cx="82" cy="108" r="6" />
@@ -34,11 +34,11 @@ export default function NotFound() {
           </svg>
         </div>
         <h1>404 — Not Built Yet</h1>
-        <p style={{ color: "var(--text-secondary)" }}>
+        <p style={{ color: "var(--graphite)" }}>
           This topic doesn&apos;t have a visualizer yet. Check back soon, or look at what&apos;s already live.
         </p>
         <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 18 }}>
-          <Link className="btn btn-primary" href="/topics/">
+          <Link className="btn btn-primary" href="/#topics">
             See live topics →
           </Link>
           <Link className="btn btn-ghost" href="/">

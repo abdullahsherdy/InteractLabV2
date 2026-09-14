@@ -10,7 +10,7 @@
 | **Phase** | 4 — Roll out |
 | **Branch** | `feat/ui-design` (always branch from `main`; never commit to `main`) |
 | **Opened** | 2026-09-12 |
-| **Status** | 🟡 In progress — **4a (Walkthroughs) ✅ landed**; **4b** next |
+| **Status** | 🟡 In progress — **4a (Walkthroughs) + 4b (Recursion/Sorting/Bitwise + `topics` retire) ✅ landed**; **4c** (Stacks & Queues, native) next |
 
 ## Why sub-phases
 
@@ -22,8 +22,8 @@ pause. Commits stay atomic per sub-phase.
 | Sub | Scope | State |
 |---|---|---|
 | **4a** | **Problem Walkthroughs** — full re-skin + migrate onto shared kit | ✅ landed (gates green) |
-| 4b | Recursion / Sorting / Bitwise — ink-swap + migrate (delete `useStepper`) | ▶ next |
-| 4c | Stacks & Queues — build natively (D2 **rose** `--ink-stack`) | ⬜ |
+| 4b | Recursion / Sorting / Bitwise — ink-swap + migrate (delete `useStepper`) + retire legacy `topics` | ✅ landed (gates green) |
+| 4c | Stacks & Queues — build natively (D2 **rose** `--ink-stack`) | ▶ next |
 | 4d | Cleanup — remove back-compat token aliases; refresh `web/.claude/CLAUDE.md` | ⬜ |
 
 > Survey landed (see the refined 4b–4d outline below): only **Recursion + Sorting**
@@ -125,6 +125,16 @@ do not push (user-gated); leave git add/commit to the user.**
 > (walkthroughs.css + `ArrayCanvas.tsx` + `VarBoard.tsx` are now alias-free).
 
 ### 4b — Recursion / Sorting / Bitwise
+
+> ✅ **Landed 2026-09-14** — all gates green (117/117 tests unchanged; clean
+> static export; `tsc --noEmit` exit 0). Recursion + Sorting migrated onto
+> `useStepEngine`/`StepTransport`; `useStepper` deleted (one engine remains);
+> Bitwise ink-swapped + de-aliased (no engine work — it never had a shared
+> player); and the legacy `topics` route was **retired** (not folded), its 3
+> inbound links repointed to the home `/#topics` grid. Recursion, sorting,
+> walkthroughs and bitwise are all alias-free — the 4d blast radius shrinks to
+> Linked-Lists + `globals.css` internals + `not-found.tsx`. Close-out recorded
+> in the progress log. Migration matched the spec below.
 
 Per-tool ink via `--accent` on hero + main (`--ink-rec` #7c3aed / `--ink-sort`
 #c2790f / `--ink-bit` #0d9488). Today none of the three CSS files set `--accent`,

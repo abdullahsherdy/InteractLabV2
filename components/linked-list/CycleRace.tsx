@@ -40,8 +40,8 @@ export function CycleRace() {
         </button>
       </div>
       <div className="ll-legend">
-        <span><i className="ll-swatch" style={{ background: "var(--green)" }} /> slow — 1 step per tick</span>
-        <span><i className="ll-swatch" style={{ background: "var(--amber)" }} /> fast — 2 steps per tick</span>
+        <span><i className="ll-swatch" style={{ background: "var(--ink-ll)" }} /> slow — 1 step per tick</span>
+        <span><i className="ll-swatch" style={{ background: "var(--ink-sort)" }} /> fast — 2 steps per tick</span>
       </div>
       {engine.current && <ListCanvas step={engine.current} />}
       <StepTransport engine={engine} caption={engine.current?.caption} />

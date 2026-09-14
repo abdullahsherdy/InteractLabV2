@@ -64,10 +64,10 @@ export function ListCanvas({
       >
         <defs>
           {[
-            ["teal", "var(--teal)"],
-            ["purple", "var(--purple)"],
-            ["amber", "var(--amber)"],
-            ["grey", "var(--text-tertiary)"],
+            ["teal", "var(--ink-bit)"],
+            ["purple", "var(--ink-rec)"],
+            ["amber", "var(--ink-sort)"],
+            ["grey", "var(--faint)"],
           ].map(([name, color]) => (
             <marker
               key={name}
@@ -101,7 +101,7 @@ export function ListCanvas({
               const tx = isLastChain ? noneX : from.x + NODE_W + 46;
               const ty = from.y + NODE_H / 2;
               d = `M ${from.x + NODE_W} ${from.y + NODE_H / 2} C ${from.x + NODE_W + 18} ${ty}, ${tx - 16} ${ty}, ${tx - 4} ${ty}`;
-              color = from.orphan ? "var(--text-tertiary)" : link.highlight ? "var(--amber)" : "var(--teal)";
+              color = from.orphan ? "var(--faint)" : link.highlight ? "var(--ink-sort)" : "var(--ink-bit)";
               markerName = from.orphan ? "grey" : link.highlight ? "amber" : "teal";
               if (link.kind === "prev") return null; // don't draw prev→None
             } else {
@@ -112,16 +112,16 @@ export function ListCanvas({
               if (link.kind === "prev") {
                 // purple curve under the chain, right-to-left
                 d = `M ${from.x + 10} ${from.y + NODE_H} C ${from.x + 10} ${from.y + NODE_H + 34}, ${to.x + NODE_W - 10} ${to.y + NODE_H + 34}, ${to.x + NODE_W - 10} ${to.y + NODE_H + 2}`;
-                color = link.highlight ? "var(--amber)" : "var(--purple)";
+                color = link.highlight ? "var(--ink-sort)" : "var(--ink-rec)";
                 markerName = link.highlight ? "amber" : "purple";
               } else if (isBackward) {
                 // cycle return arc under the chain
                 d = `M ${from.x + NODE_W / 2} ${from.y + NODE_H} C ${from.x + NODE_W / 2} ${from.y + NODE_H + 72}, ${to.x + NODE_W / 2} ${to.y + NODE_H + 72}, ${to.x + NODE_W / 2} ${to.y + NODE_H + 2}`;
-                color = link.highlight ? "var(--amber)" : "var(--blue)";
+                color = link.highlight ? "var(--ink-sort)" : "var(--ink-walk)";
                 markerName = link.highlight ? "amber" : "teal";
               } else {
                 d = `M ${from.x + NODE_W} ${from.y + NODE_H / 2} C ${from.x + NODE_W + 26} ${from.y + NODE_H / 2}, ${to.x - 26} ${to.y + NODE_H / 2}, ${to.x - 4} ${to.y + NODE_H / 2}`;
-                color = from.orphan ? "var(--text-tertiary)" : link.highlight ? "var(--amber)" : "var(--teal)";
+                color = from.orphan ? "var(--faint)" : link.highlight ? "var(--ink-sort)" : "var(--ink-bit)";
                 markerName = from.orphan ? "grey" : link.highlight ? "amber" : "teal";
               }
             }
@@ -146,7 +146,7 @@ export function ListCanvas({
         {/* None bubble at end of chain */}
         {chain.length > 0 && state.links.some((l) => l.kind === "next" && l.from === chain[chain.length - 1] && l.to === null) && (
           <g>
-            <circle cx={noneX + 22} cy={CHAIN_Y + NODE_H / 2} r={22} fill="var(--bg-muted)" stroke="var(--border-strong)" strokeDasharray="4 3" />
+            <circle cx={noneX + 22} cy={CHAIN_Y + NODE_H / 2} r={22} fill="var(--panel-2)" stroke="var(--line-strong)" strokeDasharray="4 3" />
             <text x={noneX + 22} y={CHAIN_Y + NODE_H / 2 + 4} textAnchor="middle" className="ll-none-text">
               None
             </text>
@@ -177,8 +177,8 @@ export function ListCanvas({
                   width={NODE_W}
                   height={NODE_H}
                   rx={12}
-                  fill={isCursor ? "var(--teal-light)" : "var(--bg-elevated)"}
-                  stroke={isHi ? "var(--amber)" : pos.orphan ? "var(--text-tertiary)" : isCursor ? "var(--teal)" : "var(--border-strong)"}
+                  fill={isCursor ? "var(--ll-cursor-fill)" : "var(--panel)"}
+                  stroke={isHi ? "var(--ink-sort)" : pos.orphan ? "var(--faint)" : isCursor ? "var(--ink-bit)" : "var(--line-strong)"}
                   strokeWidth={isHi || isCursor ? 3 : 1.5}
                 />
                 <text x={NODE_W / 2} y={NODE_H / 2 + 5} textAnchor="middle" className="ll-node-text">

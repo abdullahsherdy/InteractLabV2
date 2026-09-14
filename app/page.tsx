@@ -35,6 +35,15 @@ const CARDS: TopicCard[] = [
     arrow: "Open visualizer →",
   },
   {
+    href: "/stacks/",
+    glyph: "stacks",
+    ink: "var(--ink-stack)",
+    title: "Stacks & Queues",
+    desc: "Plates you pile and lines you join: push and pop a stack (LIFO), enqueue and dequeue a queue (FIFO), and see why a list makes a fast stack but a slow queue.",
+    meta: ["LIFO & FIFO", "list vs. deque", "undo & BFS"],
+    arrow: "Open visualizer →",
+  },
+  {
     href: "/bitwise/",
     glyph: "bitwise",
     ink: "var(--ink-bit)",
@@ -68,7 +77,7 @@ export default function HomePage() {
     <>
       <HomeHero />
 
-      <section id="tutorials" className="home-section">
+      <section id="topics" className="home-section">
         <Reveal>
           <div className="section-head">
             <h2>Topics</h2>

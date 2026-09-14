@@ -15,9 +15,9 @@ interface AnalogyProps {
 
 /**
  * The analogy field-note (analogy-before-abstraction). Renders the spec's
- * field-note structure under the new `.fieldnote` class — deliberately NOT
- * `.analogy`, which still styles the 23 shipped `<p className="analogy">` boxes
- * until those pages migrate onto this component in Phase 3/4.
+ * field-note structure under the `.fieldnote` class — the single shared
+ * analogy callout used across every tutorial (bitwise, linked lists,
+ * recursion, sorting, walkthroughs).
  */
 export function Analogy({ children, title = "Think of it like…", icon = "connect", ink }: AnalogyProps) {
   const style = ink ? ({ "--accent": ink } as CSSProperties) : undefined;

@@ -89,13 +89,13 @@
 }
 
 .ll-bug-toggle.on {
-  border-color: var(--amber);
+  border-color: var(--ink-sort);
   border-style: solid;
-  background: var(--amber-light);
-  color: var(--amber);
+  background: color-mix(in srgb, var(--ink-sort) 14%, transparent);
+  color: var(--ink-sort);
 }
 
-.ll-bug-toggle input { accent-color: var(--amber); }
+.ll-bug-toggle input { accent-color: var(--ink-sort); }
 .ll-bug-toggle code { font-family: var(--mono); font-size: 12px; }
 
 .ll-legend {
@@ -129,10 +129,15 @@
   display: block;
   height: auto;
   width: 100%;
+  /* soft cursor-node fill — a wash of the "next" ink over the panel, resolved
+     here so the SVG rect can reference a plain var() rather than an inlined
+     color-mix() (unreliable inside a presentation attribute). */
+  --ll-cursor-fill: color-mix(in srgb, var(--ink-bit) 18%, var(--panel));
 }
 
-/* canvas text — the diagram keeps its own next/prev/highlight colour scheme
-   (teal / purple / amber), independent of the page accent. */
+/* canvas text — the diagram keeps its own fixed next/prev/highlight palette
+   (ink-bit / ink-rec / ink-sort, plus ink-walk for cycle arcs and ink-ll for
+   the slow runner), independent of the page accent. */
 .ll-node-text {
   font-family: var(--mono);
   font-size: 16px;
@@ -157,13 +162,13 @@
   font-family: var(--sans);
   font-size: 12px;
   font-weight: 700;
-  fill: var(--teal);
+  fill: var(--ink-bit);
 }
 
 .ll-orphan-label {
   font-family: var(--mono);
   font-size: 12px;
-  fill: var(--amber);
+  fill: var(--ink-sort);
 }
 
 /* Playlist "now playing" banner */
@@ -173,7 +178,11 @@
   gap: 14px;
   padding: 12px 16px;
   border-radius: var(--r-control);
-  background: linear-gradient(135deg, var(--teal-light), var(--purple-light));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ink-bit) 14%, transparent),
+    color-mix(in srgb, var(--ink-rec) 14%, transparent)
+  );
   border: 1px solid var(--line);
 }
 
@@ -184,14 +193,14 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--teal);
+  background: var(--ink-bit);
   color: #fff;
   font-size: 20px;
   animation: ll-pulse 2s ease-in-out infinite;
 }
 
 @keyframes ll-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 var(--teal-glow); }
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ink-bit) 25%, transparent); }
   50% { box-shadow: 0 0 0 10px transparent; }
 }
 

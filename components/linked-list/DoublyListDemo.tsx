@@ -75,8 +75,8 @@ export function DoublyListDemo() {
         </button>
       </div>
       <div className="ll-legend">
-        <span><i className="ll-swatch" style={{ background: "var(--teal)" }} /> next</span>
-        <span><i className="ll-swatch" style={{ background: "var(--purple)" }} /> prev</span>
+        <span><i className="ll-swatch" style={{ background: "var(--ink-bit)" }} /> next</span>
+        <span><i className="ll-swatch" style={{ background: "var(--ink-rec)" }} /> prev</span>
       </div>
       {engine.current && <ListCanvas step={engine.current} showPrev />}
       <StepTransport engine={engine} caption={engine.current?.caption} />

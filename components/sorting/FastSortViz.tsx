@@ -6,7 +6,8 @@ import { mergeSort, quickSort, type MergeOp, type QuickOp } from "@/lib/sorting/
 import { PRESETS, parseArray } from "@/lib/sorting/util";
 import { FAST_CODE, FAST_EXPLAIN } from "@/lib/sorting/content";
 import { CodeBlock } from "@/components/shared/CodeBlock";
-import { useStepper } from "@/components/shared/useStepper";
+import { useStepEngine } from "@/components/shared/useStepEngine";
+import { StepTransport } from "@/components/shared/StepTransport";
 
 type FastAlgo = "merge" | "quick";
 
@@ -29,7 +30,7 @@ function Pills({ values, depth, muted }: { values: number[]; depth: number; mute
           className="sort-pill"
           style={{
             borderColor: color,
-            color: muted ? "var(--text-secondary)" : color,
+            color: muted ? "var(--graphite)" : color,
             background: muted ? "transparent" : `${color}14`,
           }}
         >
@@ -125,7 +126,7 @@ export function FastSortViz() {
 
   const trace = useMemo(() => (algo === "merge" ? mergeSort(data) : quickSort(data)), [algo, data]);
   const ops: (MergeOp | QuickOp)[] = trace.ops;
-  const player = useStepper(ops);
+  const player = useStepEngine(ops);
   const { current, index } = player;
 
   const kindLabel = current ? current.kind : "—";
@@ -248,40 +249,7 @@ export function FastSortViz() {
         </div>
       </div>
 
-      {/* Caption */}
-      <p className="sort-caption">{current?.note}</p>
-
-      {/* Transport */}
-      <div className="sort-transport">
-        <button className="sort-btn" onClick={player.prev} disabled={player.atStart} aria-label="Previous step">
-          ⏮
-        </button>
-        <button
-          className="sort-btn sort-btn-play"
-          onClick={player.playing ? player.pause : player.play}
-          aria-label={player.playing ? "Pause" : "Play"}
-        >
-          {player.playing ? "❚❚" : "▶"}
-        </button>
-        <button className="sort-btn" onClick={player.next} disabled={player.atEnd} aria-label="Next step">
-          ⏭
-        </button>
-        <span className="sort-step-count">
-          Step {index + 1} / {player.total}
-        </span>
-        <label className="sort-speed">
-          <span>Speed</span>
-          <input
-            type="range"
-            min={0.5}
-            max={3}
-            step={0.5}
-            value={player.speed}
-            onChange={(e) => player.setSpeed(Number(e.target.value))}
-          />
-          <span>{player.speed}x</span>
-        </label>
-      </div>
+      <StepTransport engine={player} caption={current?.note} />
 
       <p className="sort-result">
         Sorted result: <strong>[{trace.result.join(", ")}]</strong>

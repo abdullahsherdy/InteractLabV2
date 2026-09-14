@@ -62,39 +62,6 @@
   --header-h: 60px;
   --content-wide: 1120px;
   --content-narrow: 820px;
-
-  /* ── back-compat aliases — bridge the old token names to the blueprint system
-       so shipped components keep rendering unchanged until they are redesigned.
-       Base accents map 1:1 to inks (and auto-flip in dark); the *-dark / *-light /
-       *-glow variants have no blueprint equivalent, so they keep their old literals.
-       Removed in Phase 4 once every component uses the new tokens. ── */
-  --bg: var(--paper);
-  --bg-elevated: var(--panel);
-  --bg-muted: var(--panel-2);
-  --bg-subtle: var(--panel-2);
-  --text: var(--ink);
-  --text-secondary: var(--graphite);
-  --text-tertiary: var(--faint);
-  --border: var(--line);
-  --border-strong: var(--line-strong);
-  --radius: var(--r-control);
-  --radius-lg: var(--r-card);
-  --radius-xl: 24px;
-  --shadow-lg: var(--shadow-lift);
-  --font-sans: var(--sans);
-  --font-mono: var(--mono);
-  --teal: var(--ink-bit);
-  --teal-dark: #0f766e;
-  --teal-light: #ccfbf1;
-  --teal-glow: rgba(13, 148, 136, 0.25);
-  --purple: var(--ink-rec);
-  --purple-light: #ede9fe;
-  --amber: var(--ink-sort);
-  --amber-light: #fef3c7;
-  --blue: var(--ink-walk);
-  --blue-light: #dbeafe;
-  --green: var(--ink-ll);
-  --green-light: #d1fae5;
 }
 
 /* Three-state theme.
@@ -131,12 +98,6 @@
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5);
     --shadow-lift: 0 22px 46px rgba(0, 0, 0, 0.6);
-    /* dark back-compat aliases (only the light-tint backgrounds differ in dark) */
-    --teal-light: #042f2e;
-    --purple-light: #2e1065;
-    --amber-light: #451a03;
-    --blue-light: #1e3a8a;
-    --green-light: #064e3b;
   }
 }
 
@@ -172,11 +133,6 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5);
   --shadow-lift: 0 22px 46px rgba(0, 0, 0, 0.6);
-  --teal-light: #042f2e;
-  --purple-light: #2e1065;
-  --amber-light: #451a03;
-  --blue-light: #1e3a8a;
-  --green-light: #064e3b;
 }
 
 html { scroll-behavior: smooth; }
@@ -332,13 +288,13 @@ a {
 .site-footer {
   margin-top: auto;
   padding: 32px 24px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
   text-align: center;
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
-.site-footer a { color: var(--teal); text-decoration: none; }
+.site-footer a { color: var(--ink-bit); text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
 
 /* ─── Tutorial shell ─── */
@@ -355,20 +311,6 @@ a {
   width: 100%;
 }
 
-.tutorial-hero .breadcrumb {
-  font-size: 12px;
-  color: var(--text-tertiary);
-  margin-bottom: 12px;
-  font-family: var(--font-mono);
-}
-
-.tutorial-hero .breadcrumb a {
-  color: var(--text-secondary);
-  text-decoration: none;
-}
-
-.tutorial-hero .breadcrumb a:hover { color: var(--teal); }
-
 .tutorial-hero h1 {
   font-size: clamp(22px, 4vw, 28px);
   font-weight: 600;
@@ -379,7 +321,7 @@ a {
 
 .tutorial-hero .hero-desc {
   font-size: 15px;
-  color: var(--text-secondary);
+  color: var(--graphite);
   max-width: 52ch;
   line-height: 1.6;
 }
@@ -389,17 +331,6 @@ a {
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 14px;
-}
-
-.hero-tag {
-  font-size: 11px;
-  font-weight: 500;
-  font-family: var(--font-mono);
-  padding: 4px 10px;
-  border-radius: 20px;
-  background: var(--bg-muted);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
 }
 
 .tutorial-main {
@@ -547,9 +478,9 @@ svg.schem {
   padding: 12px 22px;
   font-size: 14px;
   font-weight: 600;
-  font-family: var(--font-sans);
+  font-family: var(--sans);
   text-decoration: none;
-  border-radius: var(--radius);
+  border-radius: var(--r-control);
   border: 1px solid transparent;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
@@ -558,23 +489,23 @@ svg.schem {
 .btn:hover { transform: translateY(-1px); }
 
 .btn-primary {
-  background: var(--teal);
+  background: var(--ink-bit);
   color: #fff;
-  box-shadow: 0 4px 14px var(--teal-glow);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--ink-bit) 25%, transparent);
 }
 
 .btn-primary:hover {
-  background: var(--teal-dark);
-  box-shadow: 0 6px 20px var(--teal-glow);
+  background: color-mix(in srgb, var(--ink-bit) 88%, #000);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--ink-bit) 25%, transparent);
 }
 
 .btn-ghost {
-  background: var(--bg-elevated);
-  color: var(--text);
-  border-color: var(--border-strong);
+  background: var(--panel);
+  color: var(--ink);
+  border-color: var(--line-strong);
 }
 
-.btn-ghost:hover { background: var(--bg-muted); }
+.btn-ghost:hover { background: var(--panel-2); }
 
 /* Sections */
 .home-section {
@@ -595,7 +526,7 @@ svg.schem {
 
 .section-head p {
   font-size: 15px;
-  color: var(--text-secondary);
+  color: var(--graphite);
   max-width: 50ch;
 }
 
@@ -674,9 +605,9 @@ svg.schem {
 
 .feature-box {
   padding: 20px;
-  border-radius: var(--radius-lg);
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
 }
 
 .feature-box h4 {
@@ -687,7 +618,7 @@ svg.schem {
 
 .feature-box p {
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--graphite);
   line-height: 1.55;
 }
 
@@ -695,10 +626,10 @@ svg.schem {
 .code-block {
   background: #0f172a;
   color: #e2e8f0;
-  border-radius: var(--radius);
+  border-radius: var(--r-control);
   padding: 14px 16px;
   overflow-x: auto;
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
   line-height: 1.65;
   border: 1px solid rgba(148, 163, 184, 0.18);
@@ -763,36 +694,11 @@ svg.schem {
 .code .tok-num { color: var(--ink-sort); }
 .code .tok-str { color: var(--ink-ll); }
 
-/* ─── Shared analogy callout ─── */
-/* The "remember this" / "where this connects" note that every tutorial opens
-   its modules with. One definition so the box reads identically across bitwise,
-   linked lists, recursion, sorting and the walkthroughs. */
-.analogy {
-  display: flex;
-  gap: 10px;
-  padding: 12px 16px;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  background: var(--bg-muted);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  max-width: 72ch;
-}
-
-.analogy code {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  background: var(--bg-subtle);
-  padding: 1px 5px;
-  border-radius: 4px;
-  color: var(--text);
-}
-
-/* ─── Analogy field-note (Phase 2) ─── */
-/* The redesigned analogy-before-abstraction note. New `.fieldnote` class so the
-   23 shipped `.analogy` boxes above keep rendering until they migrate onto the
-   <Analogy> component in Phase 3/4 (then the legacy rule is removed). */
+/* ─── Analogy field-note ─── */
+/* The analogy-before-abstraction note that every tutorial opens its modules
+   with — one definition so the box reads identically across bitwise, linked
+   lists, recursion, sorting and the walkthroughs. Rendered by the shared
+   <Analogy> component (components/shared/Analogy.tsx). */
 .fieldnote {
   display: flex;
   gap: 13px;
