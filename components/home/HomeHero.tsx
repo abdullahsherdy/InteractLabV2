@@ -67,7 +67,7 @@ export function HomeHero() {
           <Link className="btn btn-primary" href="/linked-lists/">
             Try the Linked Lists visualizer
           </Link>
-          <Link className="btn btn-ghost" href="/topics/">
+          <Link className="btn btn-ghost" href="/#topics">
             Open a topic →
           </Link>
         </div>

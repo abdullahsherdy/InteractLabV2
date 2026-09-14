@@ -7,11 +7,11 @@
 import type { Problem, VarBinding, WalkStep } from "./types";
 
 const C = {
-  window: "var(--teal)",
-  right: "var(--blue)",
-  left: "var(--purple)",
-  sum: "var(--amber)",
-  min: "var(--green)",
+  window: "var(--ink-bit)",
+  right: "var(--ink-walk)",
+  left: "var(--ink-rec)",
+  sum: "var(--ink-sort)",
+  min: "var(--ink-ll)",
 };
 
 const INF = "∞";

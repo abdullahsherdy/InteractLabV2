@@ -6,7 +6,8 @@ import { SLOW_SORTS, type SlowAlgo, type SlowStep } from "@/lib/sorting/slow-sor
 import { PRESETS, parseArray } from "@/lib/sorting/util";
 import { SLOW_CODE } from "@/lib/sorting/content";
 import { CodeBlock } from "@/components/shared/CodeBlock";
-import { useStepper } from "@/components/shared/useStepper";
+import { useStepEngine } from "@/components/shared/useStepEngine";
+import { StepTransport } from "@/components/shared/StepTransport";
 
 const ALGOS: { value: SlowAlgo; label: string; blurb: string }[] = [
   {
@@ -51,8 +52,8 @@ export function SlowSortViz() {
   const [error, setError] = useState("");
 
   const steps = useMemo(() => SLOW_SORTS[algo](data), [algo, data]);
-  const player = useStepper(steps);
-  const { current, index } = player;
+  const player = useStepEngine(steps);
+  const { current } = player;
 
   const array = current?.array ?? data;
   const maxVal = Math.max(...array, 1);
@@ -191,40 +192,7 @@ export function SlowSortViz() {
         </div>
       </div>
 
-      {/* Caption */}
-      <p className="sort-caption">{current?.note}</p>
-
-      {/* Transport */}
-      <div className="sort-transport">
-        <button className="sort-btn" onClick={player.prev} disabled={player.atStart} aria-label="Previous step">
-          ⏮
-        </button>
-        <button
-          className="sort-btn sort-btn-play"
-          onClick={player.playing ? player.pause : player.play}
-          aria-label={player.playing ? "Pause" : "Play"}
-        >
-          {player.playing ? "❚❚" : "▶"}
-        </button>
-        <button className="sort-btn" onClick={player.next} disabled={player.atEnd} aria-label="Next step">
-          ⏭
-        </button>
-        <span className="sort-step-count">
-          Step {index + 1} / {player.total}
-        </span>
-        <label className="sort-speed">
-          <span>Speed</span>
-          <input
-            type="range"
-            min={0.5}
-            max={3}
-            step={0.5}
-            value={player.speed}
-            onChange={(e) => player.setSpeed(Number(e.target.value))}
-          />
-          <span>{player.speed}x</span>
-        </label>
-      </div>
+      <StepTransport engine={player} caption={current?.note} />
 
       <details className="sort-code-toggle">
         <summary>Show the Python</summary>

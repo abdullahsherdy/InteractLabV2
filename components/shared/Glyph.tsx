@@ -13,11 +13,14 @@ export type GlyphName =
   | "bitwise"
   | "walkthrough"
   | "stacks"
+  | "queue"
   | "home"
   | "connect"
   // Analogy glyphs (the field-note "think of it like…" icons)
   | "nesting-dolls"
   | "plates"
+  | "coffee"
+  | "bricks"
   | "tree"
   | "growth-curve"
   | "magnifier"
@@ -89,6 +92,15 @@ function paths(name: GlyphName) {
           <rect x="4" y="2.5" width="18" height="5" rx="1.5" {...STROKE} strokeWidth={1.5} />
         </>
       );
+    // A line of cells left→right — the horizontal counterpart to the stack.
+    case "queue":
+      return (
+        <>
+          <rect x="2" y="8.5" width="6" height="9" rx="1.5" {...STROKE} strokeWidth={1.5} />
+          <rect x="10" y="8.5" width="6" height="9" rx="1.5" {...STROKE} strokeWidth={1.5} />
+          <rect x="18" y="8.5" width="6" height="9" rx="1.5" {...STROKE} strokeWidth={1.5} />
+        </>
+      );
     case "home":
       return (
         <>
@@ -123,6 +135,26 @@ function paths(name: GlyphName) {
           <ellipse cx="13" cy="8" rx="9" ry="2.6" {...STROKE} strokeWidth={1.5} />
           <ellipse cx="13" cy="13.5" rx="9" ry="2.6" {...STROKE} strokeWidth={1.5} />
           <ellipse cx="13" cy="19" rx="9" ry="2.6" {...STROKE} strokeWidth={1.5} />
+        </>
+      );
+    // A coffee cup — the queue = line at the coffee shop (first come, first served).
+    case "coffee":
+      return (
+        <>
+          <rect x="4.5" y="9.5" width="12" height="11" rx="2.5" {...STROKE} strokeWidth={1.5} />
+          <path d="M16.5 12 h2.2 a3 3 0 0 1 0 6 h-2.2" {...STROKE} strokeWidth={1.5} />
+          <path d="M8 7 q1.6 -1.8 0 -3.6 M12.5 7 q1.6 -1.8 0 -3.6" {...STROKE} strokeWidth={1.3} />
+        </>
+      );
+    // A brick wall — what a stack / queue is actually built from (a plain list).
+    case "bricks":
+      return (
+        <>
+          <rect x="3" y="6" width="20" height="15" rx="1" {...STROKE} strokeWidth={1.5} />
+          <path d="M3 11 H23 M3 16 H23" {...STROKE} strokeWidth={1.4} />
+          <path d="M9.5 6 V11 M16 6 V11" {...STROKE} strokeWidth={1.4} />
+          <path d="M6.5 11 V16 M13 11 V16 M19.5 11 V16" {...STROKE} strokeWidth={1.4} />
+          <path d="M9.5 16 V21 M16 16 V21" {...STROKE} strokeWidth={1.4} />
         </>
       );
     // A branching tree — the recursion / Fibonacci call tree.

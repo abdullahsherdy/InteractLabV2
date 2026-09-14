@@ -1,13 +1,14 @@
 import type { Link, ListState, NodeModel, Pointer, Step } from "./types";
 
-/* Design-token colors for pointer badges */
+/* Blueprint inks for pointer badges — a fixed semantic palette (next/current/
+   prev/slow/fast), independent of the page accent. */
 export const COLORS = {
-  head: "var(--teal)",
-  current: "var(--blue)",
-  previous: "var(--purple)",
-  slow: "var(--green)",
-  fast: "var(--amber)",
-  newNode: "var(--purple)",
+  head: "var(--ink-bit)",
+  current: "var(--ink-walk)",
+  previous: "var(--ink-rec)",
+  slow: "var(--ink-ll)",
+  fast: "var(--ink-sort)",
+  newNode: "var(--ink-rec)",
 };
 
 let idCounter = 0;

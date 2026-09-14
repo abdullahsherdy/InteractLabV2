@@ -1,41 +1,17 @@
-/* Bitwise & Number Systems — module styles. Mirrors the linked-lists layout
-   conventions (bw- prefix) and reuses the globals.css design tokens. */
+/* Bitwise & Number Systems — module styles, drawn in the bitwise ink.
+   The page sets --accent: var(--ink-bit) on the hero + main, so the shared kit
+   (crumb, .tag.accent, .plate caps, the <Analogy> field-note, the shared .code
+   plate) all draw in bitwise teal. This file styles only the bitwise-specific
+   vizes: the light-switch byte, the division trace, and the operator playground.
 
-.bw-block {
-  margin-bottom: 48px;
-}
+   Bitwise borrows only three accent hues, and all three already exist as
+   blueprint inks — the "lit switch" green (--ink-ll), the "B operand" amber
+   (--ink-sort), and the "result" purple (--ink-rec) — so unlike sorting and
+   recursion this sheet needs no locally-defined tokens; every colour flips with
+   the theme through the inks themselves. */
 
-.bw-block-head {
-  margin-bottom: 16px;
-}
-
-.bw-kicker {
-  font-size: 12px;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--teal-dark);
-  margin-bottom: 6px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .bw-kicker { color: #5eead4; }
-}
-
-.bw-block-head h2 {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 6px;
-}
-
-/* ---- module shell ---- */
+/* ---- module shell — frameless; the surrounding .plate is the frame ---- */
 .bw-module {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -59,7 +35,7 @@
 
 .bw-field-label {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--graphite);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   display: inline-flex;
@@ -71,11 +47,11 @@
 .bw-select {
   padding: 9px 12px;
   font-size: 15px;
-  font-family: var(--font-mono);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--mono);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-control);
+  background: var(--paper);
+  color: var(--ink);
   min-height: 42px;
 }
 
@@ -84,14 +60,14 @@
 
 .bw-input:focus,
 .bw-select:focus {
-  outline: 2px solid var(--teal);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
 .bw-slider {
   flex: 1;
   min-width: 160px;
-  accent-color: var(--teal);
+  accent-color: var(--accent);
 }
 
 .bw-readout {
@@ -104,16 +80,16 @@
 .bw-readout-num {
   font-size: 30px;
   font-weight: 600;
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   line-height: 1;
-  color: var(--text);
+  color: var(--ink);
 }
 
 .bw-readout-sub {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-tertiary);
+  color: var(--faint);
 }
 
 /* ---- the byte / bit boxes ---- */
@@ -137,7 +113,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 18px;
   font-weight: 600;
   border: 1.5px solid transparent;
@@ -155,31 +131,33 @@ button.bw-bit:hover {
   box-shadow: var(--shadow-sm);
 }
 button.bw-bit:focus-visible {
-  outline: 2px solid var(--teal);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
+/* Bit state reads by hue: a cleared switch is muted, a lit one glows green, the
+   "B operand" row amber, and the operator result purple. */
 .bw-bit-zero {
-  background: var(--bg-muted);
-  border-color: var(--border);
-  color: var(--text-tertiary);
+  background: var(--panel-2);
+  border-color: var(--line);
+  color: var(--faint);
 }
 
 .bw-bit-one {
-  background: var(--green);
-  border-color: var(--green);
+  background: var(--ink-ll);
+  border-color: var(--ink-ll);
   color: #fff;
 }
 
 .bw-bit-active {
-  background: var(--amber);
-  border-color: var(--amber);
+  background: var(--ink-sort);
+  border-color: var(--ink-sort);
   color: #fff;
 }
 
 .bw-bit-result {
-  background: var(--purple);
-  border-color: var(--purple);
+  background: var(--ink-rec);
+  border-color: var(--ink-rec);
   color: #fff;
 }
 
@@ -187,43 +165,43 @@ button.bw-bit:focus-visible {
   width: 40px;
   flex: none;
   text-align: center;
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 11px;
-  color: var(--text-tertiary);
+  color: var(--faint);
 }
 
-.bw-bit-val { color: var(--text-secondary); }
+.bw-bit-val { color: var(--graphite); }
 
 /* ---- notes / labels ---- */
 .bw-note {
   font-size: 13px;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--graphite);
   max-width: 72ch;
 }
 
 .bw-note code,
 .bw-card code {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 12px;
-  background: var(--bg-subtle);
+  background: var(--panel-2);
   padding: 1px 5px;
   border-radius: 4px;
-  color: var(--text);
+  color: var(--ink);
 }
 
 .bw-label {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--graphite);
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
 
 /* ---- conversion trace ---- */
 .bw-steps {
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
   padding: 8px 16px;
 }
 
@@ -232,22 +210,22 @@ button.bw-bit:focus-visible {
   align-items: center;
   gap: 10px;
   padding: 7px 0;
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 14px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }
 
 .bw-step:last-of-type { border-bottom: none; }
 
 .bw-step-num {
-  color: var(--text-tertiary);
-  font-family: var(--font-sans);
+  color: var(--faint);
+  font-family: var(--sans);
   font-size: 12px;
   width: 56px;
   flex: none;
 }
 
-.bw-step-math { color: var(--text); }
+.bw-step-math { color: var(--ink); }
 
 .bw-rem {
   display: inline-flex;
@@ -260,8 +238,8 @@ button.bw-bit:focus-visible {
   font-weight: 600;
 }
 
-.bw-rem-1 { background: var(--green); color: #fff; }
-.bw-rem-0 { background: var(--bg-subtle); color: var(--text-secondary); }
+.bw-rem-1 { background: var(--ink-ll); color: #fff; }
+.bw-rem-0 { background: var(--panel-2); color: var(--graphite); }
 
 .bw-result {
   display: flex;
@@ -275,9 +253,9 @@ button.bw-bit:focus-visible {
   flex-direction: column;
   gap: 6px;
   padding: 16px;
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
   overflow-x: auto;
 }
 
@@ -289,19 +267,19 @@ button.bw-bit:focus-visible {
 }
 
 .bw-op-dec {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .bw-op-hint {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .bw-op-sep {
   height: 1px;
-  background: var(--border-strong);
+  background: var(--line-strong);
   margin: 8px 0 4px;
 }
 
@@ -310,34 +288,40 @@ button.bw-bit:focus-visible {
   padding-left: 2px;
 }
 
+/* The result callout blends the page's teal accent into the result purple, so
+   the answer row reads as "operands (teal ground) → result (purple)". */
 .bw-op-answer {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
   gap: 12px;
   padding: 14px 16px;
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--teal-light), var(--purple-light));
-  border: 1px solid var(--border);
+  border-radius: var(--r-control);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 14%, transparent),
+    color-mix(in srgb, var(--ink-rec) 14%, transparent)
+  );
+  border: 1px solid var(--line);
 }
 
 .bw-op-expr {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 15px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .bw-op-result-num {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 28px;
   font-weight: 700;
-  color: var(--text);
+  color: var(--ink);
 }
 
 .bw-op-bin {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 /* ---- tags ---- */
@@ -347,12 +331,21 @@ button.bw-bit:focus-visible {
   border-radius: 5px;
   font-size: 11px;
   font-weight: 600;
-  font-family: var(--font-sans);
+  font-family: var(--sans);
 }
 
-.bw-tag-a { background: var(--green-light); color: var(--green); }
-.bw-tag-b { background: var(--amber-light); color: var(--amber); }
-.bw-tag-r { background: var(--purple-light); color: var(--purple); }
+.bw-tag-a {
+  background: color-mix(in srgb, var(--ink-ll) 15%, transparent);
+  color: var(--ink-ll);
+}
+.bw-tag-b {
+  background: color-mix(in srgb, var(--ink-sort) 15%, transparent);
+  color: var(--ink-sort);
+}
+.bw-tag-r {
+  background: color-mix(in srgb, var(--ink-rec) 15%, transparent);
+  color: var(--ink-rec);
+}
 
 /* ---- real-world cards ---- */
 .bw-cards {
@@ -362,9 +355,9 @@ button.bw-bit:focus-visible {
 }
 
 .bw-card {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
   padding: 16px;
   box-shadow: var(--shadow-sm);
 }
@@ -378,7 +371,7 @@ button.bw-bit:focus-visible {
 .bw-card p {
   font-size: 13px;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 @media (prefers-reduced-motion: reduce) {

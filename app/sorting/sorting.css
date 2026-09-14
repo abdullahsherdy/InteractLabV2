@@ -1,62 +1,44 @@
-/* Sorting Algorithms — module styles. Mirrors the recursion module conventions
-   (sort- prefix) and reuses the globals.css design tokens. The accent is amber
-   (matching the tool's card colour on the home grid). globals has no red or
-   orange, so the O(n²) red and selection-sort "min" orange are defined here. */
+/* Sorting Algorithms — module styles, drawn in the sorting ink.
+   The page sets --accent: var(--ink-sort) on the hero + main, so the shared kit
+   (crumb, .tag.accent, .plate caps, the <Analogy> field-note, the shared
+   .transport, and the .code plate's highlighted line) all draw in sorting amber.
+   This file styles only the sorting-specific vizes (bar chart, recursion trace,
+   comparison bars, key demo, properties table, why-grid, decision table).
 
-.sort-block {
-  margin-bottom: 48px;
+   The blueprint palette has no red or orange, so the O(n²) "swap" red and the
+   selection-sort "min" orange are defined locally. They live on .tutorial-main
+   (this stylesheet only ships on the sorting route, so the class is effectively
+   route-scoped) and flip with the theme the same three-state way as the globals
+   tokens, so the inline var(--sort-red) / var(--sort-orange) resolve in every
+   mode. */
+
+.tutorial-main {
   --sort-red: #dc2626;
-  --sort-red-light: #fee2e2;
-  --sort-red-border: #fecaca;
   --sort-orange: #ea580c;
-  --sort-orange-light: #ffedd5;
 }
 
 @media (prefers-color-scheme: dark) {
-  .sort-block {
+  :root:not([data-theme="light"]) .tutorial-main {
     --sort-red: #f87171;
-    --sort-red-light: rgba(248, 113, 113, 0.14);
-    --sort-red-border: rgba(248, 113, 113, 0.3);
     --sort-orange: #fb923c;
-    --sort-orange-light: rgba(251, 146, 60, 0.16);
   }
 }
 
-.sort-block-head {
-  margin-bottom: 16px;
+:root[data-theme="dark"] .tutorial-main {
+  --sort-red: #f87171;
+  --sort-orange: #fb923c;
 }
 
-.sort-kicker {
-  font-size: 12px;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--amber);
-  margin-bottom: 6px;
+/* Module 6's plate caption carries an inline <code>sorted()</code>; the shared
+   .plate-t sets the display face + uppercase, so opt the code back into mono and
+   its natural case. */
+.plate-t code {
+  font-family: var(--mono);
+  text-transform: none;
 }
 
-.sort-block-head h2 {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 6px;
-}
-
-.sort-block-head h2 code {
-  font-family: var(--font-mono);
-  font-size: 18px;
-  background: var(--bg-subtle);
-  padding: 1px 7px;
-  border-radius: 5px;
-}
-
-/* ---- module shell ---- */
+/* ---- module shell — frameless; the surrounding .plate is the frame ---- */
 .sort-module {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -67,9 +49,9 @@
   display: inline-flex;
   gap: 4px;
   padding: 4px;
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
   align-self: flex-start;
   flex-wrap: wrap;
 }
@@ -81,16 +63,16 @@
   border: none;
   border-radius: 7px;
   background: none;
-  color: var(--text-secondary);
+  color: var(--graphite);
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
 
-.sort-seg:hover { color: var(--text); }
+.sort-seg:hover { color: var(--ink); }
 
 .sort-seg.active {
-  background: var(--bg-elevated);
-  color: var(--amber);
+  background: var(--panel);
+  color: var(--accent);
   box-shadow: var(--shadow-sm);
 }
 
@@ -98,13 +80,13 @@
 .sort-note {
   font-size: 13px;
   line-height: 1.7;
-  color: var(--text-secondary);
+  color: var(--graphite);
   max-width: 74ch;
 }
 
 .sort-hint {
   font-size: 12px;
-  color: var(--text-tertiary);
+  color: var(--faint);
   margin-top: -8px;
 }
 
@@ -112,21 +94,17 @@
 
 .sort-explain {
   padding: 14px 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--amber);
-  background: var(--amber-light);
-}
-
-@media (prefers-color-scheme: dark) {
-  .sort-explain { background: var(--bg-muted); }
+  border-radius: var(--r-control);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  background: color-mix(in srgb, var(--ink-sort) 10%, transparent);
 }
 
 .sort-explain strong { font-size: 15px; }
 .sort-explain p {
   font-size: 13px;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--graphite);
   margin-top: 6px;
 }
 
@@ -148,7 +126,7 @@
 
 .sort-field-label {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--graphite);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -157,11 +135,11 @@
 .sort-select {
   padding: 9px 12px;
   font-size: 15px;
-  font-family: var(--font-mono);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--mono);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-control);
+  background: var(--paper);
+  color: var(--ink);
   min-height: 42px;
 }
 
@@ -169,7 +147,7 @@
 
 .sort-input:focus,
 .sort-select:focus {
-  outline: 2px solid var(--amber);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -178,7 +156,7 @@
 
 .sort-slider {
   width: 100%;
-  accent-color: var(--amber);
+  accent-color: var(--accent);
 }
 
 .sort-btn-ghost {
@@ -186,25 +164,25 @@
   min-height: 42px;
   font-size: 13px;
   font-weight: 600;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--bg);
-  color: var(--text-secondary);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-control);
+  background: var(--paper);
+  color: var(--graphite);
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.15s, color 0.15s;
 }
 
 .sort-btn-ghost:hover {
-  background: var(--bg-muted);
-  color: var(--text);
+  background: var(--panel-2);
+  color: var(--ink);
 }
 
 /* ---- bar chart (slow sorts) ---- */
 .sort-arena {
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
   padding: 16px;
 }
 
@@ -237,28 +215,31 @@
   width: 100%;
   border-radius: 6px 6px 2px 2px;
   min-height: 4px;
-  background: var(--blue);
+  background: var(--ink-walk);
 }
 
-.sort-bar-default { background: var(--blue); }
-.sort-bar-compare { background: var(--amber); }
+/* Bar state reads by hue: walk-blue at rest, the sort accent while comparing,
+   red on a swap, recursion purple for the insertion "key", orange for the
+   selection "min", and linked-list green once locked in place. */
+.sort-bar-default { background: var(--ink-walk); }
+.sort-bar-compare { background: var(--accent); }
 .sort-bar-swap { background: var(--sort-red); }
-.sort-bar-key { background: var(--purple); }
+.sort-bar-key { background: var(--ink-rec); }
 .sort-bar-min { background: var(--sort-orange); }
-.sort-bar-sorted { background: var(--green); }
+.sort-bar-sorted { background: var(--ink-ll); }
 
 .sort-bar-label {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
-.sort-bar-label-compare { color: var(--amber); }
+.sort-bar-label-compare { color: var(--accent); }
 .sort-bar-label-swap { color: var(--sort-red); }
-.sort-bar-label-key { color: var(--purple); }
+.sort-bar-label-key { color: var(--ink-rec); }
 .sort-bar-label-min { color: var(--sort-orange); }
-.sort-bar-label-sorted { color: var(--green); }
+.sort-bar-label-sorted { color: var(--ink-ll); }
 
 /* ---- legend ---- */
 .sort-legend {
@@ -267,7 +248,7 @@
   gap: 14px;
   margin-top: 14px;
   padding-top: 14px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
 }
 
 .sort-legend-item {
@@ -275,7 +256,7 @@
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .sort-dot {
@@ -287,9 +268,9 @@
 
 /* ---- trace stage (fast sorts) ---- */
 .sort-trace {
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
   padding: 16px;
   min-height: 96px;
   display: flex;
@@ -315,22 +296,23 @@
 }
 
 .sort-stage-tag-base {
-  background: var(--bg-subtle);
-  color: var(--text-secondary);
+  background: var(--panel);
+  color: var(--graphite);
+  border: 1px solid var(--line);
 }
 
 .sort-stage-arrow,
 .sort-stage-plus {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 16px;
-  color: var(--text-tertiary);
+  color: var(--faint);
   font-weight: 700;
 }
 
 .sort-pills { display: inline-flex; gap: 5px; }
 
 .sort-pill {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 14px;
   font-weight: 600;
   padding: 4px 9px;
@@ -345,9 +327,9 @@
 }
 
 .sort-pill-empty {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 12px;
-  color: var(--text-tertiary);
+  color: var(--faint);
   font-style: italic;
 }
 
@@ -364,16 +346,16 @@
   align-items: center;
   gap: 2px;
   padding: 14px 10px;
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
 }
 
 .sort-stat-num {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 22px;
   font-weight: 700;
-  color: var(--amber);
+  color: var(--accent);
   text-transform: capitalize;
 }
 
@@ -381,85 +363,22 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-tertiary);
+  color: var(--faint);
 }
 
-/* ---- caption + transport ---- */
-.sort-caption {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--text);
-  min-height: 44px;
-  padding: 10px 14px;
-  background: var(--bg-muted);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-}
-
+/* ---- sorted-result readout ---- */
 .sort-result {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 .sort-result strong {
-  font-family: var(--font-mono);
-  color: var(--green);
+  font-family: var(--mono);
+  color: var(--ink-ll);
 }
-
-.sort-transport {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.sort-btn {
-  width: 42px;
-  height: 42px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius);
-  border: 1px solid var(--border-strong);
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
-  cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
-}
-
-.sort-btn:hover:not(:disabled) { background: var(--bg-muted); }
-.sort-btn:active:not(:disabled) { transform: scale(0.94); }
-.sort-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-.sort-btn-play {
-  background: var(--amber);
-  border-color: var(--amber);
-  color: #fff;
-  width: 48px;
-  height: 48px;
-  font-size: 16px;
-}
-.sort-btn-play:hover:not(:disabled) { background: #b45309; }
-
-.sort-step-count {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-.sort-speed {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-.sort-speed input { accent-color: var(--amber); width: 90px; }
 
 /* ---- code toggle ---- */
 .sort-code-toggle {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
   padding-top: 12px;
 }
 
@@ -467,7 +386,7 @@
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
-  color: var(--amber);
+  color: var(--accent);
   margin-bottom: 10px;
 }
 
@@ -477,9 +396,9 @@
   flex-direction: column;
   gap: 12px;
   padding: 16px;
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
 }
 
 .sort-cmp-row {
@@ -490,15 +409,16 @@
 }
 
 .sort-cmp-name {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .sort-cmp-track {
   height: 22px;
-  background: var(--bg-subtle);
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -510,14 +430,14 @@
 }
 
 .sort-cmp-slow { background: var(--sort-red); }
-.sort-cmp-ok { background: var(--amber); }
-.sort-cmp-fast { background: var(--green); }
+.sort-cmp-ok { background: var(--accent); }
+.sort-cmp-fast { background: var(--ink-ll); }
 
 .sort-cmp-val {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
   font-weight: 600;
-  color: var(--text);
+  color: var(--ink);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -527,7 +447,7 @@
 .sort-cmp-cx {
   font-size: 11px;
   font-weight: 500;
-  color: var(--text-tertiary);
+  color: var(--faint);
 }
 
 /* ---- key demo ---- */
@@ -553,7 +473,7 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--text-tertiary);
+  color: var(--faint);
 }
 
 .sort-key-list {
@@ -563,29 +483,25 @@
 }
 
 .sort-key-pill {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
   padding: 5px 10px;
   border-radius: 7px;
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--graphite);
 }
 
 .sort-key-pill-after {
-  background: var(--amber-light);
-  border-color: var(--amber);
-  color: var(--amber);
+  background: color-mix(in srgb, var(--ink-sort) 14%, transparent);
+  border-color: var(--accent);
+  color: var(--accent);
   font-weight: 600;
-}
-
-@media (prefers-color-scheme: dark) {
-  .sort-key-pill-after { color: var(--text); }
 }
 
 .sort-key-arrow {
   font-size: 22px;
-  color: var(--text-tertiary);
+  color: var(--faint);
   text-align: center;
 }
 
@@ -600,7 +516,7 @@
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--text-tertiary);
+  color: var(--faint);
   font-weight: 600;
 }
 
@@ -615,38 +531,38 @@
 
 .sort-concept {
   padding: 14px 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--amber);
-  background: var(--bg-elevated);
+  border-radius: var(--r-control);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  background: var(--panel);
   box-shadow: var(--shadow-sm);
 }
 
 .sort-concept-term {
   font-size: 15px;
   font-weight: 700;
-  color: var(--amber);
+  color: var(--accent);
 }
 
 .sort-concept-def {
   font-size: 13px;
   line-height: 1.5;
-  color: var(--text);
+  color: var(--ink);
   margin-top: 6px;
 }
 
 .sort-concept-why {
   font-size: 12.5px;
   line-height: 1.55;
-  color: var(--text-secondary);
+  color: var(--graphite);
   margin-top: 6px;
 }
 
 /* ---- properties: table ---- */
 .sort-table-wrap {
   overflow-x: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
 }
 
 .sort-table {
@@ -660,50 +576,46 @@
 .sort-table td {
   padding: 10px 12px;
   text-align: left;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }
 
 .sort-table th {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--text-tertiary);
+  color: var(--faint);
   font-weight: 600;
-  background: var(--bg-muted);
+  background: var(--panel-2);
 }
 
 .sort-table td code {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .sort-table-row { cursor: pointer; transition: background 0.12s; }
-.sort-table-row:hover { background: var(--bg-muted); }
-.sort-table-row.open { background: var(--amber-light); }
+.sort-table-row:hover { background: var(--panel-2); }
+.sort-table-row.open { background: color-mix(in srgb, var(--accent) 12%, transparent); }
 
-@media (prefers-color-scheme: dark) {
-  .sort-table-row.open { background: var(--bg-muted); }
-}
+.sort-table-algo { font-weight: 600; color: var(--ink); }
 
-.sort-table-algo { font-weight: 600; color: var(--text); }
-
-.sort-mark-yes { color: var(--green); font-weight: 700; }
-.sort-mark-no { color: var(--text-tertiary); }
+.sort-mark-yes { color: var(--ink-ll); font-weight: 700; }
+.sort-mark-no { color: var(--faint); }
 
 .sort-table-chev {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 16px;
-  color: var(--text-tertiary);
+  color: var(--faint);
   text-align: center;
 }
 
-.sort-table-detail-row td { padding: 0 12px; border-bottom: 1px solid var(--border); }
+.sort-table-detail-row td { padding: 0 12px; border-bottom: 1px solid var(--line); }
 
 .sort-table-detail {
   font-size: 13px;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--graphite);
   padding: 10px 0;
 }
 
@@ -716,9 +628,9 @@
 
 .sort-why {
   padding: 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--bg-elevated);
+  border-radius: var(--r-control);
+  border: 1px solid var(--line);
+  background: var(--panel);
   box-shadow: var(--shadow-sm);
 }
 
@@ -731,7 +643,7 @@
 .sort-why p {
   font-size: 13px;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 /* ---- decision table ---- */
@@ -746,7 +658,7 @@
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--text-tertiary);
+  color: var(--faint);
   font-weight: 600;
 }
 
@@ -754,8 +666,8 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
   overflow: hidden;
 }
 
@@ -763,7 +675,7 @@
 .sort-decide-table td {
   padding: 10px 14px;
   text-align: left;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
   line-height: 1.5;
 }
 
@@ -771,19 +683,18 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--text-tertiary);
+  color: var(--faint);
   font-weight: 600;
-  background: var(--bg-muted);
+  background: var(--panel-2);
 }
 
-.sort-decide-table td:first-child { color: var(--text); }
-.sort-decide-table td:last-child { color: var(--text-secondary); }
+.sort-decide-table td:first-child { color: var(--ink); }
+.sort-decide-table td:last-child { color: var(--graphite); }
 .sort-decide-table tr:last-child td { border-bottom: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .sort-bar,
   .sort-cmp-bar,
-  .sort-btn,
   .sort-table-detail {
     transition: none !important;
     animation: none !important;

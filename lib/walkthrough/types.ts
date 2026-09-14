@@ -39,7 +39,7 @@ export type Viz = ArrayViz;
 export interface VarBinding {
   name: string;
   value: string; // already display-formatted
-  color?: string; // design token, e.g. "var(--purple)"
+  color?: string; // design token, e.g. "var(--ink-rec)"
   /** Pulse this binding on the current step (it just changed). */
   changed?: boolean;
 }
