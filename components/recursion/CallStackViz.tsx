@@ -9,7 +9,8 @@ import {
   type Frame,
   type RecFn,
 } from "@/lib/recursion/call-stack";
-import { useStepper } from "@/components/shared/useStepper";
+import { useStepEngine } from "@/components/shared/useStepEngine";
+import { StepTransport } from "@/components/shared/StepTransport";
 
 const STATE_LABEL: Record<Frame["state"], string> = {
   active: "running",
@@ -29,7 +30,7 @@ export function CallStackViz() {
   const [n, setN] = useState(4);
 
   const steps = useMemo(() => buildSteps(fn, n), [fn, n]);
-  const player = useStepper(steps);
+  const player = useStepEngine(steps);
   const { current, index } = player;
 
   // Execution log = the narration of every step taken so far.
@@ -125,61 +126,7 @@ export function CallStackViz() {
         </div>
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.p
-          key={index}
-          className="rec-caption"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.2 }}
-        >
-          {current?.caption}
-        </motion.p>
-      </AnimatePresence>
-
-      <div className="rec-transport">
-        <button
-          className="rec-btn"
-          onClick={player.prev}
-          disabled={player.atStart}
-          aria-label="Previous step"
-        >
-          ⏮
-        </button>
-        <button
-          className="rec-btn rec-btn-play"
-          onClick={player.playing ? player.pause : player.play}
-          aria-label={player.playing ? "Pause" : "Play"}
-        >
-          {player.playing ? "❚❚" : "▶"}
-        </button>
-        <button
-          className="rec-btn"
-          onClick={player.next}
-          disabled={player.atEnd}
-          aria-label="Next step"
-        >
-          ⏭
-        </button>
-
-        <span className="rec-step-count">
-          Step {index + 1} / {player.total}
-        </span>
-
-        <label className="rec-speed">
-          <span>Speed</span>
-          <input
-            type="range"
-            min={0.5}
-            max={3}
-            step={0.5}
-            value={player.speed}
-            onChange={(e) => player.setSpeed(Number(e.target.value))}
-          />
-          <span>{player.speed}x</span>
-        </label>
-      </div>
+      <StepTransport engine={player} caption={current?.caption} />
 
       {current?.answer && (
         <div className="rec-answer">
