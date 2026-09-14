@@ -1,53 +1,38 @@
-/* Recursion & Big-O — module styles. Mirrors the bitwise/linked-list layout
-   conventions (rec- prefix) and reuses the globals.css design tokens. globals
-   has no red, so O(n²) / base-case red is defined locally here. */
+/* Recursion & Big-O — module styles, drawn in the recursion ink.
+   The page sets --accent: var(--ink-rec) on the hero + main, so the shared kit
+   (crumb, .tag.accent, .plate caps, the <Analogy> field-note, the shared
+   .transport, and the .code plate's highlighted line) all draw in recursion
+   purple. This file styles only the recursion-specific vizes (call stack,
+   Fibonacci tree, Big-O bars/table, annotate cards, six-step method).
 
-.rec-block {
-  margin-bottom: 48px;
+   The blueprint palette has no red, so the O(n²) / base-case red is defined
+   locally. It lives on .tutorial-main (this stylesheet only ships on the
+   recursion route, so the class is effectively route-scoped) and flips with the
+   theme the same three-state way as the globals tokens, so the inline
+   var(--rec-red) in FibTreeViz resolves in every mode. */
+
+.tutorial-main {
   --rec-red: #dc2626;
   --rec-red-light: #fee2e2;
   --rec-red-border: #fecaca;
 }
 
 @media (prefers-color-scheme: dark) {
-  .rec-block {
+  :root:not([data-theme="light"]) .tutorial-main {
     --rec-red: #f87171;
     --rec-red-light: rgba(248, 113, 113, 0.14);
     --rec-red-border: rgba(248, 113, 113, 0.3);
   }
 }
 
-.rec-block-head {
-  margin-bottom: 16px;
+:root[data-theme="dark"] .tutorial-main {
+  --rec-red: #f87171;
+  --rec-red-light: rgba(248, 113, 113, 0.14);
+  --rec-red-border: rgba(248, 113, 113, 0.3);
 }
 
-.rec-kicker {
-  font-size: 12px;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--purple);
-  margin-bottom: 6px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .rec-kicker { color: #c4b5fd; }
-}
-
-.rec-block-head h2 {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 6px;
-}
-
-/* ---- module shell ---- */
+/* ---- module shell — frameless; the surrounding .plate is the frame ---- */
 .rec-module {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -70,7 +55,7 @@
 
 .rec-field-label {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--graphite);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -79,11 +64,11 @@
 .rec-select {
   padding: 9px 12px;
   font-size: 15px;
-  font-family: var(--font-mono);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--mono);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-control);
+  background: var(--paper);
+  color: var(--ink);
   min-height: 42px;
 }
 
@@ -92,13 +77,13 @@
 
 .rec-input:focus,
 .rec-select:focus {
-  outline: 2px solid var(--purple);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
 .rec-slider {
   width: 100%;
-  accent-color: var(--purple);
+  accent-color: var(--accent);
 }
 
 .rec-btn-ghost {
@@ -106,35 +91,35 @@
   min-height: 42px;
   font-size: 13px;
   font-weight: 600;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--bg);
-  color: var(--text-secondary);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-control);
+  background: var(--paper);
+  color: var(--graphite);
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
 
 .rec-btn-ghost:hover {
-  background: var(--bg-muted);
-  color: var(--text);
+  background: var(--panel-2);
+  color: var(--ink);
 }
 
 /* ---- notes ---- */
 .rec-note {
   font-size: 13px;
   line-height: 1.7;
-  color: var(--text-secondary);
+  color: var(--graphite);
   max-width: 74ch;
 }
 
 .rec-note code,
 .rec-intro-card code {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 12px;
-  background: var(--bg-subtle);
+  background: var(--panel-2);
   padding: 1px 5px;
   border-radius: 4px;
-  color: var(--text);
+  color: var(--ink);
 }
 
 .rec-chip {
@@ -142,7 +127,7 @@
   margin: 0 4px 4px 0;
   padding: 1px 8px;
   border-radius: 5px;
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 12px;
   background: var(--rec-red-light);
   color: var(--rec-red);
@@ -158,25 +143,26 @@
 
 .rec-intro-card {
   padding: 14px 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border-radius: var(--r-control);
+  border: 1px solid var(--line);
   border-left-width: 4px;
-  background: var(--bg-elevated);
+  background: var(--panel);
 }
 
 .rec-intro-card p {
   font-size: 13px;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--graphite);
   margin-top: 6px;
 }
 
-.rec-intro-base { border-left-color: var(--green); background: var(--green-light); }
-.rec-intro-rec { border-left-color: var(--amber); background: var(--amber-light); }
-
-@media (prefers-color-scheme: dark) {
-  .rec-intro-base,
-  .rec-intro-rec { background: var(--bg-muted); }
+.rec-intro-base {
+  border-left-color: var(--ink-ll);
+  background: color-mix(in srgb, var(--ink-ll) 10%, transparent);
+}
+.rec-intro-rec {
+  border-left-color: var(--ink-sort);
+  background: color-mix(in srgb, var(--ink-sort) 10%, transparent);
 }
 
 .rec-intro-tag {
@@ -185,8 +171,8 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-.rec-intro-base .rec-intro-tag { color: var(--green); }
-.rec-intro-rec .rec-intro-tag { color: var(--amber); }
+.rec-intro-base .rec-intro-tag { color: var(--ink-ll); }
+.rec-intro-rec .rec-intro-tag { color: var(--ink-sort); }
 
 /* ---- call stack ---- */
 .rec-stack-grid {
@@ -199,10 +185,13 @@
   .rec-stack-grid { grid-template-columns: 1fr; }
 }
 
+/* Graph-paper canvas surface — matches .diagram / .wt-canvas-wrap. */
 .rec-arena {
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background-color: var(--panel-2);
+  background-image: radial-gradient(circle at 1px 1px, var(--grid-major) 1px, transparent 0);
+  background-size: 20px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-plate);
   padding: 12px;
   min-height: 220px;
   display: flex;
@@ -213,7 +202,7 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: var(--text-tertiary);
+  color: var(--faint);
   margin-bottom: 10px;
 }
 
@@ -232,15 +221,16 @@
   padding: 9px 12px;
   border-radius: 8px;
   border: 1.5px solid transparent;
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 14px;
+  color: var(--ink);
 }
 
 .rec-frame-label { font-weight: 600; }
 
 .rec-frame-tag {
   font-size: 10px;
-  font-family: var(--font-sans);
+  font-family: var(--sans);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   opacity: 0.75;
@@ -253,25 +243,34 @@
   padding-left: 4px;
 }
 
-.rec-frame-active { background: var(--teal-light); border-color: var(--teal); color: var(--teal-dark); }
-.rec-frame-waiting { background: var(--bg-subtle); border-color: var(--border); color: var(--text-tertiary); }
-.rec-frame-base { background: var(--green-light); border-color: var(--green); color: var(--green); }
-.rec-frame-returning { background: var(--purple-light); border-color: var(--purple); color: var(--purple); }
-
-@media (prefers-color-scheme: dark) {
-  .rec-frame-active,
-  .rec-frame-base,
-  .rec-frame-returning { color: var(--text); }
+/* State reads from the coloured border + tint + the text tag, not colour alone.
+   Backgrounds are mixed onto --panel so frames sit opaque on the graph paper. */
+.rec-frame-active {
+  background: color-mix(in srgb, var(--ink-bit) 16%, var(--panel));
+  border-color: var(--ink-bit);
+}
+.rec-frame-waiting {
+  background: var(--panel-2);
+  border-color: var(--line);
+  color: var(--faint);
+}
+.rec-frame-base {
+  background: color-mix(in srgb, var(--ink-ll) 16%, var(--panel));
+  border-color: var(--ink-ll);
+}
+.rec-frame-returning {
+  background: color-mix(in srgb, var(--accent) 16%, var(--panel));
+  border-color: var(--accent);
 }
 
 .rec-arena-empty {
   margin: auto;
   font-size: 13px;
-  color: var(--text-tertiary);
+  color: var(--faint);
 }
 
 .rec-log {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 12.5px;
   line-height: 1.5;
   overflow-y: auto;
@@ -287,102 +286,46 @@
   border-left: 3px solid transparent;
 }
 
-.rec-log-call { border-left-color: var(--teal); color: var(--text-secondary); }
-.rec-log-base { border-left-color: var(--green); color: var(--green); background: var(--green-light); }
-.rec-log-return { border-left-color: var(--purple); color: var(--text-secondary); }
-.rec-log-done { border-left-color: var(--amber); color: var(--text); background: var(--amber-light); font-weight: 600; }
-
-@media (prefers-color-scheme: dark) {
-  .rec-log-base,
-  .rec-log-done { background: var(--bg-subtle); }
+.rec-log-call { border-left-color: var(--ink-bit); color: var(--graphite); }
+.rec-log-base {
+  border-left-color: var(--ink-ll);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink-ll) 14%, transparent);
 }
-
-/* ---- transport ---- */
-.rec-caption {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--text);
-  min-height: 44px;
-  padding: 10px 14px;
-  background: var(--bg-muted);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
+.rec-log-return { border-left-color: var(--accent); color: var(--graphite); }
+.rec-log-done {
+  border-left-color: var(--ink-sort);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink-sort) 14%, transparent);
+  font-weight: 600;
 }
-
-.rec-transport {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.rec-btn {
-  width: 42px;
-  height: 42px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius);
-  border: 1px solid var(--border-strong);
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
-  cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
-}
-
-.rec-btn:hover:not(:disabled) { background: var(--bg-muted); }
-.rec-btn:active:not(:disabled) { transform: scale(0.94); }
-.rec-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-.rec-btn-play {
-  background: var(--purple);
-  border-color: var(--purple);
-  color: #fff;
-  width: 48px;
-  height: 48px;
-  font-size: 16px;
-}
-.rec-btn-play:hover:not(:disabled) { background: #6d28d9; }
-
-.rec-step-count {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-.rec-speed {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-.rec-speed input { accent-color: var(--purple); width: 90px; }
 
 .rec-answer {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 14px 18px;
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--purple-light), var(--teal-light));
-  border: 1px solid var(--border);
+  border-radius: var(--r-control);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 14%, transparent),
+    color-mix(in srgb, var(--ink-bit) 14%, transparent)
+  );
+  border: 1px solid var(--line);
 }
 
 .rec-answer-label {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .rec-answer-val {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 22px;
   font-weight: 700;
-  color: var(--text);
+  color: var(--ink);
 }
 
 /* ---- fibonacci tree ---- */
@@ -390,19 +333,21 @@
   overflow-x: auto;
   display: flex;
   justify-content: center;
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background-color: var(--panel-2);
+  background-image: radial-gradient(circle at 1px 1px, var(--grid-major) 1px, transparent 0);
+  background-size: 20px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-plate);
   padding: 8px;
 }
 
 .rec-tree { display: block; max-width: 100%; height: auto; }
 
-.rec-tree-edge { stroke: var(--border-strong); stroke-width: 1.5; }
+.rec-tree-edge { stroke: var(--line-strong); stroke-width: 1.5; }
 
 .rec-tree-text {
   fill: #fff;
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
   font-weight: 700;
   text-anchor: middle;
@@ -414,33 +359,30 @@
   gap: 10px;
 }
 
+/* Readout cards, not a drawing surface — kept solid so the numbers stay crisp. */
 .rec-stat {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
   padding: 14px 10px;
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
 }
 
 .rec-stat-num {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 24px;
   font-weight: 700;
-  color: var(--purple);
-}
-
-@media (prefers-color-scheme: dark) {
-  .rec-stat-num { color: #c4b5fd; }
+  color: var(--accent);
 }
 
 .rec-stat-label {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-tertiary);
+  color: var(--faint);
 }
 
 /* ---- big-o chart ---- */
@@ -449,9 +391,11 @@
   flex-direction: column;
   gap: 12px;
   padding: 16px;
-  background: var(--bg-muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background-color: var(--panel-2);
+  background-image: radial-gradient(circle at 1px 1px, var(--grid-major) 1px, transparent 0);
+  background-size: 20px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-plate);
 }
 
 .rec-bar-row {
@@ -462,15 +406,16 @@
 }
 
 .rec-bar-name {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .rec-bar-track {
   height: 22px;
-  background: var(--bg-subtle);
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -481,17 +426,17 @@
   min-width: 4px;
 }
 
-.rec-bar-o1 { background: var(--green); }
-.rec-bar-olog { background: var(--blue); }
-.rec-bar-on { background: var(--amber); }
+.rec-bar-o1 { background: var(--ink-ll); }
+.rec-bar-olog { background: var(--ink-walk); }
+.rec-bar-on { background: var(--ink-sort); }
 .rec-bar-on2 { background: var(--rec-red); }
 
 .rec-bar-val {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
   font-weight: 600;
   text-align: right;
-  color: var(--text);
+  color: var(--ink);
 }
 
 /* ---- complexity table ---- */
@@ -505,32 +450,32 @@
 .rec-table td {
   text-align: left;
   padding: 9px 10px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }
 
 .rec-table th {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-tertiary);
+  color: var(--faint);
   font-weight: 600;
 }
 
 .rec-table-eg code {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--graphite);
 }
 
 .rec-cx {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-weight: 700;
   padding: 2px 7px;
   border-radius: 5px;
 }
 
-.rec-cx-fast { background: var(--green-light); color: var(--green); }
-.rec-cx-ok { background: var(--amber-light); color: var(--amber); }
+.rec-cx-fast { background: color-mix(in srgb, var(--ink-ll) 14%, transparent); color: var(--ink-ll); }
+.rec-cx-ok { background: color-mix(in srgb, var(--ink-sort) 14%, transparent); color: var(--ink-sort); }
 .rec-cx-slow { background: var(--rec-red-light); color: var(--rec-red); }
 
 .rec-badge {
@@ -540,8 +485,8 @@
   border-radius: 5px;
 }
 
-.rec-badge-fast { background: var(--green-light); color: var(--green); }
-.rec-badge-ok { background: var(--amber-light); color: var(--amber); }
+.rec-badge-fast { background: color-mix(in srgb, var(--ink-ll) 14%, transparent); color: var(--ink-ll); }
+.rec-badge-ok { background: color-mix(in srgb, var(--ink-sort) 14%, transparent); color: var(--ink-sort); }
 .rec-badge-slow { background: var(--rec-red-light); color: var(--rec-red); }
 
 /* ---- annotate cards ---- */
@@ -556,9 +501,9 @@
   flex-direction: column;
   gap: 10px;
   padding: 14px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
   box-shadow: var(--shadow-sm);
 }
 
@@ -567,20 +512,20 @@
   padding: 7px 14px;
   font-size: 13px;
   font-weight: 600;
-  border: 1px solid var(--purple);
-  border-radius: var(--radius);
-  background: var(--purple-light);
-  color: var(--purple);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-control);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--accent);
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
-.rec-reveal-btn:hover { background: var(--purple); color: #fff; }
+.rec-reveal-btn:hover { background: var(--accent); color: #fff; }
 
 .rec-anno-body { overflow: hidden; }
 
 .rec-bigo {
   display: inline-block;
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 16px;
   font-weight: 700;
   padding: 3px 10px;
@@ -588,23 +533,23 @@
   margin-bottom: 8px;
 }
 
-.rec-bigo-fast { background: var(--green-light); color: var(--green); }
-.rec-bigo-linear { background: var(--amber-light); color: var(--amber); }
+.rec-bigo-fast { background: color-mix(in srgb, var(--ink-ll) 14%, transparent); color: var(--ink-ll); }
+.rec-bigo-linear { background: color-mix(in srgb, var(--ink-sort) 14%, transparent); color: var(--ink-sort); }
 .rec-bigo-slow { background: var(--rec-red-light); color: var(--rec-red); }
 
 .rec-anno-why {
   font-size: 13px;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--graphite);
   margin-bottom: 8px;
 }
 
 .rec-anno-eg {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 11.5px;
   line-height: 1.5;
-  color: var(--text-secondary);
-  background: var(--bg-muted);
+  color: var(--graphite);
+  background: var(--panel-2);
   padding: 8px 10px;
   border-radius: 6px;
   overflow-x: auto;
@@ -619,13 +564,13 @@
 }
 
 .rec-step-card {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+  background: var(--panel);
   overflow: hidden;
 }
 
-.rec-step-card.open { border-color: var(--purple); }
+.rec-step-card.open { border-color: var(--accent); }
 
 .rec-step-head {
   display: flex;
@@ -637,15 +582,15 @@
   border: none;
   cursor: pointer;
   text-align: left;
-  color: var(--text);
+  color: var(--ink);
 }
 
 .rec-step-num {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 13px;
   font-weight: 700;
   color: #fff;
-  background: var(--purple);
+  background: var(--accent);
   width: 30px;
   height: 30px;
   flex: none;
@@ -657,13 +602,13 @@
 
 .rec-step-titles { display: flex; flex-direction: column; gap: 2px; }
 .rec-step-title { font-size: 15px; font-weight: 600; }
-.rec-step-short { font-size: 12.5px; color: var(--text-secondary); }
+.rec-step-short { font-size: 12.5px; color: var(--graphite); }
 
 .rec-step-chev {
   margin-left: auto;
   font-size: 20px;
-  color: var(--text-tertiary);
-  font-family: var(--font-mono);
+  color: var(--faint);
+  font-family: var(--mono);
 }
 
 .rec-step-body { overflow: hidden; padding: 0 16px 16px; }
@@ -671,7 +616,7 @@
 .rec-step-text {
   font-size: 13px;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--graphite);
   margin-bottom: 10px;
 }
 
@@ -682,14 +627,13 @@
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--text-tertiary);
+  color: var(--faint);
   font-weight: 600;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .rec-frame,
   .rec-bar,
-  .rec-btn,
   .rec-anno-body,
   .rec-step-body {
     transition: none !important;
