@@ -1,0 +1,446 @@
+﻿/* Pointer lessons share InteractLab's existing typography, theme and semantic inks. */
+.ptr-page {
+  --accent: var(--ink-walk);
+}
+.ptr-page .tutorial-hero {
+  margin-bottom: 0;
+}
+.ptr-page .tutorial-hero > .ptr-button {
+  margin-top: 1.5rem;
+}
+.ptr-hub,
+.ptr-level-main {
+  display: grid;
+  gap: 2rem;
+  padding-top: 2rem;
+  max-width: var(--content-wide);
+}
+.ptr-ladder {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+}
+.ptr-level-card {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-card);
+  background: var(--panel);
+  text-decoration: none;
+  color: var(--ink);
+  transition:
+    border-color var(--d-fast),
+    transform var(--d-fast);
+}
+.ptr-level-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.ptr-level-number {
+  font: 600 2rem var(--mono);
+  color: var(--accent);
+  border-right: 1px solid var(--line);
+}
+.ptr-level-card h3 {
+  font-size: 1.65rem;
+}
+.ptr-level-card p {
+  margin: 0.4rem 0;
+}
+.ptr-prereq {
+  color: var(--graphite);
+  font-size: 0.9rem;
+}
+.ptr-level-card .arw {
+  display: block;
+  margin-top: 0.8rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+.ptr-progress {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+.ptr-progress > span:not(:last-child) {
+  width: 0.6rem;
+  height: 0.6rem;
+  border: 1px solid var(--graphite);
+  border-radius: 50%;
+}
+.ptr-progress > span.done {
+  background: var(--ok);
+  border-color: var(--ok);
+}
+.ptr-progress > span:last-child {
+  font-size: 0.8rem;
+  margin-left: 0.4rem;
+  color: var(--graphite);
+}
+.ptr-note {
+  border-left: 3px solid var(--accent);
+  background: var(--panel-2);
+  padding: 1rem 1.25rem;
+  border-radius: var(--r-plate);
+}
+.ptr-note p + p {
+  margin-top: 0.7rem;
+}
+.ptr-playlist {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+.ptr-lesson-nav {
+  display: grid;
+  gap: 0.5rem;
+  position: sticky;
+  top: 1rem;
+}
+.ptr-lesson-nav button {
+  display: flex;
+  gap: 0.65rem;
+  align-items: baseline;
+  text-align: left;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: var(--r-control);
+  color: var(--ink);
+  padding: 0.8rem;
+  min-height: 44px;
+  font: inherit;
+  cursor: pointer;
+}
+.ptr-lesson-nav button span {
+  color: var(--accent);
+  font: 500 0.8rem var(--mono);
+  flex-shrink: 0;
+}
+.ptr-lesson-nav button[aria-current] {
+  border-color: var(--accent);
+  box-shadow: inset 3px 0 var(--accent);
+  font-weight: 600;
+}
+.ptr-lesson {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+}
+.ptr-lesson h2 {
+  font-size: clamp(1.65rem, 3vw, 2.4rem);
+}
+.ptr-hook {
+  font-size: 1.15rem;
+}
+.ptr-player {
+  min-width: 0;
+  overflow: hidden;
+}
+.ptr-player > .code {
+  margin: 0 1rem 1rem;
+}
+.ptr-player .plate-cap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.ptr-memory {
+  padding: 1rem 0.75rem;
+}
+.ptr-board-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.ptr-board-scroll svg {
+  display: block;
+  min-width: 780px;
+  max-width: none;
+}
+.ptr-memory figcaption {
+  font-size: 0.8rem;
+  color: var(--graphite);
+  padding: 0.5rem;
+}
+.ptr-zone {
+  font: 500 11px var(--mono);
+  fill: var(--graphite);
+}
+.ptr-divider {
+  stroke: var(--line-strong);
+  stroke-dasharray: 5 5;
+}
+.ptr-cell rect {
+  fill: var(--node-face);
+  stroke: var(--node-stroke);
+  stroke-width: 1.5;
+  transition:
+    fill 600ms,
+    stroke 600ms;
+}
+.ptr-cell.changed rect {
+  stroke: var(--warn);
+  stroke-width: 3;
+  fill: var(--panel-2);
+}
+.ptr-cell.danger rect {
+  stroke: var(--danger);
+  stroke-dasharray: 5 3;
+}
+.ptr-cell text {
+  fill: var(--ink);
+  font-family: var(--mono);
+}
+.ptr-cell-name {
+  font-size: 12px;
+  font-weight: 600;
+}
+.ptr-cell-value {
+  font-size: 23px;
+}
+.ptr-cell-value.small {
+  font-size: 13px;
+}
+.ptr-cell-address {
+  font-size: 10px;
+}
+.ptr-cell-status {
+  font-size: 10px;
+}
+.ptr-arrow {
+  fill: none;
+  stroke: var(--accent);
+  color: var(--accent);
+  stroke-width: 2;
+  transition: d 550ms;
+}
+.ptr-arrow.danger {
+  stroke: var(--danger);
+  color: var(--danger);
+  stroke-dasharray: 5 3;
+}
+.ptr-player .transport {
+  border-top: 1px solid var(--line);
+}
+.ptr-caption {
+  min-height: 6rem;
+  line-height: 1.7;
+}
+.ptr-controls {
+  flex-wrap: wrap;
+}
+.ptr-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-control);
+  color: var(--ink);
+  background: var(--panel);
+  font: 500 0.9rem var(--sans);
+  text-decoration: none;
+  cursor: pointer;
+}
+.ptr-button.primary {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.ptr-button:disabled {
+  cursor: default;
+  opacity: 0.65;
+}
+.ptr-controls .tp-btn {
+  min-width: 48px;
+  width: auto;
+  min-height: 44px;
+  padding: 0 0.75rem;
+}
+.ptr-speed,
+.ptr-voice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  font-size: 0.85rem;
+}
+.ptr-speed select {
+  min-height: 44px;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-control);
+  padding: 0.4rem;
+  font: inherit;
+}
+.ptr-voice input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--accent);
+}
+.ptr-timeline {
+  display: grid;
+  gap: 0.5rem;
+  font: 0.8rem var(--mono);
+  margin: 1rem 0;
+}
+.ptr-timeline input {
+  width: 100%;
+  min-height: 44px;
+  accent-color: var(--accent);
+}
+.ptr-prediction {
+  display: grid;
+  gap: 0.65rem;
+  padding: 1rem;
+  border: 2px solid var(--warn);
+  border-radius: var(--r-control);
+  margin: 1rem 0;
+}
+.ptr-prediction input {
+  min-width: 0;
+  min-height: 44px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  color: var(--ink);
+  padding: 0.5rem;
+  font: inherit;
+  border-radius: var(--r-control);
+}
+.ptr-prediction .ptr-button {
+  justify-self: start;
+}
+.ptr-checks {
+  display: grid;
+  gap: 0.8rem;
+}
+.ptr-checks details,
+.ptr-roadmap {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+  padding: 1rem;
+}
+.ptr-checks summary,
+.ptr-roadmap summary {
+  min-height: 44px;
+  cursor: pointer;
+}
+.ptr-checks details > div {
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+.ptr-checks details p {
+  margin-top: 0.5rem;
+}
+.ptr-roadmap ul {
+  padding: 1rem 1.5rem;
+}
+.ptr-end {
+  display: grid;
+  gap: 1rem;
+  border: 2px solid var(--ok);
+  padding: 1.25rem;
+  border-radius: var(--r-card);
+  background: var(--panel);
+}
+.ptr-end-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.ptr-level-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.ptr-level-links a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+@media (max-width: 850px) {
+  .ptr-playlist {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ptr-lesson-nav {
+    position: static;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .ptr-level-card {
+    grid-template-columns: 2.3rem minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+  .ptr-level-number {
+    font-size: 1.3rem;
+  }
+  .ptr-level-card h3 {
+    font-size: 1.4rem;
+  }
+  .ptr-player .transport {
+    padding: 1rem;
+  }
+  .ptr-lesson-nav {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ptr-page *,
+  .ptr-page *::before,
+  .ptr-page *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+.ptr-lesson-nav {
+  position: static;
+}
+.ptr-controls .tp-btn.play {
+  background: var(--panel);
+  color: var(--accent);
+}
+.ptr-player .kb-hint {
+  color: var(--graphite);
+}
+.ptr-timeline,
+.ptr-prediction {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.ptr-cell.warning rect {
+  stroke: var(--warn);
+  stroke-width: 2;
+  stroke-dasharray: 5 3;
+}
+.ptr-cell-value {
+  animation: ptr-value-flash 800ms ease-out;
+}
+@keyframes ptr-value-flash {
+  from {
+    fill: var(--accent);
+  }
+  to {
+    fill: var(--ink);
+  }
+}
+
+.ptr-page .code .ln,
+.ptr-page .code .tok-comment {
+  color: var(--graphite);
+}
+.ptr-page .code .tok-num {
+  color: var(--accent);
+}
+.ptr-page .code .tok-str {
+  color: var(--blueprint);
+}

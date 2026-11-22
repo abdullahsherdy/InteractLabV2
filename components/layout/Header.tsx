@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/linked-lists/", label: "Linked Lists" },
   { href: "/stacks/", label: "Stacks" },
   { href: "/walkthroughs/", label: "Walkthroughs" },
+  { href: "/pointers/", label: "Pointers" },
 ];
 
 export function Header() {

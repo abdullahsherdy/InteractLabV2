@@ -17,6 +17,15 @@ interface TopicCard {
 
 const CARDS: TopicCard[] = [
   {
+    href: "/pointers/",
+    glyph: "linked-list",
+    ink: "var(--ink-walk)",
+    title: "C++ Pointers",
+    desc: "Start with memory, follow an address, and build safe mental models of dereferencing, ownership, arrays and linked nodes. Predict each change before it happens.",
+    meta: ["address & value", "new & delete", "arrays & nodes", "two pointers"],
+    arrow: "Learn pointers →",
+  },
+  {
     href: "/walkthroughs/",
     glyph: "walkthrough",
     ink: "var(--ink-walk)",

@@ -69,6 +69,8 @@ function normalizeHighlight(highlight?: number | number[]): Set<number> {
 export interface CodeBlockProps {
   code: string;
   className?: string;
+  /** Allow keyboard scrolling for long read-only snippets. */
+  focusable?: boolean;
   /** Filename shown at the left of the framed header (opts into `.code`). */
   filename?: string;
   /** Language label shown at the right of the framed header (opts into `.code`). */
@@ -87,6 +89,7 @@ export interface CodeBlockProps {
 export function CodeBlock({
   code,
   className,
+  focusable,
   filename,
   lang,
   showLineNumbers,
@@ -100,7 +103,7 @@ export function CodeBlock({
 
   if (!framed) {
     return (
-      <pre className={`code-block${className ? ` ${className}` : ""}`}>
+      <pre tabIndex={focusable ? 0 : undefined} className={`code-block${className ? ` ${className}` : ""}`}>
         <code>{renderTokens(code)}</code>
       </pre>
     );
@@ -118,7 +121,7 @@ export function CodeBlock({
           <span>{lang}</span>
         </div>
       )}
-      <pre>
+      <pre tabIndex={focusable ? 0 : undefined}>
         <code>
           {lines.map((line, i) => {
             const n = i + 1;
